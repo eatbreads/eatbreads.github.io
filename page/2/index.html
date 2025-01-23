@@ -121,7 +121,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -147,6 +147,188 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://eatbreads.github.io/2024/10/23/c-%E4%B8%AD%E5%85%B3%E4%BA%8E%E5%B5%8C%E5%A5%97%E5%AE%9A%E4%B9%89%E7%9A%84%E6%80%9D%E8%80%83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="eatbreads">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小面包的小站">
+      <meta itemprop="description" content="这边会分享C++,Go,Java,Docker,包括一些C++多线程和模板的心得或者知识,或者一些认为有价值的东西,比如一些计算机常见问题,一些好用的库,学习过程中遇到的问题等">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 小面包的小站">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/10/23/c-%E4%B8%AD%E5%85%B3%E4%BA%8E%E5%B5%8C%E5%A5%97%E5%AE%9A%E4%B9%89%E7%9A%84%E6%80%9D%E8%80%83/" class="post-title-link" itemprop="url">c++中关于嵌套定义的思考</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-10-23 22:59:42" itemprop="dateCreated datePublished" datetime="2024-10-23T22:59:42+08:00">2024-10-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-01-23 23:02:25" itemprop="dateModified" datetime="2025-01-23T23:02:25+08:00">2025-01-23</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="关于嵌套定义的总结"><a href="#关于嵌套定义的总结" class="headerlink" title="关于嵌套定义的总结"></a>关于嵌套定义的总结</h1><h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>在 C++ 中，嵌套定义是指在一个头文件中包含另一个头文件，并且在不同的源文件（.cpp）中进行交叉引用。我在学习编译过程时发现，预处理阶段会将头文件 <code>a.h</code> 和 <code>b.h</code> 的内容都拷贝到源文件中。这一过程影响了编译的顺序和方式。</p>
+<hr>
+<h2 id="预处理和编译过程"><a href="#预处理和编译过程" class="headerlink" title="预处理和编译过程"></a>预处理和编译过程</h2><ol>
+<li><p><strong>预处理阶段</strong><br>预处理阶段会将 <code>a.h</code> 和 <code>b.h</code> 文件的内容插入到源文件中。其实编译器本质上只处理 <code>.cpp</code> 文件，头文件仅仅是被复制粘贴进源文件。</p>
+</li>
+<li><p><strong>编译过程</strong><br>在编译 <code>a.cpp</code> 时，<code>A</code> 类的定义通过前向声明 <code>B</code> 类可以正常通过编译。由于 <code>a.cpp</code> 只是对指针进行操作，而指针的大小是固定的，因此它可以直接编译并使用，甚至在调用成员函数时也没有问题，因为成员函数本质上也是指针。</p>
+</li>
+<li><p><strong>链接阶段</strong><br>在链接阶段，编译器会将 <code>a.o</code> 和 <code>b.o</code> 文件链接到一起，最终完成整个程序的编译过程。</p>
+</li>
+</ol>
+<hr>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>尽管嵌套定义在一定情况下是可行的，但我建议尽量避免过度使用这种方式。使用指针可以解决类之间的依赖关系，但最好还是审视一下类之间的关系，确保设计合理。</p>
+<hr>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>嵌套定义的本质是在预处理阶段将头文件内容拷贝进源文件，而编译和链接过程则是通过指针来实现对类和成员函数的操作。虽然这种方法在某些情况下可行，但最好通过审视类的设计来避免过度依赖这种方式。</p>
+<p><img src="https://cdn-a.markji.com/files/67051e81699743e123d6fea8_hd.png?e=1737643978019&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:UGIktc9WEbW_w2TZnfKGnEa5rF0=" alt="图片1"></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://eatbreads.github.io/2024/10/23/%E8%96%AA%E9%85%AC%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F-%E5%85%B3%E4%BA%8E%E7%BB%88%E7%AB%AF%E5%AD%97%E7%AC%A6%E9%9B%86%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="eatbreads">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小面包的小站">
+      <meta itemprop="description" content="这边会分享C++,Go,Java,Docker,包括一些C++多线程和模板的心得或者知识,或者一些认为有价值的东西,比如一些计算机常见问题,一些好用的库,学习过程中遇到的问题等">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 小面包的小站">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/10/23/%E8%96%AA%E9%85%AC%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F-%E5%85%B3%E4%BA%8E%E7%BB%88%E7%AB%AF%E5%AD%97%E7%AC%A6%E9%9B%86%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">薪酬管理系统--关于终端字符集问题</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-10-23 22:32:22" itemprop="dateCreated datePublished" datetime="2024-10-23T22:32:22+08:00">2024-10-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-01-23 23:05:44" itemprop="dateModified" datetime="2025-01-23T23:05:44+08:00">2025-01-23</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="关于中文字符集问题的总结"><a href="#关于中文字符集问题的总结" class="headerlink" title="关于中文字符集问题的总结"></a>关于中文字符集问题的总结</h1><h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>在解决了大部分问题并成功跑起程序后，我开始进行一些操作测试。然而，输入中文时却出现了乱码。经过一番排查，我发现程序中的字符集设置默认是 <code>utf-8</code>，但是 VSCode 的命令行终端似乎使用的是 <code>gbk</code> 编码，导致了中文乱码问题。</p>
+<hr>
+<h2 id="排查过程"><a href="#排查过程" class="headerlink" title="排查过程"></a>排查过程</h2><ol>
+<li><p><strong>检查 VSCode 设置</strong><br>我首先查看了 VSCode 的 <code>settings.json</code> 文件，发现其中的设置都是空白的，且提示：“此设置无法应用于此工作区。它将在您直接打开包含的工作区文件夹时应用。”</p>
+</li>
+<li><p><strong>修改设置文件</strong><br>之后，我尝试切换到全局设置。在 VSCode 左上角选择 <strong>文件 -&gt; 首选项 -&gt; 设置</strong>，搜索 <code>setting.json</code>，并选择“在 setting.json 内部编辑”。我修改了一些编码相关的设置，但即便重启了 VSCode，中文乱码问题依然没有解决。<br><img src="https://cdn-a.markji.com/files/67244003a5ae5f54b5ca759c_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:NpuXva8ZwLyZCfqZou0bsGPi7V0=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/672441c1a5ae5f54b5cabb9f_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:eXIDLSGMA5g8853a8u1C104elPo=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/6724434ae28baad2f1714840_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:pFnmtrKOxGmwfp9T92fZZn-1wO0=" alt="图片1"></p>
+</li>
+</ol>
+<hr>
+<h2 id="进一步分析"><a href="#进一步分析" class="headerlink" title="进一步分析"></a>进一步分析</h2><p>无论我在 VSCode 内部切换 <code>gbk</code> 或 <code>utf-8</code> 编码，都无法解决乱码问题。然后我发现可能是终端编码的问题。</p>
+<p>通过查询，我得知 <code>chcp</code> 命令是用来切换命令行窗口的编码页，<code>936</code> 是 <code>gbk</code> 编码（简体中文）。而 <code>65001</code> 对应的是 <code>utf-8</code> 编码。因此，我尝试使用以下命令切换编码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chcp 65001</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn-a.markji.com/files/67244ce6a5ae5f54b5cc22bd_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:V0EDcnHNzXN8hXItkTl0GlXMsLo=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67244d05a5ae5f54b5cc25f3_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:vhE-llLlGR6nfvEWCpCXkMHyiUg=" alt="图片1"><br>这一操作最终解决了 VSCode 内部终端乱码的问题。值得注意的是，当直接打开 <code>cmd</code> 时，中文输入并没有问题。</p>
+<hr>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>问题的根本原因是 VSCode 内部终端的默认编码设置。虽然通过修改 <code>settings.json</code> 文件试图解决，但问题最终通过切换命令行终端的编码页得到了解决。因此，在使用 VSCode 时，如果遇到类似问题，可以通过 <code>chcp 65001</code> 来切换到 <code>utf-8</code> 编码，解决乱码问题。</p>
+<p>至于直接输入中文的问题，我决定暂时不再使用 VSCode 终端输入中文，而是直接在外部终端中进行输入操作。</p>
+<p><img src="https://cdn-a.markji.com/files/67244d77a5ae5f54b5cc33c1_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:RpIME21mf2RZ5wSRX7jrHYjhJtc=" alt="图片1"></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 

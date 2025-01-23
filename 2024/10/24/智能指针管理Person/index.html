@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"eatbreads.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="关于智能指针和抽象基类的 new 总结问题描述在最初编写 Person 类时，我发现为了实现多态，personVec（用于统一管理 Person 对象）应该存储的是指针。然而，问题随之而来：如何管理这些指针的内存？因为我习惯于“谁申请，谁释放”的内存管理方式，而此处的指针是外部传进来的。  ![图片1](https:&#x2F;&#x2F;cdn-a.markji.com&#x2F;files&#x2F;6722fb9858683e06">
+<meta property="og:type" content="article">
+<meta property="og:title" content="智能指针管理Person">
+<meta property="og:url" content="https://eatbreads.github.io/2024/10/24/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%E7%AE%A1%E7%90%86Person/index.html">
+<meta property="og:site_name" content="小面包的小站">
+<meta property="og:description" content="关于智能指针和抽象基类的 new 总结问题描述在最初编写 Person 类时，我发现为了实现多态，personVec（用于统一管理 Person 对象）应该存储的是指针。然而，问题随之而来：如何管理这些指针的内存？因为我习惯于“谁申请，谁释放”的内存管理方式，而此处的指针是外部传进来的。  ![图片1](https:&#x2F;&#x2F;cdn-a.markji.com&#x2F;files&#x2F;6722fb9858683e06">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn-a.markji.com/files/6722489da5ae5f54b592ddb3_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:8y0aDklJKoXE_A5xn7L6W8eGwks=">
+<meta property="og:image" content="https://cdn-a.markji.com/files/672252dba5ae5f54b594d451_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:K4oV7f56rzmM3dQjGz4KB6o7qC8=">
+<meta property="og:image" content="https://cdn-a.markji.com/files/672259df58683e065fe6a0fb_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:xkJLV-2w8r8LiCcpUeoMwACEuCI=">
+<meta property="og:image" content="https://cdn-a.markji.com/files/6722f673e28baad2f1470fac_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:1lIkjpwVTNgACXYzkS7cgenvoyM=">
+<meta property="og:image" content="https://cdn-a.markji.com/files/6722fbede28baad2f147b298_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:EX3PsbmNY2VXATGlAXW0C_UxO1Y=">
+<meta property="og:image" content="https://cdn-a.markji.com/files/6722fe9aa5ae5f54b5a23554_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:JpDCzsDmF49Mjn0HeGOmkCFRGDs=">
+<meta property="og:image" content="https://cdn-a.markji.com/files/67233a0ba5ae5f54b5aa2df4_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:c1c0b7rBkrwR_IfnCcXN0VevU0I=">
+<meta property="og:image" content="https://cdn-a.markji.com/files/67233be9e28baad2f150f543_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:w1W9m8mwfpCAMIAHQTDM9ITAPgw=">
+<meta property="article:published_time" content="2024-10-24T15:07:44.000Z">
+<meta property="article:modified_time" content="2025-01-23T15:10:27.521Z">
+<meta property="article:author" content="eatbreads">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn-a.markji.com/files/6722489da5ae5f54b592ddb3_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:8y0aDklJKoXE_A5xn7L6W8eGwks=">
+
+
+<link rel="canonical" href="https://eatbreads.github.io/2024/10/24/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%E7%AE%A1%E7%90%86Person/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://eatbreads.github.io/2024/10/24/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%E7%AE%A1%E7%90%86Person/","path":"2024/10/24/智能指针管理Person/","title":"智能指针管理Person"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>智能指针管理Person | 小面包的小站</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">小面包的小站</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">主营:C++,Go,Docker,Linux(WSL/VMWare),多线程,网络,C++模板编程,算法,奇奇怪怪有趣的东西等</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%E5%92%8C%E6%8A%BD%E8%B1%A1%E5%9F%BA%E7%B1%BB%E7%9A%84-new-%E6%80%BB%E7%BB%93"><span class="nav-number">1.</span> <span class="nav-text">关于智能指针和抽象基类的 new 总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E4%B8%8E%E6%80%9D%E8%80%83"><span class="nav-number">1.2.</span> <span class="nav-text">遇到的问题与思考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E6%9B%B4%EF%BC%9A%E8%B0%83%E8%AF%95%E6%8A%80%E5%B7%A7"><span class="nav-number">1.3.</span> <span class="nav-text">二更：调试技巧</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%89%E4%B8%80%E4%B8%AA%E8%B0%83%E8%AF%95%E6%8A%80%E5%B7%A7%E6%88%91%E5%8F%91%E7%8E%B0%E9%9D%9E%E5%B8%B8%E6%9C%89%E5%B8%AE%E5%8A%A9%EF%BC%9A%E9%80%9A%E8%BF%87%E6%9F%A5%E7%9C%8B%E8%B0%83%E8%AF%95%E5%99%A8%E4%B8%AD%E7%9A%84%E7%B4%AB%E8%89%B2%E5%8C%BA%E5%9F%9F%EF%BC%8C%E5%AE%83%E4%BC%9A%E6%98%8E%E7%A1%AE%E5%88%97%E5%87%BA%E6%AF%8F%E4%B8%AA%E5%8F%82%E6%95%B0%E7%9A%84%E7%B1%BB%E5%9E%8B%E3%80%82%E8%BF%99%E6%9C%89%E5%8A%A9%E4%BA%8E%E5%BF%AB%E9%80%9F%E5%AE%9A%E4%BD%8D%E9%97%AE%E9%A2%98%EF%BC%8C%E7%89%B9%E5%88%AB%E6%98%AF%E5%9C%A8%E7%B1%BB%E5%9E%8B%E5%8C%B9%E9%85%8D%E6%96%B9%E9%9D%A2%E3%80%82"><span class="nav-number">1.4.</span> <span class="nav-text">有一个调试技巧我发现非常有帮助：通过查看调试器中的紫色区域，它会明确列出每个参数的类型。这有助于快速定位问题，特别是在类型匹配方面。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">1.5.</span> <span class="nav-text">小结</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">eatbreads</p>
+  <div class="site-description" itemprop="description">这边会分享C++,Go,Java,Docker,包括一些C++多线程和模板的心得或者知识,或者一些认为有价值的东西,比如一些计算机常见问题,一些好用的库,学习过程中遇到的问题等</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/eatreads" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;eatreads" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:sunjunhao571@gmail.com" title="E-Mail → mailto:sunjunhao571@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://eatbreads.github.io/2024/10/24/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%E7%AE%A1%E7%90%86Person/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="eatbreads">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小面包的小站">
+      <meta itemprop="description" content="这边会分享C++,Go,Java,Docker,包括一些C++多线程和模板的心得或者知识,或者一些认为有价值的东西,比如一些计算机常见问题,一些好用的库,学习过程中遇到的问题等">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="智能指针管理Person | 小面包的小站">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          智能指针管理Person
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-10-24 23:07:44" itemprop="dateCreated datePublished" datetime="2024-10-24T23:07:44+08:00">2024-10-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-01-23 23:10:27" itemprop="dateModified" datetime="2025-01-23T23:10:27+08:00">2025-01-23</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="关于智能指针和抽象基类的-new-总结"><a href="#关于智能指针和抽象基类的-new-总结" class="headerlink" title="关于智能指针和抽象基类的 new 总结"></a>关于智能指针和抽象基类的 <code>new</code> 总结</h1><h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>在最初编写 <code>Person</code> 类时，我发现为了实现多态，<code>personVec</code>（用于统一管理 <code>Person</code> 对象）应该存储的是指针。然而，问题随之而来：如何管理这些指针的内存？因为我习惯于“谁申请，谁释放”的内存管理方式，而此处的指针是外部传进来的。</p>
+<hr>
+<p><img src="https://cdn-a.markji.com/files/6722489da5ae5f54b592ddb3_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:8y0aDklJKoXE_A5xn7L6W8eGwks=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/672252dba5ae5f54b594d451_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:K4oV7f56rzmM3dQjGz4KB6o7qC8=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/672259df58683e065fe6a0fb_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:xkJLV-2w8r8LiCcpUeoMwACEuCI=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/6722f673e28baad2f1470fac_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:1lIkjpwVTNgACXYzkS7cgenvoyM=" alt="图片1"><br>![图片1](<a target="_blank" rel="noopener" href="https://cdn-a.markji.com/files/6722fb9858683e065ff1cf18_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:MrTGKOeuNYNd13PvUj_Ad7hu74A=%E7%94%A8">https://cdn-a.markji.com/files/6722fb9858683e065ff1cf18_hd.png?e=1737643978020&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:MrTGKOeuNYNd13PvUj_Ad7hu74A=用</a></p>
+<p>为了简化内存管理，我决定统一使用智能指针来管理 <code>Person</code> 对象。通过将裸指针隐藏在智能指针中，我确保了内存的自动管理，并避免了手动释放的繁琐与错误。</p>
+<hr>
+<h2 id="遇到的问题与思考"><a href="#遇到的问题与思考" class="headerlink" title="遇到的问题与思考"></a>遇到的问题与思考</h2><p>在实现过程中，我遇到了一些挑战，特别是在派生类的构造过程中。最初，我认为通过解引用智能指针就能得到 <code>Person</code> 类的对象，但实际上这个过程中出现了问题。原因在于，派生类并没有接受 <code>Person</code> 类的构造函数，导致了类型不匹配。</p>
+<p>为了解决这个问题，我花了相当长时间去思考，最终才意识到需要正确地使用 <code>new</code> 来确保派生类对象的正确构造，并且必须显式调用派生类的构造函数。</p>
+<hr>
+<h2 id="二更：调试技巧"><a href="#二更：调试技巧" class="headerlink" title="二更：调试技巧"></a>二更：调试技巧</h2><h2 id="有一个调试技巧我发现非常有帮助：通过查看调试器中的紫色区域，它会明确列出每个参数的类型。这有助于快速定位问题，特别是在类型匹配方面。"><a href="#有一个调试技巧我发现非常有帮助：通过查看调试器中的紫色区域，它会明确列出每个参数的类型。这有助于快速定位问题，特别是在类型匹配方面。" class="headerlink" title="有一个调试技巧我发现非常有帮助：通过查看调试器中的紫色区域，它会明确列出每个参数的类型。这有助于快速定位问题，特别是在类型匹配方面。"></a>有一个调试技巧我发现非常有帮助：通过查看调试器中的紫色区域，它会明确列出每个参数的类型。这有助于快速定位问题，特别是在类型匹配方面。<br><img src="https://cdn-a.markji.com/files/6722fbede28baad2f147b298_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:EX3PsbmNY2VXATGlAXW0C_UxO1Y=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/6722fe9aa5ae5f54b5a23554_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:JpDCzsDmF49Mjn0HeGOmkCFRGDs=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67233a0ba5ae5f54b5aa2df4_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:c1c0b7rBkrwR_IfnCcXN0VevU0I=" alt="图片1"></h2><h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>通过这次的实现，我更加深入地理解了智能指针和抽象基类的内存管理问题。智能指针确实能简化内存管理，但在多态和派生类的构造过程中，需要特别注意如何正确使用构造函数来避免潜在的内存错误。</p>
+<p><img src="https://cdn-a.markji.com/files/67233be9e28baad2f150f543_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:w1W9m8mwfpCAMIAHQTDM9ITAPgw=" alt="图片1"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/10/23/c-%E4%B8%AD%E5%85%B3%E4%BA%8E%E5%B5%8C%E5%A5%97%E5%AE%9A%E4%B9%89%E7%9A%84%E6%80%9D%E8%80%83/" rel="prev" title="c++中关于嵌套定义的思考">
+                  <i class="fa fa-angle-left"></i> c++中关于嵌套定义的思考
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/11/20/%E6%89%93%E5%8C%85cpp%E5%90%8E%E7%AB%AF%E4%BB%A3%E7%A0%81%E8%BF%9B%E5%85%A5docker/" rel="next" title="打包cpp后端代码进入docker">
+                  打包cpp后端代码进入docker <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">eatbreads</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

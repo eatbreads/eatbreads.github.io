@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"eatbreads.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="关于路径问题的总结问题描述在项目中，我引入了一个第三方的 CSV 解析库。问题出现了：这个库不支持相对路径，因此在助教的环境中运行时，我必须要求他们手动指定绝对路径。这个做法显然不太方便，尤其是在不同的环境中部署时。解决思路我开始思考，是否能够自动获取可执行文件的路径，并基于此拼接出一个绝对路径，这样就不需要依赖手动输入路径了。于是我尝试过多种方法，包括调用 Windows 自身的 API 等，但">
+<meta property="og:type" content="article">
+<meta property="og:title" content="薪酬管理系统关于路径问题">
+<meta property="og:url" content="https://eatbreads.github.io/2025/10/24/%E8%96%AA%E9%85%AC%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E5%85%B3%E4%BA%8E%E8%B7%AF%E5%BE%84%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="小面包的小站">
+<meta property="og:description" content="关于路径问题的总结问题描述在项目中，我引入了一个第三方的 CSV 解析库。问题出现了：这个库不支持相对路径，因此在助教的环境中运行时，我必须要求他们手动指定绝对路径。这个做法显然不太方便，尤其是在不同的环境中部署时。解决思路我开始思考，是否能够自动获取可执行文件的路径，并基于此拼接出一个绝对路径，这样就不需要依赖手动输入路径了。于是我尝试过多种方法，包括调用 Windows 自身的 API 等，但">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn-a.markji.com/files/672f59d20ac7ae9081def5f9_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:wf7RxKbiFD3WWzGCS8n57n6p2ng=">
+<meta property="og:image" content="https://cdn-a.markji.com/files/672f5b34f20d86d346644888_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:bX_UsNFy7sUFIWaWdGmtqV6lLNQ=">
+<meta property="article:published_time" content="2025-10-24T15:11:13.000Z">
+<meta property="article:modified_time" content="2025-01-23T15:12:09.340Z">
+<meta property="article:author" content="eatbreads">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn-a.markji.com/files/672f59d20ac7ae9081def5f9_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:wf7RxKbiFD3WWzGCS8n57n6p2ng=">
+
+
+<link rel="canonical" href="https://eatbreads.github.io/2025/10/24/%E8%96%AA%E9%85%AC%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E5%85%B3%E4%BA%8E%E8%B7%AF%E5%BE%84%E9%97%AE%E9%A2%98/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://eatbreads.github.io/2025/10/24/%E8%96%AA%E9%85%AC%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E5%85%B3%E4%BA%8E%E8%B7%AF%E5%BE%84%E9%97%AE%E9%A2%98/","path":"2025/10/24/薪酬管理系统关于路径问题/","title":"薪酬管理系统关于路径问题"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>薪酬管理系统关于路径问题 | 小面包的小站</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">小面包的小站</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">主营:C++,Go,Docker,Linux(WSL/VMWare),多线程,网络,C++模板编程,算法,奇奇怪怪有趣的东西等</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E8%B7%AF%E5%BE%84%E9%97%AE%E9%A2%98%E7%9A%84%E6%80%BB%E7%BB%93"><span class="nav-number">1.</span> <span class="nav-text">关于路径问题的总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E9%A1%B9%E7%9B%AE%E4%B8%AD%EF%BC%8C%E6%88%91%E5%BC%95%E5%85%A5%E4%BA%86%E4%B8%80%E4%B8%AA%E7%AC%AC%E4%B8%89%E6%96%B9%E7%9A%84-CSV-%E8%A7%A3%E6%9E%90%E5%BA%93%E3%80%82%E9%97%AE%E9%A2%98%E5%87%BA%E7%8E%B0%E4%BA%86%EF%BC%9A%E8%BF%99%E4%B8%AA%E5%BA%93%E4%B8%8D%E6%94%AF%E6%8C%81%E7%9B%B8%E5%AF%B9%E8%B7%AF%E5%BE%84%EF%BC%8C%E5%9B%A0%E6%AD%A4%E5%9C%A8%E5%8A%A9%E6%95%99%E7%9A%84%E7%8E%AF%E5%A2%83%E4%B8%AD%E8%BF%90%E8%A1%8C%E6%97%B6%EF%BC%8C%E6%88%91%E5%BF%85%E9%A1%BB%E8%A6%81%E6%B1%82%E4%BB%96%E4%BB%AC%E6%89%8B%E5%8A%A8%E6%8C%87%E5%AE%9A%E7%BB%9D%E5%AF%B9%E8%B7%AF%E5%BE%84%E3%80%82%E8%BF%99%E4%B8%AA%E5%81%9A%E6%B3%95%E6%98%BE%E7%84%B6%E4%B8%8D%E5%A4%AA%E6%96%B9%E4%BE%BF%EF%BC%8C%E5%B0%A4%E5%85%B6%E6%98%AF%E5%9C%A8%E4%B8%8D%E5%90%8C%E7%9A%84%E7%8E%AF%E5%A2%83%E4%B8%AD%E9%83%A8%E7%BD%B2%E6%97%B6%E3%80%82"><span class="nav-number">1.2.</span> <span class="nav-text">在项目中，我引入了一个第三方的 CSV 解析库。问题出现了：这个库不支持相对路径，因此在助教的环境中运行时，我必须要求他们手动指定绝对路径。这个做法显然不太方便，尤其是在不同的环境中部署时。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%80%9D%E8%B7%AF"><span class="nav-number">1.3.</span> <span class="nav-text">解决思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E7%BB%88%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">1.4.</span> <span class="nav-text">最终解决方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%8F%E8%BF%87%E4%B8%8D%E6%96%AD%E5%B0%9D%E8%AF%95%E5%92%8C%E8%B0%83%E6%95%B4%EF%BC%8C%E6%88%91%E7%BB%88%E4%BA%8E%E6%89%BE%E5%88%B0%E4%BA%86%E4%B8%80%E4%B8%AA%E6%9C%89%E6%95%88%E7%9A%84%E6%96%B9%E5%BC%8F%EF%BC%8C%E6%88%90%E5%8A%9F%E8%8E%B7%E5%8F%96%E4%BA%86%E5%8F%AF%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6%E7%9A%84%E8%B7%AF%E5%BE%84%E5%B9%B6%E6%8B%BC%E6%8E%A5%E6%88%90%E4%BA%86%E6%AD%A3%E7%A1%AE%E7%9A%84%E7%BB%9D%E5%AF%B9%E8%B7%AF%E5%BE%84%E3%80%82%E8%99%BD%E7%84%B6%E8%BF%87%E7%A8%8B%E4%B8%AD%E5%B0%9D%E8%AF%95%E4%BA%86%E5%BE%88%E5%A4%9A%E6%96%B9%E6%B3%95%EF%BC%8C%E6%9C%89%E4%BA%9B%E6%96%B9%E6%B3%95%E6%9C%80%E7%BB%88%E9%83%BD%E6%B2%A1%E6%9C%89%E5%A5%8F%E6%95%88%EF%BC%8C%E4%BD%86%E6%9C%80%E7%BB%88%E6%88%91%E6%89%BE%E5%88%B0%E4%BA%86%E4%B8%80%E4%B8%AA%E5%90%88%E9%80%82%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%E3%80%82"><span class="nav-number">1.5.</span> <span class="nav-text">经过不断尝试和调整，我终于找到了一个有效的方式，成功获取了可执行文件的路径并拼接成了正确的绝对路径。虽然过程中尝试了很多方法，有些方法最终都没有奏效，但最终我找到了一个合适的解决方案。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">1.6.</span> <span class="nav-text">小结</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">eatbreads</p>
+  <div class="site-description" itemprop="description">这边会分享C++,Go,Java,Docker,包括一些C++多线程和模板的心得或者知识,或者一些认为有价值的东西,比如一些计算机常见问题,一些好用的库,学习过程中遇到的问题等</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/eatreads" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;eatreads" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:sunjunhao571@gmail.com" title="E-Mail → mailto:sunjunhao571@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://eatbreads.github.io/2025/10/24/%E8%96%AA%E9%85%AC%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E5%85%B3%E4%BA%8E%E8%B7%AF%E5%BE%84%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="eatbreads">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小面包的小站">
+      <meta itemprop="description" content="这边会分享C++,Go,Java,Docker,包括一些C++多线程和模板的心得或者知识,或者一些认为有价值的东西,比如一些计算机常见问题,一些好用的库,学习过程中遇到的问题等">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="薪酬管理系统关于路径问题 | 小面包的小站">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          薪酬管理系统关于路径问题
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-10-24 23:11:13" itemprop="dateCreated datePublished" datetime="2025-10-24T23:11:13+08:00">2025-10-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-01-23 23:12:09" itemprop="dateModified" datetime="2025-01-23T23:12:09+08:00">2025-01-23</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="关于路径问题的总结"><a href="#关于路径问题的总结" class="headerlink" title="关于路径问题的总结"></a>关于路径问题的总结</h1><h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><h2 id="在项目中，我引入了一个第三方的-CSV-解析库。问题出现了：这个库不支持相对路径，因此在助教的环境中运行时，我必须要求他们手动指定绝对路径。这个做法显然不太方便，尤其是在不同的环境中部署时。"><a href="#在项目中，我引入了一个第三方的-CSV-解析库。问题出现了：这个库不支持相对路径，因此在助教的环境中运行时，我必须要求他们手动指定绝对路径。这个做法显然不太方便，尤其是在不同的环境中部署时。" class="headerlink" title="在项目中，我引入了一个第三方的 CSV 解析库。问题出现了：这个库不支持相对路径，因此在助教的环境中运行时，我必须要求他们手动指定绝对路径。这个做法显然不太方便，尤其是在不同的环境中部署时。"></a>在项目中，我引入了一个第三方的 CSV 解析库。问题出现了：这个库不支持相对路径，因此在助教的环境中运行时，我必须要求他们手动指定绝对路径。这个做法显然不太方便，尤其是在不同的环境中部署时。<br><img src="https://cdn-a.markji.com/files/672f59d20ac7ae9081def5f9_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:wf7RxKbiFD3WWzGCS8n57n6p2ng=" alt="图片1"></h2><h2 id="解决思路"><a href="#解决思路" class="headerlink" title="解决思路"></a>解决思路</h2><p>我开始思考，是否能够自动获取可执行文件的路径，并基于此拼接出一个绝对路径，这样就不需要依赖手动输入路径了。于是我尝试过多种方法，包括调用 Windows 自身的 API 等，但始终没有成功。</p>
+<hr>
+<h2 id="最终解决方案"><a href="#最终解决方案" class="headerlink" title="最终解决方案"></a>最终解决方案</h2><h2 id="经过不断尝试和调整，我终于找到了一个有效的方式，成功获取了可执行文件的路径并拼接成了正确的绝对路径。虽然过程中尝试了很多方法，有些方法最终都没有奏效，但最终我找到了一个合适的解决方案。"><a href="#经过不断尝试和调整，我终于找到了一个有效的方式，成功获取了可执行文件的路径并拼接成了正确的绝对路径。虽然过程中尝试了很多方法，有些方法最终都没有奏效，但最终我找到了一个合适的解决方案。" class="headerlink" title="经过不断尝试和调整，我终于找到了一个有效的方式，成功获取了可执行文件的路径并拼接成了正确的绝对路径。虽然过程中尝试了很多方法，有些方法最终都没有奏效，但最终我找到了一个合适的解决方案。"></a>经过不断尝试和调整，我终于找到了一个有效的方式，成功获取了可执行文件的路径并拼接成了正确的绝对路径。虽然过程中尝试了很多方法，有些方法最终都没有奏效，但最终我找到了一个合适的解决方案。<br><img src="https://cdn-a.markji.com/files/672f5b34f20d86d346644888_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:bX_UsNFy7sUFIWaWdGmtqV6lLNQ=" alt="图片1"></h2><h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>路径问题经常在跨平台开发中出现，尤其是第三方库不支持相对路径时。通过获取可执行文件的路径并拼接成绝对路径，我避免了手动配置路径的问题。这次的经历让我更加深刻地理解了路径处理在不同环境下的重要性，尤其是在多平台支持的项目中。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/01/23/%E5%85%B3%E4%BA%8Emysql%E5%AE%B9%E5%99%A8%E5%86%85%E9%83%A8%E6%95%B0%E6%8D%AE%E6%B6%88%E5%A4%B1/" rel="prev" title="关于mysql容器内部数据消失">
+                  <i class="fa fa-angle-left"></i> 关于mysql容器内部数据消失
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">eatbreads</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
