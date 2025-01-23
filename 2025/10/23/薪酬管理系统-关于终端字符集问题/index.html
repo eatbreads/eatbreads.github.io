@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"eatbreads.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="以下是你关于中文字符集问题的心得转化为 Hexo 博客格式的 Markdown 内容： 12345678910111213141516171819202122232425262728# 关于中文字符集问题的总结## 问题描述在解决了大部分问题并成功跑起程序后，我开始进行一些操作测试。然而，输入中文时却出现了乱码。经过一番排查，我发现程序中的字符集设置默认是 &#96;utf-8&#96;，但是 VSCode 的命">
+<meta property="og:type" content="article">
+<meta property="og:title" content="薪酬管理系统--关于终端字符集问题">
+<meta property="og:url" content="https://eatbreads.github.io/2025/10/23/%E8%96%AA%E9%85%AC%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F-%E5%85%B3%E4%BA%8E%E7%BB%88%E7%AB%AF%E5%AD%97%E7%AC%A6%E9%9B%86%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="小面包的小站">
+<meta property="og:description" content="以下是你关于中文字符集问题的心得转化为 Hexo 博客格式的 Markdown 内容： 12345678910111213141516171819202122232425262728# 关于中文字符集问题的总结## 问题描述在解决了大部分问题并成功跑起程序后，我开始进行一些操作测试。然而，输入中文时却出现了乱码。经过一番排查，我发现程序中的字符集设置默认是 &#96;utf-8&#96;，但是 VSCode 的命">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://eatbreads.github.io/%E9%93%BE%E6%8E%A5%E5%9C%B0%E5%9D%80">
+<meta property="article:published_time" content="2025-10-23T14:32:22.000Z">
+<meta property="article:modified_time" content="2025-01-23T14:33:30.384Z">
+<meta property="article:author" content="eatbreads">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://eatbreads.github.io/%E9%93%BE%E6%8E%A5%E5%9C%B0%E5%9D%80">
+
+
+<link rel="canonical" href="https://eatbreads.github.io/2025/10/23/%E8%96%AA%E9%85%AC%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F-%E5%85%B3%E4%BA%8E%E7%BB%88%E7%AB%AF%E5%AD%97%E7%AC%A6%E9%9B%86%E9%97%AE%E9%A2%98/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://eatbreads.github.io/2025/10/23/%E8%96%AA%E9%85%AC%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F-%E5%85%B3%E4%BA%8E%E7%BB%88%E7%AB%AF%E5%AD%97%E7%AC%A6%E9%9B%86%E9%97%AE%E9%A2%98/","path":"2025/10/23/薪酬管理系统-关于终端字符集问题/","title":"薪酬管理系统--关于终端字符集问题"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>薪酬管理系统--关于终端字符集问题 | 小面包的小站</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">小面包的小站</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">主营:C++,Go,Docker,Linux(WSL/VMWare),多线程,网络,C++模板编程,算法,奇奇怪怪有趣的东西等</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-number">1.</span> <span class="nav-text">结论</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">eatbreads</p>
+  <div class="site-description" itemprop="description">这边会分享C++,Go,Java,Docker,包括一些C++多线程和模板的心得或者知识,或者一些认为有价值的东西,比如一些计算机常见问题,一些好用的库,学习过程中遇到的问题等</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/eatreads" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;eatreads" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:sunjunhao571@gmail.com" title="E-Mail → mailto:sunjunhao571@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://eatbreads.github.io/2025/10/23/%E8%96%AA%E9%85%AC%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F-%E5%85%B3%E4%BA%8E%E7%BB%88%E7%AB%AF%E5%AD%97%E7%AC%A6%E9%9B%86%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="eatbreads">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小面包的小站">
+      <meta itemprop="description" content="这边会分享C++,Go,Java,Docker,包括一些C++多线程和模板的心得或者知识,或者一些认为有价值的东西,比如一些计算机常见问题,一些好用的库,学习过程中遇到的问题等">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="薪酬管理系统--关于终端字符集问题 | 小面包的小站">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          薪酬管理系统--关于终端字符集问题
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-10-23 22:32:22" itemprop="dateCreated datePublished" datetime="2025-10-23T22:32:22+08:00">2025-10-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-01-23 22:33:30" itemprop="dateModified" datetime="2025-01-23T22:33:30+08:00">2025-01-23</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>以下是你关于中文字符集问题的心得转化为 Hexo 博客格式的 Markdown 内容：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># 关于中文字符集问题的总结</span></span><br><span class="line"></span><br><span class="line"><span class="section">## 问题描述</span></span><br><span class="line"></span><br><span class="line">在解决了大部分问题并成功跑起程序后，我开始进行一些操作测试。然而，输入中文时却出现了乱码。经过一番排查，我发现程序中的字符集设置默认是 <span class="code">`utf-8`</span>，但是 VSCode 的命令行终端似乎使用的是 <span class="code">`gbk`</span> 编码，导致了中文乱码问题。</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"><span class="section">## 排查过程</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">1.</span> <span class="strong">**检查 VSCode 设置**</span>  </span><br><span class="line">   我首先查看了 VSCode 的 <span class="code">`settings.json`</span> 文件，发现其中的设置都是空白的，且提示：“此设置无法应用于此工作区。它将在您直接打开包含的工作区文件夹时应用。”</span><br><span class="line"></span><br><span class="line"><span class="bullet">2.</span> <span class="strong">**修改设置文件**</span>  </span><br><span class="line">   之后，我尝试切换到全局设置。在 VSCode 左上角选择 <span class="strong">**文件 -&gt; 首选项 -&gt; 设置**</span>，搜索 <span class="code">`setting.json`</span>，并选择“在 setting.json 内部编辑”。我修改了一些编码相关的设置，但即便重启了 VSCode，中文乱码问题依然没有解决。</span><br><span class="line">![<span class="string">图片1</span>](<span class="link">https://cdn-a.markji.com/files/67244003a5ae5f54b5ca759c_hd.png?e=1737643978020&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:NpuXva8ZwLyZCfqZou0bsGPi7V0=</span>)</span><br><span class="line">![<span class="string">图片1</span>](<span class="link">https://cdn-a.markji.com/files/672441c1a5ae5f54b5cabb9f_hd.png?e=1737643978020&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:eXIDLSGMA5g8853a8u1C104elPo=</span>)</span><br><span class="line"><span class="section">![<span class="string">图片1</span>](<span class="link">https://cdn-a.markji.com/files/6724434ae28baad2f1714840_hd.png?e=1737643978020&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:pFnmtrKOxGmwfp9T92fZZn-1wO0=</span>)</span></span><br><span class="line"><span class="section">---</span></span><br><span class="line"></span><br><span class="line"><span class="section">## 进一步分析</span></span><br><span class="line"></span><br><span class="line">无论我在 VSCode 内部切换 <span class="code">`gbk`</span> 或 <span class="code">`utf-8`</span> 编码，都无法解决乱码问题。然后我发现可能是终端编码的问题。</span><br><span class="line"></span><br><span class="line">通过查询，我得知 <span class="code">`chcp`</span> 命令是用来切换命令行窗口的编码页，<span class="code">`936`</span> 是 <span class="code">`gbk`</span> 编码（简体中文）。而 <span class="code">`65001`</span> 对应的是 <span class="code">`utf-8`</span> 编码。因此，我尝试使用以下命令切换编码：</span><br><span class="line"></span><br><span class="line"><span class="code">```bash</span></span><br><span class="line"><span class="code">chcp 65001</span></span><br></pre></td></tr></table></figure>
+
+<p>这一操作最终解决了 VSCode 内部终端乱码的问题。值得注意的是，当直接打开 <code>cmd</code> 时，中文输入并没有问题。</p>
+<hr>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>问题的根本原因是 VSCode 内部终端的默认编码设置。虽然通过修改 <code>settings.json</code> 文件试图解决，但问题最终通过切换命令行终端的编码页得到了解决。因此，在使用 VSCode 时，如果遇到类似问题，可以通过 <code>chcp 65001</code> 来切换到 <code>utf-8</code> 编码，解决乱码问题。</p>
+<p>至于直接输入中文的问题，我决定暂时不再使用 VSCode 终端输入中文，而是直接在外部终端中进行输入操作。</p>
+<p><img src="/%E9%93%BE%E6%8E%A5%E5%9C%B0%E5%9D%80" alt="图片1"></p>
+<pre><code>
+这篇博客的 Markdown 格式已经适配 Hexo，并可以在你需要的地方插入图片。你可以将 `![图片1](链接地址)` 部分替换成相应的图片链接。如果有其他图片，继续按此格式添加。
+</code></pre>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/01/23/%E5%85%B3%E4%BA%8Emysql%E5%AE%B9%E5%99%A8%E5%86%85%E9%83%A8%E6%95%B0%E6%8D%AE%E6%B6%88%E5%A4%B1/" rel="prev" title="关于mysql容器内部数据消失">
+                  <i class="fa fa-angle-left"></i> 关于mysql容器内部数据消失
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">eatbreads</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

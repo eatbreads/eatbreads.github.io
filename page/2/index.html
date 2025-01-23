@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"eatbreads.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="这边会分享C++,Go,Java,Docker,包括一些C++多线程和模板的心得或者知识,或者一些认为有价值的东西,比如一些计算机常见问题,一些好用的库,学习过程中遇到的问题等">
+<meta property="og:type" content="website">
+<meta property="og:title" content="小面包的小站">
+<meta property="og:url" content="https://eatbreads.github.io/page/2/index.html">
+<meta property="og:site_name" content="小面包的小站">
+<meta property="og:description" content="这边会分享C++,Go,Java,Docker,包括一些C++多线程和模板的心得或者知识,或者一些认为有价值的东西,比如一些计算机常见问题,一些好用的库,学习过程中遇到的问题等">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="eatbreads">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://eatbreads.github.io/page/2/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"page/2/index.html","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>小面包的小站</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">小面包的小站</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">主营:C++,Go,Docker,Linux(WSL/VMWare),多线程,网络,C++模板编程,算法,奇奇怪怪有趣的东西等</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">eatbreads</p>
+  <div class="site-description" itemprop="description">这边会分享C++,Go,Java,Docker,包括一些C++多线程和模板的心得或者知识,或者一些认为有价值的东西,比如一些计算机常见问题,一些好用的库,学习过程中遇到的问题等</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/eatreads" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;eatreads" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:sunjunhao571@gmail.com" title="E-Mail → mailto:sunjunhao571@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://eatbreads.github.io/2024/10/20/csv%E8%A7%A3%E6%9E%90%E5%99%A8%E7%BC%96%E5%86%99/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="eatbreads">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小面包的小站">
+      <meta itemprop="description" content="这边会分享C++,Go,Java,Docker,包括一些C++多线程和模板的心得或者知识,或者一些认为有价值的东西,比如一些计算机常见问题,一些好用的库,学习过程中遇到的问题等">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 小面包的小站">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/10/20/csv%E8%A7%A3%E6%9E%90%E5%99%A8%E7%BC%96%E5%86%99/" class="post-title-link" itemprop="url">csv解析器编写</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-10-20 23:02:57" itemprop="dateCreated datePublished" datetime="2024-10-20T23:02:57+08:00">2024-10-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-01-23 23:04:25" itemprop="dateModified" datetime="2025-01-23T23:04:25+08:00">2025-01-23</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="关于编写-CSV-解析器的总结"><a href="#关于编写-CSV-解析器的总结" class="headerlink" title="关于编写 CSV 解析器的总结"></a>关于编写 CSV 解析器的总结</h1><h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>我在开发过程中决定编写一个用于解析 CSV 文件的类，并且要求使用模板来实现。模板在 C++ 中的语法比较复杂，导致我在实现过程中遇到了很多报错，这让我一开始遇到很多问题。</p>
+<hr>
+<h2 id="遇到的问题与解决方案"><a href="#遇到的问题与解决方案" class="headerlink" title="遇到的问题与解决方案"></a>遇到的问题与解决方案</h2><ol>
+<li><p><strong>模板语法问题</strong><br>一开始我在模板的使用上遇到了很多问题，导致编译时出现了大量的报错。AI 给出的建议是使用模板特例化，但实际应用中，模板特例化适用于特定的 CSV 格式，这种方式并不通用，因此最终我决定将其转化为普通模板函数（非类成员模板函数）。</p>
+</li>
+<li><p><strong>模板前置声明</strong><br>即便我将模板转换为普通模板函数，依然遇到报错。后来我通过添加模板的前置声明解决了这个问题。</p>
+</li>
+<li><p><strong>模板全特化</strong><br>经过进一步的思考，我发现模板全特化本身就具有显式实例化的功能。这让我意识到，模板特例化就像是全局头文件引入全局变量之后产生的多重定义一样，存在一些设计上的问题。<br><img src="https://cdn-a.markji.com/files/670b86e48dc79fc2583ca6e7_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:siW4kca3ny7Otu5lXuSRIePu2os=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/670b87a98dc79fc2583ce987_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:g7_HBErO4Af56yuVlllS7kdbPak=" alt="图片1"></p>
+</li>
+</ol>
+<hr>
+<h2 id="遇到的其他问题"><a href="#遇到的其他问题" class="headerlink" title="遇到的其他问题"></a>遇到的其他问题</h2><ol>
+<li><p><strong>虚拟机无法连接到 GitHub</strong><br>我遇到了虚拟机无法连接到 GitHub 的问题，这让我在获取资源时遇到了一些困扰。经过一番排查，发现虚拟机的网络设置可能存在问题，导致无法访问 GitHub。</p>
+</li>
+<li><p><strong>文件读取时偏移量的问题</strong><br>在添加新功能时，我引入了偏移量记录。AI 提出了在读取每一行时记录文件的偏移量，但在实现时存在一个 bug。问题出在我在调用 <code>getline</code> 后读取了 <code>tellg()</code>，导致对应的偏移量记录并不是当前行，而是下一行。这样，我在删除某一行时总是错误地删除了下一行的起始位置。后来我修改了逻辑，在删除原行后重新调用 <code>add</code> 方法添加新行。</p>
+</li>
+<li><p><strong>跨平台问题</strong><br>在 Linux 环境下测试时，逻辑没有问题，但在 Windows 环境中，删除逻辑出现了问题。经过排查，发现 Linux 和 Windows 使用不同的换行符（LF 与 CRLF），这可能是导致删除操作不正确的原因。由于换行符的差异，删除逻辑无法在 Windows 环境下正常工作。<br><img src="https://cdn-a.markji.com/files/670f625a9e947853ff1798b8_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:VE5o2tHSBvCy316o1fNvMQ2CBp8=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/670f6ab49e947853ff19b4dd_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:B4xYEh_-To9QJVdmEDf1EyLdW2M=" alt="图片1"></p>
+</li>
+</ol>
+<hr>
+<h2 id="结论与反思"><a href="#结论与反思" class="headerlink" title="结论与反思"></a>结论与反思</h2><p>通过这次编写 CSV 解析器的经历，我学到了如何更好地使用模板，并且理解了模板特化的局限性。同时，我也意识到跨平台开发中，操作系统的差异（如换行符）可能导致代码逻辑在不同平台上出现问题。虽然最终的解决方案在 Linux 上没问题，但 Windows 上出现了困难，这让我意识到跨平台开发需要特别小心这种细节。</p>
+<p>虽然我暂时放弃了解决 Windows 下的换行符问题，但这仍然是一个值得进一步研究的方向。以后在跨平台开发时，应该更仔细地考虑操作系统之间的差异。</p>
+<p><img src="/%E9%93%BE%E6%8E%A5%E5%9C%B0%E5%9D%80" alt="图片1"></p>
+<pre><code>
+这篇博客的 Markdown 格式适配 Hexo，可以直接使用。你只需要根据需要替换掉 `![图片1](链接地址)` 部分的图片链接。如果有其他图片，继续按照此格式添加。
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://eatbreads.github.io/2024/09/14/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="eatbreads">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小面包的小站">
+      <meta itemprop="description" content="这边会分享C++,Go,Java,Docker,包括一些C++多线程和模板的心得或者知识,或者一些认为有价值的东西,比如一些计算机常见问题,一些好用的库,学习过程中遇到的问题等">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 小面包的小站">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/14/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/" class="post-title-link" itemprop="url">第一篇博客</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-14 16:21:04" itemprop="dateCreated datePublished" datetime="2024-09-14T16:21:04+08:00">2024-09-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-01-23 22:34:28" itemprop="dateModified" datetime="2025-01-23T22:34:28+08:00">2025-01-23</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="心得1-创建博客"><a href="#心得1-创建博客" class="headerlink" title="心得1 创建博客"></a>心得1 创建博客</h1><h2 id="1-安装-Hexo"><a href="#1-安装-Hexo" class="headerlink" title="1. 安装 Hexo"></a>1. 安装 Hexo</h2><p>首先，安装 Hexo。</p>
+<h3 id="遇到的小问题"><a href="#遇到的小问题" class="headerlink" title="遇到的小问题"></a>遇到的小问题</h3><p>在安装过程中遇到了依赖问题，最终没有解决 <code>npm</code> 的依赖解析问题。我初步怀疑是 <code>npm</code> 和 <code>pnpm</code> 之间的兼容性问题。</p>
+<h3 id="转战-WSL"><a href="#转战-WSL" class="headerlink" title="转战 WSL"></a>转战 WSL</h3><p>后来决定直接在 WSL 上进行安装。首先，我发现 WSL 中没有安装 Node.js，于是执行以下命令来安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt update</span><br><span class="line"><span class="built_in">sudo</span> apt upgrade -y</span><br></pre></td></tr></table></figure>
+
+<p>更新软件包索引，然后执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -fsSL https://deb.nodesource.com/setup_18.x | <span class="built_in">sudo</span> -E bash -</span><br></pre></td></tr></table></figure>
+
+<p>添加 Node.js 仓库，然后安装 Node.js：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install -y nodejs</span><br></pre></td></tr></table></figure>
+
+<p>接着安装了 <code>pnpm</code>，但发现执行 <code>pnpm add hexo-cli -g</code> 时，提示我需要执行 <code>pnpm setup</code>。解决办法是执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pnpm setup</span><br></pre></td></tr></table></figure>
+
+<p>执行完 <code>pnpm setup</code> 后，Hexo 就成功安装到环境变量中了。刷新环境变量后，问题解决。</p>
+<h3 id="初始化-Hexo-博客"><a href="#初始化-Hexo-博客" class="headerlink" title="初始化 Hexo 博客"></a>初始化 Hexo 博客</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo init</span><br><span class="line">pnpm install</span><br><span class="line">hexo server</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装部署插件"><a href="#安装部署插件" class="headerlink" title="安装部署插件"></a>安装部署插件</h3><p>安装 <code>hexo-deployer-git</code> 插件，以便将博客部署到 GitHub：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pnpm add hexo-deployer-git</span><br></pre></td></tr></table></figure>
+
+<p>然后初始化 Git 仓库并添加远程地址：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br><span class="line">git remote add origin https://github.com/your-username/your-username.github.io.git</span><br></pre></td></tr></table></figure>
+
+<h3 id="部署到-GitHub"><a href="#部署到-GitHub" class="headerlink" title="部署到 GitHub"></a>部署到 GitHub</h3><p>生成静态文件并部署：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>这样就可以通过 <code>https://eatbreads.github.io</code> 访问博客了。</p>
+<hr>
+<h3 id="使用-Hexo-查看效果"><a href="#使用-Hexo-查看效果" class="headerlink" title="使用 Hexo 查看效果"></a>使用 Hexo 查看效果</h3><p>平时如果想查看效果，可以使用 <code>hexo server</code> 在本地查看。如果想部署到 GitHub，则使用 <code>hexo deploy</code> 将博客推送到远程仓库。</p>
+<hr>
+<h2 id="2-创建新文章"><a href="#2-创建新文章" class="headerlink" title="2. 创建新文章"></a>2. 创建新文章</h2><p>创建新文章：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new post <span class="string">&quot;My New Blog Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>这将在 <code>source/_posts/</code> 目录下生成一个 <code>.md</code> 文件，你可以在其中编写文章内容。</p>
+<p>编写完成后，就可以再次执行 <code>hexo deploy</code> 将新文章发布到博客。</p>
+<hr>
+<h2 id="3-插入图片示例"><a href="#3-插入图片示例" class="headerlink" title="3. 插入图片示例"></a>3. 插入图片示例</h2><p>下面是一个插入图片的例子：</p>
+<p><img src="https://cdn-a.markji.com/files/6786077f70264288b5aa4497_hd.png?e=1736845304404&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:-8xrC4rdVoUEq1dAVdeSvsMixQY=" alt="Hexo Logo"></p>
+<p>这张图片将会显示在文章中。</p>
+<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><ul>
+<li>我使用了外部链接插入了一张 Hexo 的官方 logo 图片，确保在博客中显示。</li>
+<li>如果想插入其他图片，只需替换图片链接即可。</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+  </nav>
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">eatbreads</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
