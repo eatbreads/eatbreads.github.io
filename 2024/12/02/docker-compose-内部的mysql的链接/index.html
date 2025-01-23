@@ -19,26 +19,28 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"eatbreads.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="以下是你第四篇心得转化为 Hexo 博客格式的 Markdown 内容： 12345678910111213141516171819202122232425262728293031323334353637383940414243# 关于 Web 库抛出异常的总结## 问题起因在处理报文时，舍友发送的报文中包含了微信的特殊字符，这导致了 JSON 数据格式不合法，最终抛出了 &#96;login&#96; 异常，导">
+    <meta name="description" content="Docker Compose 内部的 MySQL 连接问题总结问题描述在使用 Docker Compose 部署 MySQL 容器时，我遇到了一些关于连接的问题。发现 MySQL 容器的配置文件位置似乎不太对，导致容器内部的数据库无法正常连接。 解决方案为了解决这个问题，我需要确保在 Docker Compose 配置中正确指定了 MySQL 配置文件的位置。通过检查容器内的文件路径并调整 Doc">
 <meta property="og:type" content="article">
-<meta property="og:title" content="关于web库抛出异常">
-<meta property="og:url" content="https://eatbreads.github.io/2024/11/20/%E5%85%B3%E4%BA%8Eweb%E5%BA%93%E6%8A%9B%E5%87%BA%E5%BC%82%E5%B8%B8/index.html">
+<meta property="og:title" content="docker compose 内部的mysql的链接">
+<meta property="og:url" content="https://eatbreads.github.io/2024/12/02/docker-compose-%E5%86%85%E9%83%A8%E7%9A%84mysql%E7%9A%84%E9%93%BE%E6%8E%A5/index.html">
 <meta property="og:site_name" content="小面包的小站">
-<meta property="og:description" content="以下是你第四篇心得转化为 Hexo 博客格式的 Markdown 内容： 12345678910111213141516171819202122232425262728293031323334353637383940414243# 关于 Web 库抛出异常的总结## 问题起因在处理报文时，舍友发送的报文中包含了微信的特殊字符，这导致了 JSON 数据格式不合法，最终抛出了 &#96;login&#96; 异常，导">
+<meta property="og:description" content="Docker Compose 内部的 MySQL 连接问题总结问题描述在使用 Docker Compose 部署 MySQL 容器时，我遇到了一些关于连接的问题。发现 MySQL 容器的配置文件位置似乎不太对，导致容器内部的数据库无法正常连接。 解决方案为了解决这个问题，我需要确保在 Docker Compose 配置中正确指定了 MySQL 配置文件的位置。通过检查容器内的文件路径并调整 Doc">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-11-20T14:01:53.000Z">
-<meta property="article:modified_time" content="2025-01-23T14:02:59.892Z">
+<meta property="og:image" content="https://cdn-a.markji.com/files/6767960081df59c0dc5552b8_hd.png?e=1737643978024&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:OemKu6DAYYX2N3Ffy_wAz5Tr0q0=">
+<meta property="article:published_time" content="2024-12-02T14:26:41.000Z">
+<meta property="article:modified_time" content="2025-01-23T14:29:08.516Z">
 <meta property="article:author" content="eatbreads">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn-a.markji.com/files/6767960081df59c0dc5552b8_hd.png?e=1737643978024&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:OemKu6DAYYX2N3Ffy_wAz5Tr0q0=">
 
 
-<link rel="canonical" href="https://eatbreads.github.io/2024/11/20/%E5%85%B3%E4%BA%8Eweb%E5%BA%93%E6%8A%9B%E5%87%BA%E5%BC%82%E5%B8%B8/">
+<link rel="canonical" href="https://eatbreads.github.io/2024/12/02/docker-compose-%E5%86%85%E9%83%A8%E7%9A%84mysql%E7%9A%84%E9%93%BE%E6%8E%A5/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://eatbreads.github.io/2024/11/20/%E5%85%B3%E4%BA%8Eweb%E5%BA%93%E6%8A%9B%E5%87%BA%E5%BC%82%E5%B8%B8/","path":"2024/11/20/关于web库抛出异常/","title":"关于web库抛出异常"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://eatbreads.github.io/2024/12/02/docker-compose-%E5%86%85%E9%83%A8%E7%9A%84mysql%E7%9A%84%E9%93%BE%E6%8E%A5/","path":"2024/12/02/docker-compose-内部的mysql的链接/","title":"docker compose 内部的mysql的链接"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>关于web库抛出异常 | 小面包的小站</title>
+<title>docker compose 内部的mysql的链接 | 小面包的小站</title>
   
 
 
@@ -98,7 +100,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -111,6 +113,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-Compose-%E5%86%85%E9%83%A8%E7%9A%84-MySQL-%E8%BF%9E%E6%8E%A5%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93"><span class="nav-number">1.</span> <span class="nav-text">Docker Compose 内部的 MySQL 连接问题总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">1.2.</span> <span class="nav-text">解决方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">1.3.</span> <span class="nav-text">小结</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -159,7 +162,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://eatbreads.github.io/2024/11/20/%E5%85%B3%E4%BA%8Eweb%E5%BA%93%E6%8A%9B%E5%87%BA%E5%BC%82%E5%B8%B8/">
+    <link itemprop="mainEntityOfPage" href="https://eatbreads.github.io/2024/12/02/docker-compose-%E5%86%85%E9%83%A8%E7%9A%84mysql%E7%9A%84%E9%93%BE%E6%8E%A5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -172,12 +175,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="关于web库抛出异常 | 小面包的小站">
+      <meta itemprop="name" content="docker compose 内部的mysql的链接 | 小面包的小站">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          关于web库抛出异常
+          docker compose 内部的mysql的链接
         </h1>
 
         <div class="post-meta-container">
@@ -188,14 +191,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2024-11-20 22:01:53" itemprop="dateCreated datePublished" datetime="2024-11-20T22:01:53+08:00">2024-11-20</time>
+      <time title="创建时间：2024-12-02 22:26:41" itemprop="dateCreated datePublished" datetime="2024-12-02T22:26:41+08:00">2024-12-02</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-01-23 22:02:59" itemprop="dateModified" datetime="2025-01-23T22:02:59+08:00">2025-01-23</time>
+      <time title="修改时间：2025-01-23 22:29:08" itemprop="dateModified" datetime="2025-01-23T22:29:08+08:00">2025-01-23</time>
     </span>
 
   
@@ -207,10 +210,10 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>以下是你第四篇心得转化为 Hexo 博客格式的 Markdown 内容：</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># 关于 Web 库抛出异常的总结</span></span><br><span class="line"></span><br><span class="line"><span class="section">## 问题起因</span></span><br><span class="line"></span><br><span class="line">在处理报文时，舍友发送的报文中包含了微信的特殊字符，这导致了 JSON 数据格式不合法，最终抛出了 <span class="code">`login`</span> 异常，导致程序崩溃。这个问题让我意识到需要更好地处理异常，避免程序直接终止。</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"><span class="section">## 异常分析</span></span><br><span class="line"></span><br><span class="line">在分析过程中，我发现当 JSON 库在解析过程中遇到错误时，会抛出异常。而这个异常没有被正确处理，导致了程序的崩溃。为了避免这个问题，我决定在 <span class="code">`http_task`</span> 中捕获报文体解析时抛出的异常，并记录日志，而不是让程序直接崩溃。</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"><span class="section">## 捕获异常与调试</span></span><br><span class="line"></span><br><span class="line">通过查看函数调用堆栈，我能够准确定位到抛出异常的具体位置。基于此，我可以在正确的地方进行异常捕获，确保程序能够在遇到类似情况时优雅地处理异常。</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"><span class="section">## 使用 VSCode 作为调试器</span></span><br><span class="line"></span><br><span class="line">为了进一步调试这个问题，我尝试使用 VSCode 作为调试器。按照原本的 CMake 配置进行操作，VSCode 成功地启动了调试会话，帮助我更容易地跟踪程序的执行流程。</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"><span class="section">## 虚拟机性能问题</span></span><br><span class="line"></span><br><span class="line">在调试过程中，我发现虚拟机的性能较差，导致 Postman 访问虚拟机时非常卡，甚至严重影响了开发进程。尽管如此，这个问题在一段时间后自行缓解，可能是由于网络问题或资源分配不足。</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"><span class="section">## 异常捕获的最终解决方案</span></span><br><span class="line"></span><br><span class="line">通过不断调试和查看堆栈跟踪，我最终找到了抛出异常的具体点，并在该点添加了异常处理。这样，程序在遇到类似的报文异常时，不会再崩溃，而是会记录详细的日志，帮助我们进一步分析和修复问题。</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"><span class="section">## 小结</span></span><br><span class="line"></span><br><span class="line">通过这次处理 Web 库抛出异常的经验，我学到了如何在正确的地方捕获异常，并记录日志，避免程序崩溃。使用 VSCode 调试器也让我更高效地解决了问题，虽然在虚拟机上运行时遇到了一些性能问题，但最终通过耐心等待和分析，问题得以解决。</span><br><span class="line"></span><br><span class="line">![<span class="string">图片1</span>](<span class="link">链接地址</span>)</span><br></pre></td></tr></table></figure>
-
-<p>这个 Markdown 格式同样适用于 Hexo 博客。你可以根据实际需要替换 <code>![图片1](链接地址)</code> 部分的图片链接。如果有更多图片，可以继续按照此格式添加。</p>
+    <div class="post-body" itemprop="articleBody"><h1 id="Docker-Compose-内部的-MySQL-连接问题总结"><a href="#Docker-Compose-内部的-MySQL-连接问题总结" class="headerlink" title="Docker Compose 内部的 MySQL 连接问题总结"></a>Docker Compose 内部的 MySQL 连接问题总结</h1><h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>在使用 Docker Compose 部署 MySQL 容器时，我遇到了一些关于连接的问题。发现 MySQL 容器的配置文件位置似乎不太对，导致容器内部的数据库无法正常连接。</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>为了解决这个问题，我需要确保在 Docker Compose 配置中正确指定了 MySQL 配置文件的位置。通过检查容器内的文件路径并调整 Docker Compose 配置文件中的设置，确保容器启动时能找到正确的配置文件。</p>
+<p><img src="https://cdn-a.markji.com/files/6767960081df59c0dc5552b8_hd.png?e=1737643978024&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:OemKu6DAYYX2N3Ffy_wAz5Tr0q0=" alt="图片1"></p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>通过这次排查，我认识到 Docker Compose 内部 MySQL 容器配置文件路径的问题，以及它对容器连接的影响。确保正确配置路径和网络设置，是解决 MySQL 容器连接问题的关键。</p>
 
     </div>
 
@@ -224,13 +227,13 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2024/11/20/%E6%89%93%E5%8C%85cpp%E5%90%8E%E7%AB%AF%E4%BB%A3%E7%A0%81%E8%BF%9B%E5%85%A5docker/" rel="prev" title="打包cpp后端代码进入docker">
-                  <i class="fa fa-angle-left"></i> 打包cpp后端代码进入docker
+                <a href="/2024/11/23/%E5%85%B3%E4%BA%8Emysql%E6%9C%AC%E6%9C%BA%E4%B9%8B%E5%A4%96%E9%93%BE%E6%8E%A5%E4%B8%8D%E4%B8%8A%E7%9A%84%E9%97%AE%E9%A2%98%E5%92%8C%E4%B8%AD%E6%96%87%E5%AD%97%E7%AC%A6%E9%9B%86/" rel="prev" title="关于mysql本机之外链接不上的问题和中文字符集">
+                  <i class="fa fa-angle-left"></i> 关于mysql本机之外链接不上的问题和中文字符集
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2024/11/21/%E4%BD%BF%E7%94%A8smtp%E6%9C%8D%E5%8A%A1/" rel="next" title="使用smtp服务">
-                  使用smtp服务 <i class="fa fa-angle-right"></i>
+                <a href="/2025/01/14/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/" rel="next" title="第一篇博客">
+                  第一篇博客 <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>
