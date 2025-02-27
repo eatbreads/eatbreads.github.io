@@ -19,32 +19,29 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"eatbreads.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="纹理映射使用 QOpenGLTexture 导入图片 可以使用 Qt 封装的 QOpenGLTexture 来导入图片等纹理资源。  纹理单元 OpenGL 保证有 16 个纹理单元，这意味着最多可以绑定 16 个纹理。  纹理过滤 OpenGL 需要知道如何将纹理像素映射到纹理坐标。常见的纹理过滤方式包括： 就近值过滤：取纹理坐标附近最近的像素值。 融合过滤：将周边像素进行融合，产生更平滑的过渡">
+    <meta name="description" content="给顶点数据中添加更多属性">
 <meta property="og:type" content="article">
-<meta property="og:title" content="postopengl的纹理映射和纹理过滤">
-<meta property="og:url" content="https://eatbreads.github.io/2025/02/27/postopengl%E7%9A%84%E7%BA%B9%E7%90%86%E6%98%A0%E5%B0%84%E5%92%8C%E7%BA%B9%E7%90%86%E8%BF%87%E6%BB%A4/index.html">
+<meta property="og:title" content="opengl给顶点数据增加更多属性">
+<meta property="og:url" content="https://eatbreads.github.io/2025/02/27/opengl%E7%BB%99%E9%A1%B6%E7%82%B9%E6%95%B0%E6%8D%AE%E5%A2%9E%E5%8A%A0%E6%9B%B4%E5%A4%9A%E5%B1%9E%E6%80%A7/index.html">
 <meta property="og:site_name" content="小面包的小站">
-<meta property="og:description" content="纹理映射使用 QOpenGLTexture 导入图片 可以使用 Qt 封装的 QOpenGLTexture 来导入图片等纹理资源。  纹理单元 OpenGL 保证有 16 个纹理单元，这意味着最多可以绑定 16 个纹理。  纹理过滤 OpenGL 需要知道如何将纹理像素映射到纹理坐标。常见的纹理过滤方式包括： 就近值过滤：取纹理坐标附近最近的像素值。 融合过滤：将周边像素进行融合，产生更平滑的过渡">
+<meta property="og:description" content="给顶点数据中添加更多属性">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://cdn-a.markji.com/files/67becacd62d9c43585a04aee_hd.png?e=1740672193731&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:jm0Us9UtbHenL0P2084ZvQ_cnPs=">
-<meta property="og:image" content="https://cdn-a.markji.com/files/67becc7162d9c43585a0abdb_hd.png?e=1740672193731&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:40mSGTkgBMNFrnudGcfFOZ357-k=">
-<meta property="og:image" content="https://cdn-a.markji.com/files/67bef936dc26a985b3681803_hd.png?e=1740672193731&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:oW4g9iz2l4cYznAuqhVGjcfeXpg=">
-<meta property="og:image" content="https://cdn-a.markji.com/files/67befd9a62d9c43585a81425_hd.png?e=1740672193731&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:sisu-6cJY4ZxwSApaDX3ELQtXZc=">
-<meta property="og:image" content="https://cdn-a.markji.com/files/67bf0d5962d9c43585abfc69_hd.png?e=1740672193731&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:0-6T-Xh7gsWLDyWhCN0Ig4YOgvk=">
-<meta property="article:published_time" content="2025-02-27T15:27:59.000Z">
-<meta property="article:modified_time" content="2025-02-27T15:30:32.495Z">
+<meta property="og:image" content="https://cdn-a.markji.com/files/67bec75062d9c435859f6691_hd.png?e=1740672193731&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:2wi5ClIvhXNorQsOPq1Whnf4mqs=">
+<meta property="og:image" content="https://cdn-a.markji.com/files/67bec7abfaa33a2f9faf35ff_hd.png?e=1740672193731&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:vhhNRHZ5ajGnL1F31YAyhkIhqc0=">
+<meta property="article:published_time" content="2025-02-27T15:24:58.000Z">
+<meta property="article:modified_time" content="2025-02-27T16:14:40.431Z">
 <meta property="article:author" content="eatbreads">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://cdn-a.markji.com/files/67becacd62d9c43585a04aee_hd.png?e=1740672193731&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:jm0Us9UtbHenL0P2084ZvQ_cnPs=">
+<meta name="twitter:image" content="https://cdn-a.markji.com/files/67bec75062d9c435859f6691_hd.png?e=1740672193731&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:2wi5ClIvhXNorQsOPq1Whnf4mqs=">
 
 
-<link rel="canonical" href="https://eatbreads.github.io/2025/02/27/postopengl%E7%9A%84%E7%BA%B9%E7%90%86%E6%98%A0%E5%B0%84%E5%92%8C%E7%BA%B9%E7%90%86%E8%BF%87%E6%BB%A4/">
+<link rel="canonical" href="https://eatbreads.github.io/2025/02/27/opengl%E7%BB%99%E9%A1%B6%E7%82%B9%E6%95%B0%E6%8D%AE%E5%A2%9E%E5%8A%A0%E6%9B%B4%E5%A4%9A%E5%B1%9E%E6%80%A7/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://eatbreads.github.io/2025/02/27/postopengl%E7%9A%84%E7%BA%B9%E7%90%86%E6%98%A0%E5%B0%84%E5%92%8C%E7%BA%B9%E7%90%86%E8%BF%87%E6%BB%A4/","path":"2025/02/27/postopengl的纹理映射和纹理过滤/","title":"postopengl的纹理映射和纹理过滤"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://eatbreads.github.io/2025/02/27/opengl%E7%BB%99%E9%A1%B6%E7%82%B9%E6%95%B0%E6%8D%AE%E5%A2%9E%E5%8A%A0%E6%9B%B4%E5%A4%9A%E5%B1%9E%E6%80%A7/","path":"2025/02/27/opengl给顶点数据增加更多属性/","title":"opengl给顶点数据增加更多属性"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>postopengl的纹理映射和纹理过滤 | 小面包的小站</title>
+<title>opengl给顶点数据增加更多属性 | 小面包的小站</title>
   
 
 
@@ -117,7 +114,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%B9%E7%90%86%E6%98%A0%E5%B0%84"><span class="nav-number">1.</span> <span class="nav-text">纹理映射</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-QOpenGLTexture-%E5%AF%BC%E5%85%A5%E5%9B%BE%E7%89%87"><span class="nav-number">1.1.</span> <span class="nav-text">使用 QOpenGLTexture 导入图片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%B9%E7%90%86%E5%8D%95%E5%85%83"><span class="nav-number">1.2.</span> <span class="nav-text">纹理单元</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%B9%E7%90%86%E8%BF%87%E6%BB%A4"><span class="nav-number">1.3.</span> <span class="nav-text">纹理过滤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E7%BA%A7%E6%B8%90%E8%BF%9C%E7%BA%B9%E7%90%86%EF%BC%88Mipmap%EF%BC%89"><span class="nav-number">1.4.</span> <span class="nav-text">多级渐远纹理（Mipmap）</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%99%E9%A1%B6%E7%82%B9%E6%95%B0%E6%8D%AE%E4%B8%AD%E6%B7%BB%E5%8A%A0%E6%9B%B4%E5%A4%9A%E5%B1%9E%E6%80%A7"><span class="nav-number">1.</span> <span class="nav-text">给顶点数据中添加更多属性</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -166,7 +163,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://eatbreads.github.io/2025/02/27/postopengl%E7%9A%84%E7%BA%B9%E7%90%86%E6%98%A0%E5%B0%84%E5%92%8C%E7%BA%B9%E7%90%86%E8%BF%87%E6%BB%A4/">
+    <link itemprop="mainEntityOfPage" href="https://eatbreads.github.io/2025/02/27/opengl%E7%BB%99%E9%A1%B6%E7%82%B9%E6%95%B0%E6%8D%AE%E5%A2%9E%E5%8A%A0%E6%9B%B4%E5%A4%9A%E5%B1%9E%E6%80%A7/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -179,12 +176,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="postopengl的纹理映射和纹理过滤 | 小面包的小站">
+      <meta itemprop="name" content="opengl给顶点数据增加更多属性 | 小面包的小站">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          postopengl的纹理映射和纹理过滤
+          opengl给顶点数据增加更多属性
         </h1>
 
         <div class="post-meta-container">
@@ -194,9 +191,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2025-02-27 23:27:59 / 修改时间：23:30:32" itemprop="dateCreated datePublished" datetime="2025-02-27T23:27:59+08:00">2025-02-27</time>
+      <time title="创建时间：2025-02-27 23:24:58" itemprop="dateCreated datePublished" datetime="2025-02-27T23:24:58+08:00">2025-02-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-02-28 00:14:40" itemprop="dateModified" datetime="2025-02-28T00:14:40+08:00">2025-02-28</time>
     </span>
 
   
@@ -208,22 +211,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h2 id="纹理映射"><a href="#纹理映射" class="headerlink" title="纹理映射"></a>纹理映射</h2><h3 id="使用-QOpenGLTexture-导入图片"><a href="#使用-QOpenGLTexture-导入图片" class="headerlink" title="使用 QOpenGLTexture 导入图片"></a>使用 QOpenGLTexture 导入图片</h3><ul>
-<li>可以使用 Qt 封装的 <code>QOpenGLTexture</code> 来导入图片等纹理资源。<br><img src="https://cdn-a.markji.com/files/67becacd62d9c43585a04aee_hd.png?e=1740672193731&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:jm0Us9UtbHenL0P2084ZvQ_cnPs=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67becc7162d9c43585a0abdb_hd.png?e=1740672193731&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:40mSGTkgBMNFrnudGcfFOZ357-k=" alt="图片1"></li>
-</ul>
-<h3 id="纹理单元"><a href="#纹理单元" class="headerlink" title="纹理单元"></a>纹理单元</h3><ul>
-<li>OpenGL 保证有 16 个纹理单元，这意味着最多可以绑定 16 个纹理。<br><img src="https://cdn-a.markji.com/files/67bef936dc26a985b3681803_hd.png?e=1740672193731&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:oW4g9iz2l4cYznAuqhVGjcfeXpg=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67befd9a62d9c43585a81425_hd.png?e=1740672193731&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:sisu-6cJY4ZxwSApaDX3ELQtXZc=" alt="图片1"></li>
-</ul>
-<h3 id="纹理过滤"><a href="#纹理过滤" class="headerlink" title="纹理过滤"></a>纹理过滤</h3><ul>
-<li>OpenGL 需要知道如何将纹理像素映射到纹理坐标。常见的纹理过滤方式包括：<ul>
-<li><strong>就近值过滤</strong>：取纹理坐标附近最近的像素值。</li>
-<li><strong>融合过滤</strong>：将周边像素进行融合，产生更平滑的过渡。<br><img src="https://cdn-a.markji.com/files/67bf0d5962d9c43585abfc69_hd.png?e=1740672193731&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:0-6T-Xh7gsWLDyWhCN0Ig4YOgvk=" alt="图片1"></li>
-</ul>
-</li>
-</ul>
-<h3 id="多级渐远纹理（Mipmap）"><a href="#多级渐远纹理（Mipmap）" class="headerlink" title="多级渐远纹理（Mipmap）"></a>多级渐远纹理（Mipmap）</h3><ul>
-<li>OpenGL 还提供了多级渐远纹理（Mipmap），用于对远处的纹理进行低分辨率渲染，而对近处的纹理进行高分辨率渲染，从而优化性能并提高视觉效果。</li>
-</ul>
+    <div class="post-body" itemprop="articleBody"><h2 id="给顶点数据中添加更多属性"><a href="#给顶点数据中添加更多属性" class="headerlink" title="给顶点数据中添加更多属性"></a>给顶点数据中添加更多属性</h2><p><img src="https://cdn-a.markji.com/files/67bec75062d9c435859f6691_hd.png?e=1740672193731&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:2wi5ClIvhXNorQsOPq1Whnf4mqs=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67bec7abfaa33a2f9faf35ff_hd.png?e=1740672193731&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:vhhNRHZ5ajGnL1F31YAyhkIhqc0=" alt="图片1"></p>
 
     </div>
 
@@ -237,13 +225,13 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2025/02/27/postopengl%E7%BB%99%E9%A1%B6%E7%82%B9%E6%95%B0%E6%8D%AE%E5%A2%9E%E5%8A%A0%E6%9B%B4%E5%A4%9A%E5%B1%9E%E6%80%A7/" rel="prev" title="postopengl给顶点数据增加更多属性">
-                  <i class="fa fa-angle-left"></i> postopengl给顶点数据增加更多属性
+                <a href="/2025/02/27/layout%E5%92%8CUniform/" rel="prev" title="layout和Uniform">
+                  <i class="fa fa-angle-left"></i> layout和Uniform
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2025/02/28/postopengl%E7%9A%84%E7%BC%A9%E6%94%BE-%E4%BD%8D%E7%A7%BB-%E6%97%8B%E8%BD%AC%E5%92%8C%E5%9D%90%E6%A0%87%E7%B3%BB%E7%BB%9F/" rel="next" title="postopengl的缩放/位移/旋转和坐标系统">
-                  postopengl的缩放/位移/旋转和坐标系统 <i class="fa fa-angle-right"></i>
+                <a href="/2025/02/27/opengl%E7%9A%84%E7%BA%B9%E7%90%86%E6%98%A0%E5%B0%84%E5%92%8C%E7%BA%B9%E7%90%86%E8%BF%87%E6%BB%A4/" rel="next" title="opengl的纹理映射和纹理过滤">
+                  opengl的纹理映射和纹理过滤 <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>
