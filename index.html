@@ -121,7 +121,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-count">17</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -147,6 +147,84 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://eatbreads.github.io/2025/02/27/opengl%E5%92%8Cqt%E4%BA%A4%E4%BA%92/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="eatbreads">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小面包的小站">
+      <meta itemprop="description" content="这边会分享C++,Go,Java,Docker,包括一些C++多线程和模板的心得或者知识,或者一些认为有价值的东西,比如一些计算机常见问题,一些好用的库,学习过程中遇到的问题等">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 小面包的小站">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/02/27/opengl%E5%92%8Cqt%E4%BA%A4%E4%BA%92/" class="post-title-link" itemprop="url">opengl和qt交互</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2025-02-27 23:21:28 / 修改时间：23:23:04" itemprop="dateCreated datePublished" datetime="2025-02-27T23:21:28+08:00">2025-02-27</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Qt-和-OpenGL-交互"><a href="#Qt-和-OpenGL-交互" class="headerlink" title="Qt 和 OpenGL 交互"></a>Qt 和 OpenGL 交互</h2><ul>
+<li><p>当在 <code>paintGL</code> 之外的地方重新绘制（比如按下按钮），则需要调用 <code>widget</code> 的 <code>update()</code> 来重新更新。</p>
+</li>
+<li><p>若要从其他地方调用 OpenGL 函数（即不在 <code>paintGL</code>、<code>resizeGL</code> 等函数中），需要先调用 <code>makeCurrent</code>。<br><img src="https://cdn-a.markji.com/files/67be7dae62d9c4358590966c_hd.png?e=1740672193731&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:XZjt94Ejewd88ls2vko6yGyYisA=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67be7e1dfaa33a2f9f9def5b_hd.png?e=1740672193731&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:pm7R8YQW0BVCl3rCnQA3wzR4Zhg=" alt="图片1"></p>
+</li>
+</ul>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ul>
+<li>如果要设置控件是否是选中的状态，可以使用带布尔值的”转到槽”。<br><img src="https://cdn-a.markji.com/files/67be7eebfaa33a2f9f9e67a4_hd.png?e=1740672193731&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:4sN-9t_2Vqgbd2TrJJmtQlHgYMg=" alt="图片1"></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -984,126 +1062,6 @@
 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># 关于 Web 库抛出异常的总结</span></span><br><span class="line"></span><br><span class="line"><span class="section">## 问题起因</span></span><br><span class="line"></span><br><span class="line">在处理报文时，舍友发送的报文中包含了微信的特殊字符，这导致了 JSON 数据格式不合法，最终抛出了 <span class="code">`login`</span> 异常，导致程序崩溃。这个问题让我意识到需要更好地处理异常，避免程序直接终止。</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"><span class="section">## 异常分析</span></span><br><span class="line"></span><br><span class="line">在分析过程中，我发现当 JSON 库在解析过程中遇到错误时，会抛出异常。而这个异常没有被正确处理，导致了程序的崩溃。为了避免这个问题，我决定在 <span class="code">`http_task`</span> 中捕获报文体解析时抛出的异常，并记录日志，而不是让程序直接崩溃。</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"><span class="section">## 捕获异常与调试</span></span><br><span class="line"></span><br><span class="line">通过查看函数调用堆栈，我能够准确定位到抛出异常的具体位置。基于此，我可以在正确的地方进行异常捕获，确保程序能够在遇到类似情况时优雅地处理异常。</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"><span class="section">## 使用 VSCode 作为调试器</span></span><br><span class="line"></span><br><span class="line">为了进一步调试这个问题，我尝试使用 VSCode 作为调试器。按照原本的 CMake 配置进行操作，VSCode 成功地启动了调试会话，帮助我更容易地跟踪程序的执行流程。</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"><span class="section">## 虚拟机性能问题</span></span><br><span class="line"></span><br><span class="line">在调试过程中，我发现虚拟机的性能较差，导致 Postman 访问虚拟机时非常卡，甚至严重影响了开发进程。尽管如此，这个问题在一段时间后自行缓解，可能是由于网络问题或资源分配不足。</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"><span class="section">## 异常捕获的最终解决方案</span></span><br><span class="line"></span><br><span class="line">通过不断调试和查看堆栈跟踪，我最终找到了抛出异常的具体点，并在该点添加了异常处理。这样，程序在遇到类似的报文异常时，不会再崩溃，而是会记录详细的日志，帮助我们进一步分析和修复问题。</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"><span class="section">## 小结</span></span><br><span class="line"></span><br><span class="line">通过这次处理 Web 库抛出异常的经验，我学到了如何在正确的地方捕获异常，并记录日志，避免程序崩溃。使用 VSCode 调试器也让我更高效地解决了问题，虽然在虚拟机上运行时遇到了一些性能问题，但最终通过耐心等待和分析，问题得以解决。</span><br><span class="line"></span><br><span class="line">![<span class="string">图片1</span>](<span class="link">链接地址</span>)</span><br></pre></td></tr></table></figure>
 
 <p>这个 Markdown 格式同样适用于 Hexo 博客。你可以根据实际需要替换 <code>![图片1](链接地址)</code> 部分的图片链接。如果有更多图片，可以继续按照此格式添加。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://eatbreads.github.io/2024/11/20/%E6%89%93%E5%8C%85cpp%E5%90%8E%E7%AB%AF%E4%BB%A3%E7%A0%81%E8%BF%9B%E5%85%A5docker/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="eatbreads">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="小面包的小站">
-      <meta itemprop="description" content="这边会分享C++,Go,Java,Docker,包括一些C++多线程和模板的心得或者知识,或者一些认为有价值的东西,比如一些计算机常见问题,一些好用的库,学习过程中遇到的问题等">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 小面包的小站">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/11/20/%E6%89%93%E5%8C%85cpp%E5%90%8E%E7%AB%AF%E4%BB%A3%E7%A0%81%E8%BF%9B%E5%85%A5docker/" class="post-title-link" itemprop="url">打包cpp后端代码进入docker</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-11-20 21:41:46" itemprop="dateCreated datePublished" datetime="2024-11-20T21:41:46+08:00">2024-11-20</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-01-23 21:54:03" itemprop="dateModified" datetime="2025-01-23T21:54:03+08:00">2025-01-23</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="C-后端打包-Docker-镜像总结"><a href="#C-后端打包-Docker-镜像总结" class="headerlink" title="C++ 后端打包 Docker 镜像总结"></a>C++ 后端打包 Docker 镜像总结</h1><p>将 C++ 的代码打包成 Docker 镜像的过程</p>
-<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><ol>
-<li><p><strong>静态编译</strong></p>
-<p>先使用静态编译，确保代码的依赖能被打包到最终的可执行文件中。</p>
-</li>
-<li><p><strong>编写 Dockerfile</strong></p>
-<p>创建一个 Dockerfile，用于构建镜像。</p>
-</li>
-<li><p><strong>构建 Docker 镜像</strong></p>
-<p>使用命令构建镜像：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t mywebproject:latest .</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>测试镜像</strong></p>
-<p>在本地构建后，使用 <code>docker run</code> 命令测试镜像是否能正常运行：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -it --name mywebproject_container -p 8080:8080 mywebproject /bin/bash</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>推送到镜像仓库</strong></p>
-<p>当本地测试通过后，可以将镜像推送到镜像仓库。</p>
-</li>
-</ol>
-<hr>
-<h2 id="使用-Docker-Compose-统一管理多个镜像"><a href="#使用-Docker-Compose-统一管理多个镜像" class="headerlink" title="使用 Docker Compose 统一管理多个镜像"></a>使用 Docker Compose 统一管理多个镜像</h2><p>通过 Docker Compose 可以方便地管理多个服务，比如同时运行 <code>MySQL</code> 和 <code>MinIO</code> 镜像。在此过程中，我将数据库连接参数写死了，虽然不太灵活，但快速构建时是可接受的。</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3&#x27;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">mysql:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">mysql:5.7</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">MYSQL_ROOT_PASSWORD:</span> <span class="string">password</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;3306:3306&quot;</span></span><br><span class="line">  <span class="attr">minio:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">minio/minio</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;9000:9000&quot;</span></span><br><span class="line">    <span class="attr">command:</span> <span class="string">server</span> <span class="string">/data</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="处理跨平台问题"><a href="#处理跨平台问题" class="headerlink" title="处理跨平台问题"></a>处理跨平台问题</h2><p>目前的 CMake 配置并不完美，需要适应不同的 Linux 环境，特别是在动态库和头文件路径方面。由于依赖的环境不同，CMake 配置需要更通用一些，以便在不同平台下能成功构建。</p>
-<p><img src="https://cdn-a.markji.com/files/673ff6bd4b5c865a82e26cc4_hd.png?e=1737642002780&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:8Y9jWFstiT7yiyKjP9yB9rv89lw=" alt="图片1"></p>
-<h2 id=""><a href="#" class="headerlink" title=""></a><img src="https://cdn-a.markji.com/files/673ffb62813017964582c91e_hd.png?e=1737642002780&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:ewba-9d0qW2iVT870DRQwR-tlJA=" alt="图片1"></h2><h2 id="关于镜像构建的优化"><a href="#关于镜像构建的优化" class="headerlink" title="关于镜像构建的优化"></a>关于镜像构建的优化</h2><p>在构建镜像时，如果每次都要执行测试命令，重新构建会非常麻烦。为了避免每次都重建镜像，可以构建一个不执行测试命令的基础镜像：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t mywebproject:latest .</span><br></pre></td></tr></table></figure>
-<p><img src="https://cdn-a.markji.com/files/673ffe1f4b5c865a82e46a1f_hd.png?e=1737642002780&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:V-6ZeVmCGEAgeLAyThHm4m9CrcU=" alt="图片1"><br>然后进入镜像内部，手动运行构建命令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -it --name mywebproject_container mywebproject /bin/bash</span><br></pre></td></tr></table></figure>
-
-<p>这样就避免了每次都需要重新构建的问题。</p>
-<hr>
-<h2 id="遇到的库路径问题"><a href="#遇到的库路径问题" class="headerlink" title="遇到的库路径问题"></a>遇到的库路径问题</h2><p>在容器内部，我遇到了一些关于库路径和版本的问题。通过运行 <code>ldd ./main</code>，可以查看缺少的库，并根据实际情况安装对应版本的库。最终，我发现 Ubuntu 系统中库文件常常位于：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/lib/x86_64-linux-gnu</span><br></pre></td></tr></table></figure>
-<h2 id="-1"><a href="#-1" class="headerlink" title=""></a><img src="https://cdn-a.markji.com/files/6740933f8eb894c77959208d_hd.png?e=1737642002781&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:acxFONkOm0JF9g81zes7a5prQXs=" alt="图片1"></h2><h2 id="版本依赖问题"><a href="#版本依赖问题" class="headerlink" title="版本依赖问题"></a>版本依赖问题</h2><h2 id="即使编译成功，运行时依然可能会遇到库版本不匹配的问题，导致程序无法启动。这时，Docker-的优势得到了体现。通过指定-Docker-镜像的基础版本，可以避免版本不匹配的麻烦。"><a href="#即使编译成功，运行时依然可能会遇到库版本不匹配的问题，导致程序无法启动。这时，Docker-的优势得到了体现。通过指定-Docker-镜像的基础版本，可以避免版本不匹配的麻烦。" class="headerlink" title="即使编译成功，运行时依然可能会遇到库版本不匹配的问题，导致程序无法启动。这时，Docker 的优势得到了体现。通过指定 Docker 镜像的基础版本，可以避免版本不匹配的麻烦。"></a>即使编译成功，运行时依然可能会遇到库版本不匹配的问题，导致程序无法启动。这时，Docker 的优势得到了体现。通过指定 Docker 镜像的基础版本，可以避免版本不匹配的麻烦。<br><img src="https://cdn-a.markji.com/files/67409a15934b33cc600f0356_hd.png?e=1737642002781&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:kHylrBJ7TV-lbmYH8lp8rbodiSQ=" alt="图片1"></h2><h2 id="使用低版本-Ubuntu-解决依赖问题"><a href="#使用低版本-Ubuntu-解决依赖问题" class="headerlink" title="使用低版本 Ubuntu 解决依赖问题"></a>使用低版本 Ubuntu 解决依赖问题</h2><p>为了应对版本不兼容的问题，我尝试使用低版本的 Ubuntu 镜像进行构建，这样可以下载较旧版本的依赖库。然而，这样做的缺点是，镜像中的 <code>apt</code> 下载速度较慢。为了减少构建过程中的问题，我最终选择了较为稳定的版本。</p>
-<hr>
-<h2 id="最终结果"><a href="#最终结果" class="headerlink" title="最终结果"></a>最终结果</h2><p>经过一番尝试和修复，最终我成功构建了镜像，并且解决了端口映射的问题。使用以下命令运行容器，确保能够通过端口访问到应用：<br><img src="https://cdn-a.markji.com/files/6740b1438eb894c77960e935_hd.png?e=1737642002781&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:977QLHB2NCVWpU5Enzigzu_GRys=" alt="图片1"></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -it --name mywebproject_container -p 8080:8080 mywebproject /bin/bash</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="部署到服务器"><a href="#部署到服务器" class="headerlink" title="部署到服务器"></a>部署到服务器</h2><p>当镜像构建完成并且本地测试通过后，我就可以尝试将镜像上传到服务器，进行部署和运行。</p>
-<hr>
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>通过这次构建 C++ 后端 Docker 镜像的过程，我不仅学到了 Docker 和 CMake 配置的技巧，还解决了多个跨平台的依赖和版本问题。使用 Docker 的优势尤为突出，尤其是在处理依赖版本不兼容时提供了极大的便利。</p>
 
       
     </div>

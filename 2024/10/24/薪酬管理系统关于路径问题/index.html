@@ -29,7 +29,7 @@
 <meta property="og:image" content="https://cdn-a.markji.com/files/672f59d20ac7ae9081def5f9_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:wf7RxKbiFD3WWzGCS8n57n6p2ng=">
 <meta property="og:image" content="https://cdn-a.markji.com/files/672f5b34f20d86d346644888_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:bX_UsNFy7sUFIWaWdGmtqV6lLNQ=">
 <meta property="article:published_time" content="2024-10-24T15:11:13.000Z">
-<meta property="article:modified_time" content="2025-02-25T12:18:44.689Z">
+<meta property="article:modified_time" content="2025-02-25T12:27:38.183Z">
 <meta property="article:author" content="eatbreads">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://cdn-a.markji.com/files/672f59d20ac7ae9081def5f9_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:wf7RxKbiFD3WWzGCS8n57n6p2ng=">
@@ -127,7 +127,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-count">17</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -199,7 +199,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-02-25 20:18:44" itemprop="dateModified" datetime="2025-02-25T20:18:44+08:00">2025-02-25</time>
+      <time title="修改时间：2025-02-25 20:27:38" itemprop="dateModified" datetime="2025-02-25T20:27:38+08:00">2025-02-25</time>
     </span>
 
   
@@ -214,6 +214,7 @@
     <div class="post-body" itemprop="articleBody"><h1 id="关于路径问题的总结"><a href="#关于路径问题的总结" class="headerlink" title="关于路径问题的总结"></a>关于路径问题的总结</h1><h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><h2 id="在项目中，我引入了一个第三方的-CSV-解析库。问题出现了：这个库不支持相对路径，因此在助教的环境中运行时，我必须要求他们手动指定绝对路径。这个做法显然不太方便，尤其是在不同的环境中部署时。"><a href="#在项目中，我引入了一个第三方的-CSV-解析库。问题出现了：这个库不支持相对路径，因此在助教的环境中运行时，我必须要求他们手动指定绝对路径。这个做法显然不太方便，尤其是在不同的环境中部署时。" class="headerlink" title="在项目中，我引入了一个第三方的 CSV 解析库。问题出现了：这个库不支持相对路径，因此在助教的环境中运行时，我必须要求他们手动指定绝对路径。这个做法显然不太方便，尤其是在不同的环境中部署时。"></a>在项目中，我引入了一个第三方的 CSV 解析库。问题出现了：这个库不支持相对路径，因此在助教的环境中运行时，我必须要求他们手动指定绝对路径。这个做法显然不太方便，尤其是在不同的环境中部署时。<br><img src="https://cdn-a.markji.com/files/672f59d20ac7ae9081def5f9_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:wf7RxKbiFD3WWzGCS8n57n6p2ng=" alt="图片1"></h2><h2 id="解决思路"><a href="#解决思路" class="headerlink" title="解决思路"></a>解决思路</h2><p>我开始思考，是否能够自动获取可执行文件的路径，并基于此拼接出一个绝对路径，这样就不需要依赖手动输入路径了。于是我尝试过多种方法，包括调用 Windows 自身的 API 等，但始终没有成功。</p>
 <hr>
 <h2 id="最终解决方案"><a href="#最终解决方案" class="headerlink" title="最终解决方案"></a>最终解决方案</h2><h2 id="经过不断尝试和调整，我终于找到了一个有效的方式，成功获取了可执行文件的路径并拼接成了正确的绝对路径。虽然过程中尝试了很多方法，有些方法最终都没有奏效，但最终我找到了一个合适的解决方案。"><a href="#经过不断尝试和调整，我终于找到了一个有效的方式，成功获取了可执行文件的路径并拼接成了正确的绝对路径。虽然过程中尝试了很多方法，有些方法最终都没有奏效，但最终我找到了一个合适的解决方案。" class="headerlink" title="经过不断尝试和调整，我终于找到了一个有效的方式，成功获取了可执行文件的路径并拼接成了正确的绝对路径。虽然过程中尝试了很多方法，有些方法最终都没有奏效，但最终我找到了一个合适的解决方案。"></a>经过不断尝试和调整，我终于找到了一个有效的方式，成功获取了可执行文件的路径并拼接成了正确的绝对路径。虽然过程中尝试了很多方法，有些方法最终都没有奏效，但最终我找到了一个合适的解决方案。<br><img src="https://cdn-a.markji.com/files/672f5b34f20d86d346644888_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:bX_UsNFy7sUFIWaWdGmtqV6lLNQ=" alt="图片1"></h2><h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>路径问题经常在跨平台开发中出现，尤其是第三方库不支持相对路径时。通过获取可执行文件的路径并拼接成绝对路径，我避免了手动配置路径的问题。这次的经历让我更加深刻地理解了路径处理在不同环境下的重要性，尤其是在多平台支持的项目中。</p>
+<p>int &amp; fun()<br>{<br>    return x;<br>}</p>
 
     </div>
 
