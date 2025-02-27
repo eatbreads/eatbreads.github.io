@@ -121,7 +121,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-count">20</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -147,6 +147,280 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://eatbreads.github.io/2024/11/23/%E5%85%B3%E4%BA%8Emysql%E6%9C%AC%E6%9C%BA%E4%B9%8B%E5%A4%96%E9%93%BE%E6%8E%A5%E4%B8%8D%E4%B8%8A%E7%9A%84%E9%97%AE%E9%A2%98%E5%92%8C%E4%B8%AD%E6%96%87%E5%AD%97%E7%AC%A6%E9%9B%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="eatbreads">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小面包的小站">
+      <meta itemprop="description" content="这边会分享C++,Go,Java,Docker,包括一些C++多线程和模板的心得或者知识,或者一些认为有价值的东西,比如一些计算机常见问题,一些好用的库,学习过程中遇到的问题等">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 小面包的小站">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/11/23/%E5%85%B3%E4%BA%8Emysql%E6%9C%AC%E6%9C%BA%E4%B9%8B%E5%A4%96%E9%93%BE%E6%8E%A5%E4%B8%8D%E4%B8%8A%E7%9A%84%E9%97%AE%E9%A2%98%E5%92%8C%E4%B8%AD%E6%96%87%E5%AD%97%E7%AC%A6%E9%9B%86/" class="post-title-link" itemprop="url">关于mysql本机之外链接不上的问题和中文字符集</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-11-23 22:20:04" itemprop="dateCreated datePublished" datetime="2024-11-23T22:20:04+08:00">2024-11-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-01-23 22:21:50" itemprop="dateModified" datetime="2025-01-23T22:21:50+08:00">2025-01-23</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="关于-MySQL-连接不上和中文字符集问题的总结"><a href="#关于-MySQL-连接不上和中文字符集问题的总结" class="headerlink" title="关于 MySQL 连接不上和中文字符集问题的总结"></a>关于 MySQL 连接不上和中文字符集问题的总结</h1><h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>在使用 MySQL 时，我遇到了一些连接问题，尤其是在处理中文字符集时出现了乱码。经过一些排查，我发现问题与 MySQL 的字符集设置有关。</p>
+<hr>
+<h2 id="修改字符集配置"><a href="#修改字符集配置" class="headerlink" title="修改字符集配置"></a>修改字符集配置</h2><p>在 Linux 系统中，可以通过编辑 MySQL 的配置文件来修改字符集。路径是 <code>/etc/mysql/mysql.conf.d/mysqld.cnf</code>，而在 Windows 系统中，通常是 <code>my.ini</code> 文件。<br><img src="https://cdn-a.markji.com/files/674976f0d66a8266eeb31e9c_hd.png?e=1737643978022&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:MGPaZPNZ0d2Y34oG2Qzpv37mfA4=" alt="图片1"><br>我修改了以下几个配置项来解决字符集问题：</p>
+<ul>
+<li><p><strong>character-set-server</strong>: 设置服务器的默认字符集为 <code>utf8mb4</code>，这是 MySQL 最推荐的字符集，支持所有 Unicode 字符。</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">character-set-server</span> = utf8mb4</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>collation-server</strong>: 设置服务器的默认排序规则为 <code>utf8mb4_unicode_ci</code>，这是 <code>utf8mb4</code> 字符集的通用排序规则。</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">collation-server</span> = utf8mb4_unicode_ci</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>init-connect</strong>: 在每个客户端连接时设置字符集为 <code>utf8mb4</code>。</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">init-connect</span>=<span class="string">&#x27;SET NAMES utf8mb4&#x27;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>这些设置确保了 MySQL 使用支持所有 Unicode 字符的字符集和排序规则。<br><img src="https://cdn-a.markji.com/files/67498a22c0bbb7b3acebaeb3_hd.png?e=1737643978022&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:JU-tjEJ_PNOI4rzAtjaL_4s40KY=" alt="图片1"></p>
+<h2 id=""><a href="#" class="headerlink" title=""></a><img src="https://cdn-a.markji.com/files/67498b45d66a8266eeb92709_hd.png?e=1737643978022&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:VfYXlZyC19S4eLkf9232I6DZ7uY=" alt="图片1"></h2><h2 id="数据已导入后无法直接修改"><a href="#数据已导入后无法直接修改" class="headerlink" title="数据已导入后无法直接修改"></a>数据已导入后无法直接修改</h2><p>修改字符集设置后，我发现由于数据已经导入到数据库中，直接修改字符集配置并不能生效。为了解决这个问题，我需要手动重新执行建表语句。</p>
+<hr>
+<h2 id="优化流程"><a href="#优化流程" class="headerlink" title="优化流程"></a>优化流程</h2><p>在执行这些更改时，我的建议是：</p>
+<ol>
+<li><strong>先修改配置文件</strong>，确保 MySQL 使用 <code>utf8mb4</code> 字符集。</li>
+<li><strong>然后重新执行插入语句</strong>，确保数据表使用正确的字符集。</li>
+</ol>
+<p>为了更好地管理这个过程，我将这些操作写入了 <code>start.sh</code> 脚本，确保每次启动容器时，MySQL 都能自动加载这些配置。</p>
+<hr>
+<h2 id="重新构建镜像"><a href="#重新构建镜像" class="headerlink" title="重新构建镜像"></a>重新构建镜像</h2><p>在我重新构建镜像后，发现字符集问题已经得到解决，并且中文字符能够正常显示。镜像构建时，我确保了配置的正确性，避免了手动操作时可能出现的错误。</p>
+<hr>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>通过这次解决 MySQL 连接和字符集问题的经历，我学到了如何正确设置 MySQL 的字符集配置，并避免字符集不匹配导致的乱码问题。修改配置文件后，我手动执行了建表语句，并且在重新构建镜像时确保了问题得到解决。将这些操作写入脚本中，也大大简化了以后部署的过程。</p>
+<p><img src="/%E9%93%BE%E6%8E%A5%E5%9C%B0%E5%9D%80" alt="图片1"></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://eatbreads.github.io/2024/11/21/%E4%BD%BF%E7%94%A8smtp%E6%9C%8D%E5%8A%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="eatbreads">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小面包的小站">
+      <meta itemprop="description" content="这边会分享C++,Go,Java,Docker,包括一些C++多线程和模板的心得或者知识,或者一些认为有价值的东西,比如一些计算机常见问题,一些好用的库,学习过程中遇到的问题等">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 小面包的小站">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/11/21/%E4%BD%BF%E7%94%A8smtp%E6%9C%8D%E5%8A%A1/" class="post-title-link" itemprop="url">使用smtp服务</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-11-21 21:58:01" itemprop="dateCreated datePublished" datetime="2024-11-21T21:58:01+08:00">2024-11-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-01-23 21:59:57" itemprop="dateModified" datetime="2025-01-23T21:59:57+08:00">2025-01-23</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="使用-SMTP-发送邮件的总结"><a href="#使用-SMTP-发送邮件的总结" class="headerlink" title="使用 SMTP 发送邮件的总结"></a>使用 SMTP 发送邮件的总结</h1><h2 id="初步尝试"><a href="#初步尝试" class="headerlink" title="初步尝试"></a>初步尝试</h2><p>在项目中，我需要实现邮件发送功能，于是决定使用 SMTP 协议来发送邮件。最初，我尝试使用 C++ 中的 <code>curl</code> 库进行连接，然而在连接时遇到了一些问题，主要是无法连接到服务器。<br><img src="https://cdn-a.markji.com/files/674fd76334a2d0766ac942e7_hd.png?e=1737642002782&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:CMPJAgcbZzD_uY6HWF7V6dFN2VI=" alt="图片1"></p>
+<h3 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h3><ul>
+<li>使用的端口 587 被拒绝连接。经过排查，发现最初可能是由于编码问题导致无法正确连接。<br><img src="https://cdn-a.markji.com/files/674fdb1c1dd56644358b2808_hd.png?e=1737642002782&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:Huu9GsLcuBAwvfOV6JvYRyt77Gg=" alt="图片1"></li>
+<li>虽然在 Python 中能成功连接 SMTP 服务，但在 C++ 中却无法连接成功。这让我陷入了困惑。</li>
+</ul>
+<hr>
+<h2 id="使用-Python-脚本解决问题"><a href="#使用-Python-脚本解决问题" class="headerlink" title="使用 Python 脚本解决问题"></a>使用 Python 脚本解决问题</h2><p>由于在 Python 中 SMTP 连接能够正常工作，我决定通过系统调用来直接运行 Python 脚本，解决 C++ 发送邮件的问题。最终，成功调用 Python 脚本实现了邮件发送功能。<br><img src="https://cdn-a.markji.com/files/674fdb1c1dd56644358b2808_hd.png?e=1737642002782&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:Huu9GsLcuBAwvfOV6JvYRyt77Gg=" alt="图片1"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> smtplib</span><br><span class="line"><span class="keyword">from</span> email.mime.text <span class="keyword">import</span> MIMEText</span><br><span class="line"></span><br><span class="line">msg = MIMEText(<span class="string">&quot;Hello World&quot;</span>)</span><br><span class="line">msg[<span class="string">&quot;Subject&quot;</span>] = <span class="string">&quot;SMTP Test&quot;</span></span><br><span class="line">msg[<span class="string">&quot;From&quot;</span>] = <span class="string">&quot;your-email@example.com&quot;</span></span><br><span class="line">msg[<span class="string">&quot;To&quot;</span>] = <span class="string">&quot;recipient@example.com&quot;</span></span><br><span class="line"></span><br><span class="line">server = smtplib.SMTP(<span class="string">&quot;smtp.example.com&quot;</span>, <span class="number">587</span>)</span><br><span class="line">server.starttls()</span><br><span class="line">server.login(<span class="string">&quot;your-email@example.com&quot;</span>, <span class="string">&quot;password&quot;</span>)</span><br><span class="line">server.sendmail(msg[<span class="string">&quot;From&quot;</span>], msg[<span class="string">&quot;To&quot;</span>], msg.as_string())</span><br><span class="line">server.quit()</span><br></pre></td></tr></table></figure>
+
+<p>我通过 C++ 使用 <code>system()</code> 函数来调用这个 Python 脚本，从而绕过了 C++ 中的 SMTP 连接问题。</p>
+<hr>
+<h2 id="集成到-Java-项目"><a href="#集成到-Java-项目" class="headerlink" title="集成到 Java 项目"></a>集成到 Java 项目</h2><p>一旦邮件发送功能在 C++ 中解决了，我开始将其集成到 Java 项目中。过程非常顺利，只需导入相关库即可实现。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> javax.mail.*;</span><br><span class="line"><span class="keyword">import</span> javax.mail.internet.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">EmailSender</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">sendEmail</span><span class="params">(String to, String subject, String body)</span> &#123;</span><br><span class="line">        <span class="comment">// Email sending code using JavaMail API</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然而，在集成过程中遇到了一个经典的 Spring Boot 版本问题。Spring Boot 版本不匹配导致无法解析依赖项。这个问题需要到网上查找解决方案，并确保正确配置了 <code>pom.xml</code> 中的依赖版本。</p>
+<hr>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>通过这次实现 SMTP 邮件发送功能的过程，我经历了从 C++ 到 Python，再到 Java 的集成工作。虽然 C++ 连接 SMTP 时遇到了一些问题，但最终通过调用 Python 脚本解决了问题。而在 Java 中集成时，也遇到了一些常见的框架版本不匹配问题，解决这些问题后邮件发送功能得以顺利实现。</p>
+<p><img src="https://cdn-a.markji.com/files/674ff77c2f7418f70a3eb83f_hd.png?e=1737642002782&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:SATav5nL6qzotwRGgW6wkky0vK8=" alt="图片1"></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://eatbreads.github.io/2024/11/20/%E5%85%B3%E4%BA%8Eweb%E5%BA%93%E6%8A%9B%E5%87%BA%E5%BC%82%E5%B8%B8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="eatbreads">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小面包的小站">
+      <meta itemprop="description" content="这边会分享C++,Go,Java,Docker,包括一些C++多线程和模板的心得或者知识,或者一些认为有价值的东西,比如一些计算机常见问题,一些好用的库,学习过程中遇到的问题等">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 小面包的小站">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/11/20/%E5%85%B3%E4%BA%8Eweb%E5%BA%93%E6%8A%9B%E5%87%BA%E5%BC%82%E5%B8%B8/" class="post-title-link" itemprop="url">关于web库抛出异常</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-11-20 22:01:53" itemprop="dateCreated datePublished" datetime="2024-11-20T22:01:53+08:00">2024-11-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-01-23 22:02:59" itemprop="dateModified" datetime="2025-01-23T22:02:59+08:00">2025-01-23</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>以下是你第四篇心得转化为 Hexo 博客格式的 Markdown 内容：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># 关于 Web 库抛出异常的总结</span></span><br><span class="line"></span><br><span class="line"><span class="section">## 问题起因</span></span><br><span class="line"></span><br><span class="line">在处理报文时，舍友发送的报文中包含了微信的特殊字符，这导致了 JSON 数据格式不合法，最终抛出了 <span class="code">`login`</span> 异常，导致程序崩溃。这个问题让我意识到需要更好地处理异常，避免程序直接终止。</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"><span class="section">## 异常分析</span></span><br><span class="line"></span><br><span class="line">在分析过程中，我发现当 JSON 库在解析过程中遇到错误时，会抛出异常。而这个异常没有被正确处理，导致了程序的崩溃。为了避免这个问题，我决定在 <span class="code">`http_task`</span> 中捕获报文体解析时抛出的异常，并记录日志，而不是让程序直接崩溃。</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"><span class="section">## 捕获异常与调试</span></span><br><span class="line"></span><br><span class="line">通过查看函数调用堆栈，我能够准确定位到抛出异常的具体位置。基于此，我可以在正确的地方进行异常捕获，确保程序能够在遇到类似情况时优雅地处理异常。</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"><span class="section">## 使用 VSCode 作为调试器</span></span><br><span class="line"></span><br><span class="line">为了进一步调试这个问题，我尝试使用 VSCode 作为调试器。按照原本的 CMake 配置进行操作，VSCode 成功地启动了调试会话，帮助我更容易地跟踪程序的执行流程。</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"><span class="section">## 虚拟机性能问题</span></span><br><span class="line"></span><br><span class="line">在调试过程中，我发现虚拟机的性能较差，导致 Postman 访问虚拟机时非常卡，甚至严重影响了开发进程。尽管如此，这个问题在一段时间后自行缓解，可能是由于网络问题或资源分配不足。</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"><span class="section">## 异常捕获的最终解决方案</span></span><br><span class="line"></span><br><span class="line">通过不断调试和查看堆栈跟踪，我最终找到了抛出异常的具体点，并在该点添加了异常处理。这样，程序在遇到类似的报文异常时，不会再崩溃，而是会记录详细的日志，帮助我们进一步分析和修复问题。</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"><span class="section">## 小结</span></span><br><span class="line"></span><br><span class="line">通过这次处理 Web 库抛出异常的经验，我学到了如何在正确的地方捕获异常，并记录日志，避免程序崩溃。使用 VSCode 调试器也让我更高效地解决了问题，虽然在虚拟机上运行时遇到了一些性能问题，但最终通过耐心等待和分析，问题得以解决。</span><br><span class="line"></span><br><span class="line">![<span class="string">图片1</span>](<span class="link">链接地址</span>)</span><br></pre></td></tr></table></figure>
+
+<p>这个 Markdown 格式同样适用于 Hexo 博客。你可以根据实际需要替换 <code>![图片1](链接地址)</code> 部分的图片链接。如果有更多图片，可以继续按照此格式添加。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
