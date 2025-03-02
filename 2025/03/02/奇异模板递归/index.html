@@ -19,30 +19,33 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"eatbreads.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="Qt 和 OpenGL 交互 当在 paintGL 之外的地方重新绘制（比如按下按钮），则需要调用 widget 的 update() 来重新更新。  若要从其他地方调用 OpenGL 函数（即不在 paintGL、resizeGL 等函数中），需要先调用 makeCurrent。   注意事项 如果要设置控件是否是选中的状态，可以使用带布尔值的”转到槽”。">
+    <meta name="description" content="CRTPCRTP（Curiously Recurring Template Pattern）被称为奇异重现，或者奇异递归模板模式。 优势 实现了静态多态，无需使用虚函数。 无运行时开销，提高性能。 避免了传统的向下转换（downcasting）导致的类型错误。  备注以后可以尝试都使用 CRTP 来编写代码，以免去运行时开销。其实改动并不难。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="opengl和qt交互">
-<meta property="og:url" content="https://eatbreads.github.io/2025/02/27/opengl%E5%92%8Cqt%E4%BA%A4%E4%BA%92/index.html">
+<meta property="og:title" content="奇异模板递归">
+<meta property="og:url" content="https://eatbreads.github.io/2025/03/02/%E5%A5%87%E5%BC%82%E6%A8%A1%E6%9D%BF%E9%80%92%E5%BD%92/index.html">
 <meta property="og:site_name" content="小面包的小站">
-<meta property="og:description" content="Qt 和 OpenGL 交互 当在 paintGL 之外的地方重新绘制（比如按下按钮），则需要调用 widget 的 update() 来重新更新。  若要从其他地方调用 OpenGL 函数（即不在 paintGL、resizeGL 等函数中），需要先调用 makeCurrent。   注意事项 如果要设置控件是否是选中的状态，可以使用带布尔值的”转到槽”。">
+<meta property="og:description" content="CRTPCRTP（Curiously Recurring Template Pattern）被称为奇异重现，或者奇异递归模板模式。 优势 实现了静态多态，无需使用虚函数。 无运行时开销，提高性能。 避免了传统的向下转换（downcasting）导致的类型错误。  备注以后可以尝试都使用 CRTP 来编写代码，以免去运行时开销。其实改动并不难。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://cdn-a.markji.com/files/67be7dae62d9c4358590966c_hd.png?e=1740672193731&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:XZjt94Ejewd88ls2vko6yGyYisA=">
-<meta property="og:image" content="https://cdn-a.markji.com/files/67be7e1dfaa33a2f9f9def5b_hd.png?e=1740672193731&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:pm7R8YQW0BVCl3rCnQA3wzR4Zhg=">
-<meta property="og:image" content="https://cdn-a.markji.com/files/67be7eebfaa33a2f9f9e67a4_hd.png?e=1740672193731&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:4sN-9t_2Vqgbd2TrJJmtQlHgYMg=">
-<meta property="article:published_time" content="2025-02-27T15:21:28.000Z">
-<meta property="article:modified_time" content="2025-02-27T16:14:39.208Z">
+<meta property="og:image" content="https://cdn-a.markji.com/files/671efd0edee1d69b5795e9e8_hd.png?e=1740932078154&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:eTV6e0Uq9JPfOinXXfpIMFBNfrQ=">
+<meta property="og:image" content="https://cdn-a.markji.com/files/671efe26dee1d69b579632ad_hd.png?e=1740932078154&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:xdubiw1N2IuVkkZDpZFaa3Zt7zw=">
+<meta property="og:image" content="https://cdn-a.markji.com/files/671efe71dee1d69b5796771c_hd.png?e=1740932078154&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:2SKkuT0tqcQk8W5ETJdWlTmGC0M=">
+<meta property="og:image" content="https://cdn-a.markji.com/files/671effd53f407d0defb03c91_hd.png?e=1740932078154&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:266HrCtrSmLMkWx15DEJq9Tg2CI=">
+<meta property="og:image" content="https://cdn-a.markji.com/files/671f0372dee1d69b57977b98_hd.png?e=1740932078154&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:5rrSzhrY_9WCbvminQU3CnWYDzk=">
+<meta property="og:image" content="https://eatbreads.github.io/%E9%93%BEhttps:/cdn-a.markji.com/files/671f0407dee1d69b57979395_hd.png?e=1740932078154&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:0y2tMdhuqFIb51or_ieuJTP55wA=">
+<meta property="article:published_time" content="2025-03-02T15:32:28.000Z">
+<meta property="article:modified_time" content="2025-03-02T15:33:25.912Z">
 <meta property="article:author" content="eatbreads">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://cdn-a.markji.com/files/67be7dae62d9c4358590966c_hd.png?e=1740672193731&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:XZjt94Ejewd88ls2vko6yGyYisA=">
+<meta name="twitter:image" content="https://cdn-a.markji.com/files/671efd0edee1d69b5795e9e8_hd.png?e=1740932078154&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:eTV6e0Uq9JPfOinXXfpIMFBNfrQ=">
 
 
-<link rel="canonical" href="https://eatbreads.github.io/2025/02/27/opengl%E5%92%8Cqt%E4%BA%A4%E4%BA%92/">
+<link rel="canonical" href="https://eatbreads.github.io/2025/03/02/%E5%A5%87%E5%BC%82%E6%A8%A1%E6%9D%BF%E9%80%92%E5%BD%92/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://eatbreads.github.io/2025/02/27/opengl%E5%92%8Cqt%E4%BA%A4%E4%BA%92/","path":"2025/02/27/opengl和qt交互/","title":"opengl和qt交互"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://eatbreads.github.io/2025/03/02/%E5%A5%87%E5%BC%82%E6%A8%A1%E6%9D%BF%E9%80%92%E5%BD%92/","path":"2025/03/02/奇异模板递归/","title":"奇异模板递归"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>opengl和qt交互 | 小面包的小站</title>
+<title>奇异模板递归 | 小面包的小站</title>
   
 
 
@@ -115,7 +118,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Qt-%E5%92%8C-OpenGL-%E4%BA%A4%E4%BA%92"><span class="nav-number">1.</span> <span class="nav-text">Qt 和 OpenGL 交互</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">1.1.</span> <span class="nav-text">注意事项</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#CRTP"><span class="nav-number">1.</span> <span class="nav-text">CRTP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%8A%BF"><span class="nav-number">1.1.</span> <span class="nav-text">优势</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%87%E6%B3%A8"><span class="nav-number">1.2.</span> <span class="nav-text">备注</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -164,7 +167,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://eatbreads.github.io/2025/02/27/opengl%E5%92%8Cqt%E4%BA%A4%E4%BA%92/">
+    <link itemprop="mainEntityOfPage" href="https://eatbreads.github.io/2025/03/02/%E5%A5%87%E5%BC%82%E6%A8%A1%E6%9D%BF%E9%80%92%E5%BD%92/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -177,12 +180,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="opengl和qt交互 | 小面包的小站">
+      <meta itemprop="name" content="奇异模板递归 | 小面包的小站">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          opengl和qt交互
+          奇异模板递归
         </h1>
 
         <div class="post-meta-container">
@@ -192,15 +195,9 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
+      
 
-      <time title="创建时间：2025-02-27 23:21:28" itemprop="dateCreated datePublished" datetime="2025-02-27T23:21:28+08:00">2025-02-27</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-02-28 00:14:39" itemprop="dateModified" datetime="2025-02-28T00:14:39+08:00">2025-02-28</time>
+      <time title="创建时间：2025-03-02 23:32:28 / 修改时间：23:33:25" itemprop="dateCreated datePublished" datetime="2025-03-02T23:32:28+08:00">2025-03-02</time>
     </span>
 
   
@@ -212,15 +209,13 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h2 id="Qt-和-OpenGL-交互"><a href="#Qt-和-OpenGL-交互" class="headerlink" title="Qt 和 OpenGL 交互"></a>Qt 和 OpenGL 交互</h2><ul>
-<li><p>当在 <code>paintGL</code> 之外的地方重新绘制（比如按下按钮），则需要调用 <code>widget</code> 的 <code>update()</code> 来重新更新。</p>
-</li>
-<li><p>若要从其他地方调用 OpenGL 函数（即不在 <code>paintGL</code>、<code>resizeGL</code> 等函数中），需要先调用 <code>makeCurrent</code>。<br><img src="https://cdn-a.markji.com/files/67be7dae62d9c4358590966c_hd.png?e=1740672193731&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:XZjt94Ejewd88ls2vko6yGyYisA=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67be7e1dfaa33a2f9f9def5b_hd.png?e=1740672193731&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:pm7R8YQW0BVCl3rCnQA3wzR4Zhg=" alt="图片1"></p>
-</li>
+    <div class="post-body" itemprop="articleBody"><h1 id="CRTP"><a href="#CRTP" class="headerlink" title="CRTP"></a>CRTP</h1><p>CRTP（Curiously Recurring Template Pattern）被称为<strong>奇异重现</strong>，或者<strong>奇异递归模板模式</strong>。</p>
+<h2 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h2><ul>
+<li>实现了<strong>静态多态</strong>，无需使用虚函数。</li>
+<li><strong>无运行时开销</strong>，提高性能。</li>
+<li>避免了传统的向下转换（downcasting）导致的类型错误。</li>
 </ul>
-<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ul>
-<li>如果要设置控件是否是选中的状态，可以使用带布尔值的”转到槽”。<br><img src="https://cdn-a.markji.com/files/67be7eebfaa33a2f9f9e67a4_hd.png?e=1740672193731&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:4sN-9t_2Vqgbd2TrJJmtQlHgYMg=" alt="图片1"></li>
-</ul>
+<h2 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h2><p>以后可以尝试<strong>都使用 CRTP</strong> 来编写代码，以免去运行时开销。其实改动并不难。<br><img src="https://cdn-a.markji.com/files/671efd0edee1d69b5795e9e8_hd.png?e=1740932078154&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:eTV6e0Uq9JPfOinXXfpIMFBNfrQ=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/671efe26dee1d69b579632ad_hd.png?e=1740932078154&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:xdubiw1N2IuVkkZDpZFaa3Zt7zw=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/671efe71dee1d69b5796771c_hd.png?e=1740932078154&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:2SKkuT0tqcQk8W5ETJdWlTmGC0M=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/671effd53f407d0defb03c91_hd.png?e=1740932078154&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:266HrCtrSmLMkWx15DEJq9Tg2CI=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/671f0372dee1d69b57977b98_hd.png?e=1740932078154&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:5rrSzhrY_9WCbvminQU3CnWYDzk=" alt="图片1"><br><img src="/%E9%93%BEhttps:/cdn-a.markji.com/files/671f0407dee1d69b57979395_hd.png?e=1740932078154&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:0y2tMdhuqFIb51or_ieuJTP55wA=" alt="图片1"></p>
 
     </div>
 
@@ -234,14 +229,11 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2025/02/25/%E7%BB%98%E5%88%B6%E4%B8%80%E4%B8%AA%E4%B8%89%E8%A7%92%E5%BD%A2/" rel="prev" title="绘制一个三角形-opengl">
-                  <i class="fa fa-angle-left"></i> 绘制一个三角形-opengl
+                <a href="/2025/03/01/%E9%A2%9C%E8%89%B2%E4%B8%8E%E5%85%89%E7%85%A7%E5%92%8C%E5%86%AF%E6%B0%8F%E5%85%89%E6%BA%90/" rel="prev" title="颜色与光照和冯氏光源">
+                  <i class="fa fa-angle-left"></i> 颜色与光照和冯氏光源
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2025/02/27/layout%E5%92%8CUniform/" rel="next" title="layout和Uniform">
-                  layout和Uniform <i class="fa fa-angle-right"></i>
-                </a>
             </div>
           </div>
     </footer>
