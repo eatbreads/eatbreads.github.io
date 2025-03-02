@@ -121,7 +121,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-count">25</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -147,6 +147,83 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://eatbreads.github.io/2025/02/25/opengl-qt%E5%88%9D%E5%B0%9D%E8%AF%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="eatbreads">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小面包的小站">
+      <meta itemprop="description" content="这边会分享C++,Go,Java,Docker,包括一些C++多线程和模板的心得或者知识,或者一些认为有价值的东西,比如一些计算机常见问题,一些好用的库,学习过程中遇到的问题等">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 小面包的小站">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/02/25/opengl-qt%E5%88%9D%E5%B0%9D%E8%AF%95/" class="post-title-link" itemprop="url">opengl+qt初尝试</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2025-02-25 19:51:22 / 修改时间：19:54:58" itemprop="dateCreated datePublished" datetime="2025-02-25T19:51:22+08:00">2025-02-25</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="我的OpenGL-Qt初次使用日记"><a href="#我的OpenGL-Qt初次使用日记" class="headerlink" title="我的OpenGL + Qt初次使用日记"></a>我的OpenGL + Qt初次使用日记</h1><p>今天，我开启了OpenGL与Qt结合使用,以下是我初次使用过程中的操作记录。</p>
+<h2 id="1-创建Qt的MainWindow"><a href="#1-创建Qt的MainWindow" class="headerlink" title="1. 创建Qt的MainWindow"></a>1. 创建Qt的MainWindow</h2><p>我首先使用cmake来正常创建Qt项目的MainWindow</p>
+<h2 id="2-编辑菜单"><a href="#2-编辑菜单" class="headerlink" title="2. 编辑菜单"></a>2. 编辑菜单</h2><p>完成MainWindow的创建后，我着手编辑菜单。菜单编辑过程没有遇到太大阻碍</p>
+<h2 id="3-添加工具栏（Tool-Bar）和操作（Action）"><a href="#3-添加工具栏（Tool-Bar）和操作（Action）" class="headerlink" title="3. 添加工具栏（Tool Bar）和操作（Action）"></a>3. 添加工具栏（Tool Bar）和操作（Action）</h2><ul>
+<li><strong>添加工具栏</strong>：在编辑过程中，我很直观地发现右键点击相关区域就可以轻松加入一个工具栏。这个操作很简便，使得界面布局变得更加丰富和可定制。</li>
+<li><strong>添加操作（Action）</strong>：接着，我注意到点击下方左边的一个<code>New</code>选项，就可以增加一个<code>action</code>。</li>
+</ul>
+<p>虽然这是初次将OpenGL与Qt结合使用，但在这个过程中我对Qt框架的基本操作有了进一步的认识，也为后续探索OpenGL和Qt在图形渲染、界面构建等方面的复杂交互打下了良好的基础。<br><img src="https://cdn-a.markji.com/files/67bd0cb56b78148678378233_hd.png?e=1740447220182&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:xC85aDukPV9mDqOd6BJguO46DPo=" alt="Hexo Logo"><br><img src="https://cdn-a.markji.com/files/67bd0e53d983580075d9529f_hd.png?e=1740447220182&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:mfO3mCDVhiFVBF8UQOcDE1W7kDo=" alt="Hexo Logo"><br><img src="https://cdn-a.markji.com/files/67bd1042d983580075d9786a_hd.png?e=1740447220182&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:SNXpuQKWRq3iApZHEHn0rZSeBeg=" alt="Hexo Logo"><br><img src="https://cdn-a.markji.com/files/67bd11096b781486783851e4_hd.png?e=1740447220182&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:rdsdc-sw7JWtwHkcNHe-MBd9rtg=" alt="Hexo Logo"><br><img src="https://cdn-a.markji.com/files/67bd13d0d983580075d9e01d_hd.png?e=1740447220182&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:rJfmXzehMsalV0tv1Rph4rESeIw=" alt="Hexo Logo"></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1020,91 +1097,6 @@
 <hr>
 <h2 id="最终解决方案"><a href="#最终解决方案" class="headerlink" title="最终解决方案"></a>最终解决方案</h2><h2 id="经过不断尝试和调整，我终于找到了一个有效的方式，成功获取了可执行文件的路径并拼接成了正确的绝对路径。虽然过程中尝试了很多方法，有些方法最终都没有奏效，但最终我找到了一个合适的解决方案。"><a href="#经过不断尝试和调整，我终于找到了一个有效的方式，成功获取了可执行文件的路径并拼接成了正确的绝对路径。虽然过程中尝试了很多方法，有些方法最终都没有奏效，但最终我找到了一个合适的解决方案。" class="headerlink" title="经过不断尝试和调整，我终于找到了一个有效的方式，成功获取了可执行文件的路径并拼接成了正确的绝对路径。虽然过程中尝试了很多方法，有些方法最终都没有奏效，但最终我找到了一个合适的解决方案。"></a>经过不断尝试和调整，我终于找到了一个有效的方式，成功获取了可执行文件的路径并拼接成了正确的绝对路径。虽然过程中尝试了很多方法，有些方法最终都没有奏效，但最终我找到了一个合适的解决方案。<br><img src="https://cdn-a.markji.com/files/672f5b34f20d86d346644888_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:bX_UsNFy7sUFIWaWdGmtqV6lLNQ=" alt="图片1"></h2><h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>路径问题经常在跨平台开发中出现，尤其是第三方库不支持相对路径时。通过获取可执行文件的路径并拼接成绝对路径，我避免了手动配置路径的问题。这次的经历让我更加深刻地理解了路径处理在不同环境下的重要性，尤其是在多平台支持的项目中。</p>
 <p>int &amp; fun()<br>{<br>    return x;<br>}</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://eatbreads.github.io/2024/10/24/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%E7%AE%A1%E7%90%86Person/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="eatbreads">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="小面包的小站">
-      <meta itemprop="description" content="这边会分享C++,Go,Java,Docker,包括一些C++多线程和模板的心得或者知识,或者一些认为有价值的东西,比如一些计算机常见问题,一些好用的库,学习过程中遇到的问题等">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 小面包的小站">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/10/24/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%E7%AE%A1%E7%90%86Person/" class="post-title-link" itemprop="url">智能指针管理Person</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-10-24 23:07:44" itemprop="dateCreated datePublished" datetime="2024-10-24T23:07:44+08:00">2024-10-24</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-01-23 23:10:27" itemprop="dateModified" datetime="2025-01-23T23:10:27+08:00">2025-01-23</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="关于智能指针和抽象基类的-new-总结"><a href="#关于智能指针和抽象基类的-new-总结" class="headerlink" title="关于智能指针和抽象基类的 new 总结"></a>关于智能指针和抽象基类的 <code>new</code> 总结</h1><h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>在最初编写 <code>Person</code> 类时，我发现为了实现多态，<code>personVec</code>（用于统一管理 <code>Person</code> 对象）应该存储的是指针。然而，问题随之而来：如何管理这些指针的内存？因为我习惯于“谁申请，谁释放”的内存管理方式，而此处的指针是外部传进来的。</p>
-<hr>
-<p><img src="https://cdn-a.markji.com/files/6722489da5ae5f54b592ddb3_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:8y0aDklJKoXE_A5xn7L6W8eGwks=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/672252dba5ae5f54b594d451_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:K4oV7f56rzmM3dQjGz4KB6o7qC8=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/672259df58683e065fe6a0fb_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:xkJLV-2w8r8LiCcpUeoMwACEuCI=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/6722f673e28baad2f1470fac_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:1lIkjpwVTNgACXYzkS7cgenvoyM=" alt="图片1"><br>![图片1](<a target="_blank" rel="noopener" href="https://cdn-a.markji.com/files/6722fb9858683e065ff1cf18_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:MrTGKOeuNYNd13PvUj_Ad7hu74A=%E7%94%A8">https://cdn-a.markji.com/files/6722fb9858683e065ff1cf18_hd.png?e=1737643978020&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:MrTGKOeuNYNd13PvUj_Ad7hu74A=用</a></p>
-<p>为了简化内存管理，我决定统一使用智能指针来管理 <code>Person</code> 对象。通过将裸指针隐藏在智能指针中，我确保了内存的自动管理，并避免了手动释放的繁琐与错误。</p>
-<hr>
-<h2 id="遇到的问题与思考"><a href="#遇到的问题与思考" class="headerlink" title="遇到的问题与思考"></a>遇到的问题与思考</h2><p>在实现过程中，我遇到了一些挑战，特别是在派生类的构造过程中。最初，我认为通过解引用智能指针就能得到 <code>Person</code> 类的对象，但实际上这个过程中出现了问题。原因在于，派生类并没有接受 <code>Person</code> 类的构造函数，导致了类型不匹配。</p>
-<p>为了解决这个问题，我花了相当长时间去思考，最终才意识到需要正确地使用 <code>new</code> 来确保派生类对象的正确构造，并且必须显式调用派生类的构造函数。</p>
-<hr>
-<h2 id="二更：调试技巧"><a href="#二更：调试技巧" class="headerlink" title="二更：调试技巧"></a>二更：调试技巧</h2><h2 id="有一个调试技巧我发现非常有帮助：通过查看调试器中的紫色区域，它会明确列出每个参数的类型。这有助于快速定位问题，特别是在类型匹配方面。"><a href="#有一个调试技巧我发现非常有帮助：通过查看调试器中的紫色区域，它会明确列出每个参数的类型。这有助于快速定位问题，特别是在类型匹配方面。" class="headerlink" title="有一个调试技巧我发现非常有帮助：通过查看调试器中的紫色区域，它会明确列出每个参数的类型。这有助于快速定位问题，特别是在类型匹配方面。"></a>有一个调试技巧我发现非常有帮助：通过查看调试器中的紫色区域，它会明确列出每个参数的类型。这有助于快速定位问题，特别是在类型匹配方面。<br><img src="https://cdn-a.markji.com/files/6722fbede28baad2f147b298_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:EX3PsbmNY2VXATGlAXW0C_UxO1Y=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/6722fe9aa5ae5f54b5a23554_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:JpDCzsDmF49Mjn0HeGOmkCFRGDs=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67233a0ba5ae5f54b5aa2df4_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:c1c0b7rBkrwR_IfnCcXN0VevU0I=" alt="图片1"></h2><h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>通过这次的实现，我更加深入地理解了智能指针和抽象基类的内存管理问题。智能指针确实能简化内存管理，但在多态和派生类的构造过程中，需要特别注意如何正确使用构造函数来避免潜在的内存错误。</p>
-<p><img src="https://cdn-a.markji.com/files/67233be9e28baad2f150f543_hd.png?e=1737643978020&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:w1W9m8mwfpCAMIAHQTDM9ITAPgw=" alt="图片1"></p>
 
       
     </div>

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"eatbreads.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="代换失败不是错误（SFINAE）概念SFINAE（Substitution Failure Is Not An Error）意为代换失败不是错误，这是 C++ 模板机制中的一个重要特性。 核心思想：当模板参数推导失败时，编译器不会报错，而是会尝试匹配其他可能的函数或模板。因此，它可以避免不合理的模板实例化，防止不该匹配的类型被错误实例化。PS：非常非常重要！ 代换失败的规则任何导致代换的模板实参不">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SFINAE在c++模板中的使用及标准库中的应用">
+<meta property="og:url" content="https://eatbreads.github.io/2025/03/02/SFINAE%E5%9C%A8c-%E6%A8%A1%E6%9D%BF%E4%B8%AD%E7%9A%84%E4%BD%BF%E7%94%A8%E5%8F%8A%E6%A0%87%E5%87%86%E5%BA%93%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/index.html">
+<meta property="og:site_name" content="小面包的小站">
+<meta property="og:description" content="代换失败不是错误（SFINAE）概念SFINAE（Substitution Failure Is Not An Error）意为代换失败不是错误，这是 C++ 模板机制中的一个重要特性。 核心思想：当模板参数推导失败时，编译器不会报错，而是会尝试匹配其他可能的函数或模板。因此，它可以避免不合理的模板实例化，防止不该匹配的类型被错误实例化。PS：非常非常重要！ 代换失败的规则任何导致代换的模板实参不">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn-a.markji.com/files/6718a31157833190dc44516e_hd.png?e=1740932078152&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:RUdsJ4FONhfWNo9_YiTTcVxvcrk=">
+<meta property="og:image" content="https://cdn-a.markji.com/files/6718a366f0750c5d4663751b_hd.png?e=1740932078152&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:o6yHRfpeWxDBQnRrolze3ZVy3a0=">
+<meta property="og:image" content="https://cdn-a.markji.com/files/6718aa5af0750c5d46665066_hd.png?e=1740932078152&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:x751lLJmCrCiHlKE9qCWN48oK2g=">
+<meta property="og:image" content="https://cdn-a.markji.com/files/6718aebb12bf596766b9afe2_hd.png?e=1740932078152&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:Zqkct74cpIBK0S1gAb-IUjoCuN0=">
+<meta property="og:image" content="https://cdn-a.markji.com/files/6718e6c4ccfef1e7ef90aa39_hd.png?e=1740932078152&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:Qic1PBCiJefrDMGGuvz70TXe6bQ=">
+<meta property="og:image" content="https://cdn-a.markji.com/files/6718e87eccfef1e7ef91d10e_hd.png?e=1740932078152&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:_9RzhzxTtQxZkuO8DX9FiOHPmPk=">
+<meta property="article:published_time" content="2025-03-02T15:35:44.000Z">
+<meta property="article:modified_time" content="2025-03-02T15:37:45.569Z">
+<meta property="article:author" content="eatbreads">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn-a.markji.com/files/6718a31157833190dc44516e_hd.png?e=1740932078152&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:RUdsJ4FONhfWNo9_YiTTcVxvcrk=">
+
+
+<link rel="canonical" href="https://eatbreads.github.io/2025/03/02/SFINAE%E5%9C%A8c-%E6%A8%A1%E6%9D%BF%E4%B8%AD%E7%9A%84%E4%BD%BF%E7%94%A8%E5%8F%8A%E6%A0%87%E5%87%86%E5%BA%93%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://eatbreads.github.io/2025/03/02/SFINAE%E5%9C%A8c-%E6%A8%A1%E6%9D%BF%E4%B8%AD%E7%9A%84%E4%BD%BF%E7%94%A8%E5%8F%8A%E6%A0%87%E5%87%86%E5%BA%93%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/","path":"2025/03/02/SFINAE在c-模板中的使用及标准库中的应用/","title":"SFINAE在c++模板中的使用及标准库中的应用"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>SFINAE在c++模板中的使用及标准库中的应用 | 小面包的小站</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">小面包的小站</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">主营:C++,Go,Docker,Linux(WSL/VMWare),多线程,网络,C++模板编程,算法,奇奇怪怪有趣的东西等</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%A3%E6%8D%A2%E5%A4%B1%E8%B4%A5%E4%B8%8D%E6%98%AF%E9%94%99%E8%AF%AF%EF%BC%88SFINAE%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">代换失败不是错误（SFINAE）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E5%BF%B5"><span class="nav-number">1.1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E6%8D%A2%E5%A4%B1%E8%B4%A5%E7%9A%84%E8%A7%84%E5%88%99"><span class="nav-number">1.2.</span> <span class="nav-text">代换失败的规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SFINAE-%E7%9A%84%E5%85%B7%E4%BD%93%E4%BD%BF%E7%94%A8"><span class="nav-number">1.3.</span> <span class="nav-text">SFINAE 的具体使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%87%E5%87%86%E5%BA%93%E4%B8%AD%E7%9A%84-SFINAE-%E2%80%94%E2%80%94-enable-if-t"><span class="nav-number">1.4.</span> <span class="nav-text">标准库中的 SFINAE —— enable_if_t</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#enable-if-t-%E7%9A%84%E5%8E%9F%E7%90%86"><span class="nav-number">1.5.</span> <span class="nav-text">enable_if_t 的原理</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">eatbreads</p>
+  <div class="site-description" itemprop="description">这边会分享C++,Go,Java,Docker,包括一些C++多线程和模板的心得或者知识,或者一些认为有价值的东西,比如一些计算机常见问题,一些好用的库,学习过程中遇到的问题等</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/eatreads" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;eatreads" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:sunjunhao571@gmail.com" title="E-Mail → mailto:sunjunhao571@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://eatbreads.github.io/2025/03/02/SFINAE%E5%9C%A8c-%E6%A8%A1%E6%9D%BF%E4%B8%AD%E7%9A%84%E4%BD%BF%E7%94%A8%E5%8F%8A%E6%A0%87%E5%87%86%E5%BA%93%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="eatbreads">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小面包的小站">
+      <meta itemprop="description" content="这边会分享C++,Go,Java,Docker,包括一些C++多线程和模板的心得或者知识,或者一些认为有价值的东西,比如一些计算机常见问题,一些好用的库,学习过程中遇到的问题等">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="SFINAE在c++模板中的使用及标准库中的应用 | 小面包的小站">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SFINAE在c++模板中的使用及标准库中的应用
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2025-03-02 23:35:44 / 修改时间：23:37:45" itemprop="dateCreated datePublished" datetime="2025-03-02T23:35:44+08:00">2025-03-02</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="代换失败不是错误（SFINAE）"><a href="#代换失败不是错误（SFINAE）" class="headerlink" title="代换失败不是错误（SFINAE）"></a>代换失败不是错误（SFINAE）</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>SFINAE（Substitution Failure Is Not An Error）意为<strong>代换失败不是错误</strong>，这是 C++ 模板机制中的一个重要特性。</p>
+<p><strong>核心思想</strong>：<br>当模板参数推导失败时，编译器不会报错，而是会尝试匹配其他可能的函数或模板。因此，它可以避免<strong>不合理的模板实例化</strong>，防止<strong>不该匹配的类型</strong>被错误实例化。<br><img src="https://cdn-a.markji.com/files/6718a31157833190dc44516e_hd.png?e=1740932078152&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:RUdsJ4FONhfWNo9_YiTTcVxvcrk=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/6718a366f0750c5d4663751b_hd.png?e=1740932078152&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:o6yHRfpeWxDBQnRrolze3ZVy3a0=" alt="图片1"><br><strong>PS：非常非常重要！</strong></p>
+<h2 id="代换失败的规则"><a href="#代换失败的规则" class="headerlink" title="代换失败的规则"></a>代换失败的规则</h2><p>任何<strong>导致代换的模板实参</strong>不符合 C++ 语法（即<strong>非良构</strong>）的情况，都会导致代换失败，而不会引发编译错误。  </p>
+<p><strong>PS：非良构</strong>表示不符合 C++ 的基本语法。<br><img src="https://cdn-a.markji.com/files/6718aa5af0750c5d46665066_hd.png?e=1740932078152&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:x751lLJmCrCiHlKE9qCWN48oK2g=" alt="图片1"></p>
+<h2 id="SFINAE-的具体使用"><a href="#SFINAE-的具体使用" class="headerlink" title="SFINAE 的具体使用"></a>SFINAE 的具体使用</h2><p>通常，即使不使用 SFINAE，C++ 也会在模板实例化后报错。但 SFINAE 的关键在于：  </p>
+<p>✅ <strong>SFINAE 使得错误发生在实例化前，而非实例化后。</strong><br>✅ <strong>能不实例化就不要实例化</strong>，因为某些模板实例化后可能产生难以理解的错误信息。<br>✅ <strong>使用 SFINAE，错误信息会变得更简单，比如 “未找到匹配的重载函数”。</strong><br>✅ <strong>模板实例化本身是有开销的</strong>，尤其对于复杂模板而言，实例化可能带来较大编译成本。<br><img src="https://cdn-a.markji.com/files/6718aebb12bf596766b9afe2_hd.png?e=1740932078152&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:Zqkct74cpIBK0S1gAb-IUjoCuN0=" alt="图片1"></p>
+<h2 id="标准库中的-SFINAE-——-enable-if-t"><a href="#标准库中的-SFINAE-——-enable-if-t" class="headerlink" title="标准库中的 SFINAE —— enable_if_t"></a>标准库中的 SFINAE —— <code>enable_if_t</code></h2><p>标准库中的 <code>std::enable_if_t</code> 是 SFINAE 的典型应用。  </p>
+<p>在前面的知识点中，我们讨论了对类型的行为要求，例如：</p>
+<ul>
+<li>是否具有 <code>type</code> 成员</li>
+<li>是否支持加减运算</li>
+</ul>
+<p>使用 <code>enable_if</code> 可以为模板增加约束，从而控制哪些类型可以实例化该模板。</p>
+<p><strong>PS：本质上，<code>enable_if</code> 是“使得模板可用，如果满足某个条件”。</strong></p>
+<h2 id="enable-if-t-的原理"><a href="#enable-if-t-的原理" class="headerlink" title="enable_if_t 的原理"></a><code>enable_if_t</code> 的原理</h2><ul>
+<li><code>enable_if</code> <strong>在第一参数为 <code>true</code> 时</strong>，才会定义 <code>type</code> 成员；</li>
+<li>如果第一参数为 <code>false</code>，则 <strong>没有 <code>type</code> 成员</strong>，从而导致代换失败（SFINAE 机制生效）。<br><img src="https://cdn-a.markji.com/files/6718e6c4ccfef1e7ef90aa39_hd.png?e=1740932078152&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:Qic1PBCiJefrDMGGuvz70TXe6bQ=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/6718e87eccfef1e7ef91d10e_hd.png?e=1740932078152&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:_9RzhzxTtQxZkuO8DX9FiOHPmPk=" alt="图片1"></li>
+</ul>
+<hr>
+<p>SFINAE 是 C++ 模板元编程的核心技巧之一，合理使用可以提高代码的可读性和健壮性。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/03/02/%E5%A5%87%E5%BC%82%E6%A8%A1%E6%9D%BF%E9%80%92%E5%BD%92/" rel="prev" title="奇异模板递归">
+                  <i class="fa fa-angle-left"></i> 奇异模板递归
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">eatbreads</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
