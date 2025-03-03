@@ -186,7 +186,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2025-03-03 21:11:22 / 修改时间：21:15:06" itemprop="dateCreated datePublished" datetime="2025-03-03T21:11:22+08:00">2025-03-03</time>
+      <time title="创建时间：2025-03-03 21:11:22 / 修改时间：21:15:25" itemprop="dateCreated datePublished" datetime="2025-03-03T21:11:22+08:00">2025-03-03</time>
     </span>
 
   
@@ -199,7 +199,21 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          
+          <h1 id="尝试使用-vcpkg-运行项目"><a href="#尝试使用-vcpkg-运行项目" class="headerlink" title="尝试使用 vcpkg 运行项目"></a>尝试使用 vcpkg 运行项目</h1><h2 id="1-vcpkg-介绍"><a href="#1-vcpkg-介绍" class="headerlink" title="1. vcpkg 介绍"></a>1. vcpkg 介绍</h2><p><code>vcpkg</code> 安装库时，不会与系统中已存在的库发生冲突。它默认将安装的库存放在 <code>vcpkg_installed</code> 目录中，并通过 CMake 或编译命令来链接这些库。</p>
+<h2 id="2-安装-vcpkg"><a href="#2-安装-vcpkg" class="headerlink" title="2. 安装 vcpkg"></a>2. 安装 vcpkg</h2><p>进入 <code>home</code> 目录：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~</span><br></pre></td></tr></table></figure>
+<p>克隆 vcpkg 仓库：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/microsoft/vcpkg.git</span><br></pre></td></tr></table></figure>
+<p>进入 vcpkg 目录：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> vcpkg</span><br></pre></td></tr></table></figure>
+<p>编译 vcpkg：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bootstrap-vcpkg.sh</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-配置环境变量"><a href="#3-配置环境变量" class="headerlink" title="3. 配置环境变量"></a>3. 配置环境变量</h2><p>将 vcpkg 添加到环境变量，使其可以全局使用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export PATH=$HOME/vcpkg:$PATH&#x27;</span> &gt;&gt; ~/.bashrc</span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br></pre></td></tr></table></figure>
+<p>这样就可以在终端中直接使用 <code>vcpkg</code> 了。</p>
+<p><img src="https://cdn-a.markji.com/files/679de4005017c826b3e9f40f_hd.png?e=1741010058858&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:mZGz5l-YhfjDsvs3LRpJvTXC1hk=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/679de8315017c826b3ea3358_hd.png?e=1741010058858&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:Wz8CREnbJJWIZSXRYbQb1GB2qJY=" alt="图片1"></p>
+
       
     </div>
 
