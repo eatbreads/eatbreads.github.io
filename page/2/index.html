@@ -121,7 +121,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-count">28</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -147,6 +147,91 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://eatbreads.github.io/2025/02/27/layout%E5%92%8CUniform/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="eatbreads">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小面包的小站">
+      <meta itemprop="description" content="这边会分享C++,Go,Java,Docker,包括一些C++多线程和模板的心得或者知识,或者一些认为有价值的东西,比如一些计算机常见问题,一些好用的库,学习过程中遇到的问题等">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 小面包的小站">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/02/27/layout%E5%92%8CUniform/" class="post-title-link" itemprop="url">layout和Uniform</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-02-27 23:23:55" itemprop="dateCreated datePublished" datetime="2025-02-27T23:23:55+08:00">2025-02-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-02-28 00:13:08" itemprop="dateModified" datetime="2025-02-28T00:13:08+08:00">2025-02-28</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Layout-和-Uniform"><a href="#Layout-和-Uniform" class="headerlink" title="Layout 和 Uniform"></a>Layout 和 Uniform</h2><h3 id="Layout"><a href="#Layout" class="headerlink" title="Layout"></a>Layout</h3><ul>
+<li>顶点着色器接收的输入是比较特殊的，不是从流水线其他步骤传下来的。</li>
+<li>使用 <code>layout (location=?)</code> 可以使得在 CPU 上配置顶点属性。如果省略，默认会从 0 开始。 </li>
+<li>在 GLSL 中配置的数据是怎样的，C++ 文件中也需要使用相同的数字才能成功渲染。</li>
+</ul>
+<h3 id="Uniform"><a href="#Uniform" class="headerlink" title="Uniform"></a>Uniform</h3><ul>
+<li><code>uniform</code> 是用于 CPU 向 GPU 中的着色器发送数据的方式。</li>
+<li><code>uniform</code> 是一种全局数据，可以被任意着色器程序在任意阶段访问。</li>
+<li>可以在程序中定时更改参数，使得着色器定时从 CPU 中获取这些参数，进而重新绘制，从而实现闪烁等效果。<br><img src="https://cdn-a.markji.com/files/67bec28462d9c435859e4476_hd.png?e=1740672193731&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:ly4rw_uiseiou9VqwDBD5WP0Tjk=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67bec2c462d9c435859e4ae0_hd.png?e=1740672193731&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:dC0AapMNE87mV6gBGsdpjP9XPNA=" alt="图片1"></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -989,85 +1074,6 @@
 <hr>
 <h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>通过这次实现 SMTP 邮件发送功能的过程，我经历了从 C++ 到 Python，再到 Java 的集成工作。虽然 C++ 连接 SMTP 时遇到了一些问题，但最终通过调用 Python 脚本解决了问题。而在 Java 中集成时，也遇到了一些常见的框架版本不匹配问题，解决这些问题后邮件发送功能得以顺利实现。</p>
 <p><img src="https://cdn-a.markji.com/files/674ff77c2f7418f70a3eb83f_hd.png?e=1737642002782&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:SATav5nL6qzotwRGgW6wkky0vK8=" alt="图片1"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://eatbreads.github.io/2024/11/20/%E5%85%B3%E4%BA%8Eweb%E5%BA%93%E6%8A%9B%E5%87%BA%E5%BC%82%E5%B8%B8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="eatbreads">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="小面包的小站">
-      <meta itemprop="description" content="这边会分享C++,Go,Java,Docker,包括一些C++多线程和模板的心得或者知识,或者一些认为有价值的东西,比如一些计算机常见问题,一些好用的库,学习过程中遇到的问题等">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 小面包的小站">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/11/20/%E5%85%B3%E4%BA%8Eweb%E5%BA%93%E6%8A%9B%E5%87%BA%E5%BC%82%E5%B8%B8/" class="post-title-link" itemprop="url">关于web库抛出异常</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-11-20 22:01:53" itemprop="dateCreated datePublished" datetime="2024-11-20T22:01:53+08:00">2024-11-20</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-01-23 22:02:59" itemprop="dateModified" datetime="2025-01-23T22:02:59+08:00">2025-01-23</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>以下是你第四篇心得转化为 Hexo 博客格式的 Markdown 内容：</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># 关于 Web 库抛出异常的总结</span></span><br><span class="line"></span><br><span class="line"><span class="section">## 问题起因</span></span><br><span class="line"></span><br><span class="line">在处理报文时，舍友发送的报文中包含了微信的特殊字符，这导致了 JSON 数据格式不合法，最终抛出了 <span class="code">`login`</span> 异常，导致程序崩溃。这个问题让我意识到需要更好地处理异常，避免程序直接终止。</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"><span class="section">## 异常分析</span></span><br><span class="line"></span><br><span class="line">在分析过程中，我发现当 JSON 库在解析过程中遇到错误时，会抛出异常。而这个异常没有被正确处理，导致了程序的崩溃。为了避免这个问题，我决定在 <span class="code">`http_task`</span> 中捕获报文体解析时抛出的异常，并记录日志，而不是让程序直接崩溃。</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"><span class="section">## 捕获异常与调试</span></span><br><span class="line"></span><br><span class="line">通过查看函数调用堆栈，我能够准确定位到抛出异常的具体位置。基于此，我可以在正确的地方进行异常捕获，确保程序能够在遇到类似情况时优雅地处理异常。</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"><span class="section">## 使用 VSCode 作为调试器</span></span><br><span class="line"></span><br><span class="line">为了进一步调试这个问题，我尝试使用 VSCode 作为调试器。按照原本的 CMake 配置进行操作，VSCode 成功地启动了调试会话，帮助我更容易地跟踪程序的执行流程。</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"><span class="section">## 虚拟机性能问题</span></span><br><span class="line"></span><br><span class="line">在调试过程中，我发现虚拟机的性能较差，导致 Postman 访问虚拟机时非常卡，甚至严重影响了开发进程。尽管如此，这个问题在一段时间后自行缓解，可能是由于网络问题或资源分配不足。</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"><span class="section">## 异常捕获的最终解决方案</span></span><br><span class="line"></span><br><span class="line">通过不断调试和查看堆栈跟踪，我最终找到了抛出异常的具体点，并在该点添加了异常处理。这样，程序在遇到类似的报文异常时，不会再崩溃，而是会记录详细的日志，帮助我们进一步分析和修复问题。</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"><span class="section">## 小结</span></span><br><span class="line"></span><br><span class="line">通过这次处理 Web 库抛出异常的经验，我学到了如何在正确的地方捕获异常，并记录日志，避免程序崩溃。使用 VSCode 调试器也让我更高效地解决了问题，虽然在虚拟机上运行时遇到了一些性能问题，但最终通过耐心等待和分析，问题得以解决。</span><br><span class="line"></span><br><span class="line">![<span class="string">图片1</span>](<span class="link">链接地址</span>)</span><br></pre></td></tr></table></figure>
-
-<p>这个 Markdown 格式同样适用于 Hexo 博客。你可以根据实际需要替换 <code>![图片1](链接地址)</code> 部分的图片链接。如果有更多图片，可以继续按照此格式添加。</p>
 
       
     </div>
