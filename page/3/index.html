@@ -121,7 +121,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-count">29</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -147,6 +147,99 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://eatbreads.github.io/2024/11/21/%E4%BD%BF%E7%94%A8smtp%E6%9C%8D%E5%8A%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="eatbreads">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小面包的小站">
+      <meta itemprop="description" content="这边会分享C++,Go,Java,Docker,包括一些C++多线程和模板的心得或者知识,或者一些认为有价值的东西,比如一些计算机常见问题,一些好用的库,学习过程中遇到的问题等">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 小面包的小站">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/11/21/%E4%BD%BF%E7%94%A8smtp%E6%9C%8D%E5%8A%A1/" class="post-title-link" itemprop="url">使用smtp服务</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-11-21 21:58:01" itemprop="dateCreated datePublished" datetime="2024-11-21T21:58:01+08:00">2024-11-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-01-23 21:59:57" itemprop="dateModified" datetime="2025-01-23T21:59:57+08:00">2025-01-23</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="使用-SMTP-发送邮件的总结"><a href="#使用-SMTP-发送邮件的总结" class="headerlink" title="使用 SMTP 发送邮件的总结"></a>使用 SMTP 发送邮件的总结</h1><h2 id="初步尝试"><a href="#初步尝试" class="headerlink" title="初步尝试"></a>初步尝试</h2><p>在项目中，我需要实现邮件发送功能，于是决定使用 SMTP 协议来发送邮件。最初，我尝试使用 C++ 中的 <code>curl</code> 库进行连接，然而在连接时遇到了一些问题，主要是无法连接到服务器。<br><img src="https://cdn-a.markji.com/files/674fd76334a2d0766ac942e7_hd.png?e=1737642002782&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:CMPJAgcbZzD_uY6HWF7V6dFN2VI=" alt="图片1"></p>
+<h3 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h3><ul>
+<li>使用的端口 587 被拒绝连接。经过排查，发现最初可能是由于编码问题导致无法正确连接。<br><img src="https://cdn-a.markji.com/files/674fdb1c1dd56644358b2808_hd.png?e=1737642002782&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:Huu9GsLcuBAwvfOV6JvYRyt77Gg=" alt="图片1"></li>
+<li>虽然在 Python 中能成功连接 SMTP 服务，但在 C++ 中却无法连接成功。这让我陷入了困惑。</li>
+</ul>
+<hr>
+<h2 id="使用-Python-脚本解决问题"><a href="#使用-Python-脚本解决问题" class="headerlink" title="使用 Python 脚本解决问题"></a>使用 Python 脚本解决问题</h2><p>由于在 Python 中 SMTP 连接能够正常工作，我决定通过系统调用来直接运行 Python 脚本，解决 C++ 发送邮件的问题。最终，成功调用 Python 脚本实现了邮件发送功能。<br><img src="https://cdn-a.markji.com/files/674fdb1c1dd56644358b2808_hd.png?e=1737642002782&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:Huu9GsLcuBAwvfOV6JvYRyt77Gg=" alt="图片1"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> smtplib</span><br><span class="line"><span class="keyword">from</span> email.mime.text <span class="keyword">import</span> MIMEText</span><br><span class="line"></span><br><span class="line">msg = MIMEText(<span class="string">&quot;Hello World&quot;</span>)</span><br><span class="line">msg[<span class="string">&quot;Subject&quot;</span>] = <span class="string">&quot;SMTP Test&quot;</span></span><br><span class="line">msg[<span class="string">&quot;From&quot;</span>] = <span class="string">&quot;your-email@example.com&quot;</span></span><br><span class="line">msg[<span class="string">&quot;To&quot;</span>] = <span class="string">&quot;recipient@example.com&quot;</span></span><br><span class="line"></span><br><span class="line">server = smtplib.SMTP(<span class="string">&quot;smtp.example.com&quot;</span>, <span class="number">587</span>)</span><br><span class="line">server.starttls()</span><br><span class="line">server.login(<span class="string">&quot;your-email@example.com&quot;</span>, <span class="string">&quot;password&quot;</span>)</span><br><span class="line">server.sendmail(msg[<span class="string">&quot;From&quot;</span>], msg[<span class="string">&quot;To&quot;</span>], msg.as_string())</span><br><span class="line">server.quit()</span><br></pre></td></tr></table></figure>
+
+<p>我通过 C++ 使用 <code>system()</code> 函数来调用这个 Python 脚本，从而绕过了 C++ 中的 SMTP 连接问题。</p>
+<hr>
+<h2 id="集成到-Java-项目"><a href="#集成到-Java-项目" class="headerlink" title="集成到 Java 项目"></a>集成到 Java 项目</h2><p>一旦邮件发送功能在 C++ 中解决了，我开始将其集成到 Java 项目中。过程非常顺利，只需导入相关库即可实现。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> javax.mail.*;</span><br><span class="line"><span class="keyword">import</span> javax.mail.internet.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">EmailSender</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">sendEmail</span><span class="params">(String to, String subject, String body)</span> &#123;</span><br><span class="line">        <span class="comment">// Email sending code using JavaMail API</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然而，在集成过程中遇到了一个经典的 Spring Boot 版本问题。Spring Boot 版本不匹配导致无法解析依赖项。这个问题需要到网上查找解决方案，并确保正确配置了 <code>pom.xml</code> 中的依赖版本。</p>
+<hr>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>通过这次实现 SMTP 邮件发送功能的过程，我经历了从 C++ 到 Python，再到 Java 的集成工作。虽然 C++ 连接 SMTP 时遇到了一些问题，但最终通过调用 Python 脚本解决了问题。而在 Java 中集成时，也遇到了一些常见的框架版本不匹配问题，解决这些问题后邮件发送功能得以顺利实现。</p>
+<p><img src="https://cdn-a.markji.com/files/674ff77c2f7418f70a3eb83f_hd.png?e=1737642002782&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:SATav5nL6qzotwRGgW6wkky0vK8=" alt="图片1"></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 

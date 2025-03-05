@@ -121,7 +121,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-count">29</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -147,6 +147,102 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://eatbreads.github.io/2025/03/04/%E5%8A%A0%E5%85%A5%E6%97%8B%E8%BD%AC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="eatbreads">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小面包的小站">
+      <meta itemprop="description" content="这边会分享C++,Go,Java,Docker,包括一些C++多线程和模板的心得或者知识,或者一些认为有价值的东西,比如一些计算机常见问题,一些好用的库,学习过程中遇到的问题等">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 小面包的小站">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/03/04/%E5%8A%A0%E5%85%A5%E6%97%8B%E8%BD%AC/" class="post-title-link" itemprop="url">加入旋转</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2025-03-04 21:29:26 / 修改时间：21:31:12" itemprop="dateCreated datePublished" datetime="2025-03-04T21:29:26+08:00">2025-03-04</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="纹理映射与旋转"><a href="#纹理映射与旋转" class="headerlink" title="纹理映射与旋转"></a>纹理映射与旋转</h1><h2 id="1-纹理映射"><a href="#1-纹理映射" class="headerlink" title="1. 纹理映射"></a>1. 纹理映射</h2><p>在 OpenGL 中，可以使用 <code>sampler2D</code> 进行 2D 纹理采样：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uniform sampler2D ourTexture;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>该变量用于在片元着色器中获取 2D 纹理的像素值。</p>
+</blockquote>
+<hr>
+<h2 id="2-加入纹理过滤与旋转"><a href="#2-加入纹理过滤与旋转" class="headerlink" title="2. 加入纹理过滤与旋转"></a>2. 加入纹理过滤与旋转</h2><h3 id="步骤-1：转换为立方体"><a href="#步骤-1：转换为立方体" class="headerlink" title="步骤 1：转换为立方体"></a><strong>步骤 1：转换为立方体</strong></h3><ul>
+<li><strong>矩形 -&gt; 立方体</strong>：原始矩形的顶点坐标扩展为 24 个顶点，以适应立方体的六个面。</li>
+<li>每个面使用四个顶点，并绑定对应的纹理坐标。</li>
+</ul>
+<p>示例顶点数据（包含位置和纹理坐标）：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">GLfloat vertices[] = &#123;</span><br><span class="line">    <span class="comment">// 位置                // 纹理坐标</span></span><br><span class="line">    <span class="number">-0.5f</span>, <span class="number">-0.5f</span>, <span class="number">-0.5f</span>,  <span class="number">0.0f</span>, <span class="number">0.0f</span>,</span><br><span class="line">     <span class="number">0.5f</span>, <span class="number">-0.5f</span>, <span class="number">-0.5f</span>,  <span class="number">1.0f</span>, <span class="number">0.0f</span>,</span><br><span class="line">     <span class="number">0.5f</span>,  <span class="number">0.5f</span>, <span class="number">-0.5f</span>,  <span class="number">1.0f</span>, <span class="number">1.0f</span>,</span><br><span class="line">    <span class="number">-0.5f</span>,  <span class="number">0.5f</span>, <span class="number">-0.5f</span>,  <span class="number">0.0f</span>, <span class="number">1.0f</span>,</span><br><span class="line">    <span class="comment">// 其余五个面省略...</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="步骤-2：应用纹理过滤"><a href="#步骤-2：应用纹理过滤" class="headerlink" title="步骤 2：应用纹理过滤"></a><strong>步骤 2：应用纹理过滤</strong></h3><p>为了提升渲染质量，可以使用 <strong>线性过滤</strong>：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">glTexParameteri</span>(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);</span><br><span class="line"><span class="built_in">glTexParameteri</span>(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这样，在放大或缩小时，纹理会进行平滑过渡，避免像素化。</p>
+</blockquote>
+<hr>
+<h3 id="步骤-3：添加旋转"><a href="#步骤-3：添加旋转" class="headerlink" title="步骤 3：添加旋转"></a><strong>步骤 3：添加旋转</strong></h3><p>使用 <code>glm::rotate</code> 在片元着色器中动态旋转：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">model = glm::<span class="built_in">rotate</span>(model, (GLfloat)<span class="built_in">glfwGetTime</span>() * glm::<span class="built_in">radians</span>(<span class="number">50.0f</span>), glm::<span class="built_in">vec3</span>(<span class="number">0.5f</span>, <span class="number">1.0f</span>, <span class="number">0.0f</span>));</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这里 <code>glfwGetTime()</code> 让物体随着时间旋转，旋转轴为 <code>(0.5, 1.0, 0.0)</code>。</p>
+</blockquote>
+<hr>
+<p><img src="https://cdn-a.markji.com/files/67c70085684ac25add60662b_hd.png?e=1741097637264&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:C2_F2MO3wuBkT_xbflb-pLwYuCE=" alt="图片1"><br>这样，我们就成功将纹理映射应用到了立方体，并添加了旋转效果！🚀</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -908,82 +1004,6 @@
 <h3 id="多级渐远纹理（Mipmap）"><a href="#多级渐远纹理（Mipmap）" class="headerlink" title="多级渐远纹理（Mipmap）"></a>多级渐远纹理（Mipmap）</h3><ul>
 <li>OpenGL 还提供了多级渐远纹理（Mipmap），用于对远处的纹理进行低分辨率渲染，而对近处的纹理进行高分辨率渲染，从而优化性能并提高视觉效果。</li>
 </ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://eatbreads.github.io/2025/02/27/opengl%E7%BB%99%E9%A1%B6%E7%82%B9%E6%95%B0%E6%8D%AE%E5%A2%9E%E5%8A%A0%E6%9B%B4%E5%A4%9A%E5%B1%9E%E6%80%A7/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="eatbreads">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="小面包的小站">
-      <meta itemprop="description" content="这边会分享C++,Go,Java,Docker,包括一些C++多线程和模板的心得或者知识,或者一些认为有价值的东西,比如一些计算机常见问题,一些好用的库,学习过程中遇到的问题等">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 小面包的小站">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/02/27/opengl%E7%BB%99%E9%A1%B6%E7%82%B9%E6%95%B0%E6%8D%AE%E5%A2%9E%E5%8A%A0%E6%9B%B4%E5%A4%9A%E5%B1%9E%E6%80%A7/" class="post-title-link" itemprop="url">opengl给顶点数据增加更多属性</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2025-02-27 23:24:58" itemprop="dateCreated datePublished" datetime="2025-02-27T23:24:58+08:00">2025-02-27</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-02-28 00:14:40" itemprop="dateModified" datetime="2025-02-28T00:14:40+08:00">2025-02-28</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="给顶点数据中添加更多属性"><a href="#给顶点数据中添加更多属性" class="headerlink" title="给顶点数据中添加更多属性"></a>给顶点数据中添加更多属性</h2><p><img src="https://cdn-a.markji.com/files/67bec75062d9c435859f6691_hd.png?e=1740672193731&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:2wi5ClIvhXNorQsOPq1Whnf4mqs=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67bec7abfaa33a2f9faf35ff_hd.png?e=1740672193731&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:vhhNRHZ5ajGnL1F31YAyhkIhqc0=" alt="图片1"></p>
 
       
     </div>
