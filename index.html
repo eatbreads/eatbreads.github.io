@@ -121,7 +121,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">33</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -130,7 +130,7 @@
         <span class="site-state-item-name">分类</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">标签</span>
       </div>
   </nav>
@@ -286,6 +286,161 @@
 <li><strong>使用索引</strong>：避免无索引字段排序，尽量使用覆盖索引。</li>
 <li><strong>避免使用 <code>LIKE %XXX%</code></strong>：会导致全表扫描。</li>
 <li><strong>EXPLAIN 分析执行计划</strong>：查看是否走索引、是否全表扫描。</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://eatbreads.github.io/2025/03/08/MYSQL%E8%BF%9B%E9%98%B6%E5%92%8C%E6%9E%B6%E6%9E%84%E4%BC%98%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="eatbreads">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小面包的小站">
+      <meta itemprop="description" content="这边会分享C++,Go,Java,Docker,包括一些C++多线程和模板的心得或者知识,或者一些认为有价值的东西,比如一些计算机常见问题,一些好用的库,学习过程中遇到的问题等">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 小面包的小站">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/03/08/MYSQL%E8%BF%9B%E9%98%B6%E5%92%8C%E6%9E%B6%E6%9E%84%E4%BC%98%E5%8C%96/" class="post-title-link" itemprop="url">MySQL 进阶与架构优化</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2025-03-08 00:00:00 / 修改时间：23:32:38" itemprop="dateCreated datePublished" datetime="2025-03-08T00:00:00+08:00">2025-03-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="MySQL-事务与锁"><a href="#MySQL-事务与锁" class="headerlink" title="MySQL 事务与锁"></a>MySQL 事务与锁</h2><h3 id="锁的类型"><a href="#锁的类型" class="headerlink" title="锁的类型"></a>锁的类型</h3><ul>
+<li><strong>行级锁</strong>：锁住一行数据，提高并发能力。</li>
+<li><strong>表级锁</strong>：锁住整个表，适用于大批量操作。</li>
+<li><strong>意向锁</strong>：表级别的标记，用于加速行锁检测。</li>
+<li><strong>乐观锁</strong>：不加锁，依赖版本号控制并发更新。</li>
+<li><strong>悲观锁</strong>：先锁后操作，适用于高并发竞争场景。</li>
+</ul>
+<h3 id="死锁的处理"><a href="#死锁的处理" class="headerlink" title="死锁的处理"></a>死锁的处理</h3><ol>
+<li><strong>MySQL 死锁检测</strong>：自动回滚代价最小的事务。</li>
+<li><strong>手动 <code>KILL</code> 事务</strong>：手动终止长时间阻塞事务。</li>
+<li><strong>优化索引与 SQL 语句</strong>：减少锁冲突，降低死锁概率。</li>
+</ol>
+<h2 id="MySQL-读写分离与主从同步"><a href="#MySQL-读写分离与主从同步" class="headerlink" title="MySQL 读写分离与主从同步"></a>MySQL 读写分离与主从同步</h2><ul>
+<li><strong>主从架构</strong>：主库处理写操作，从库处理读操作。</li>
+<li><strong>Binlog 实现主从同步</strong>：<ol>
+<li>主库记录 Binlog。</li>
+<li>从库读取 Binlog 并重放。</li>
+</ol>
+</li>
+<li><strong>避免主从同步延迟</strong>：<ul>
+<li>关键业务查询主库。</li>
+<li>二次查询策略（从库查不到再查主库）。</li>
+</ul>
+</li>
+</ul>
+<h2 id="分库分表策略"><a href="#分库分表策略" class="headerlink" title="分库分表策略"></a>分库分表策略</h2><h3 id="水平拆分"><a href="#水平拆分" class="headerlink" title="水平拆分"></a><strong>水平拆分</strong></h3><ul>
+<li><strong>水平分表</strong>：将一张大表拆成多张小表（如 <code>users_0</code>, <code>users_1</code>）。</li>
+<li><strong>水平分库</strong>：多个数据库存相同结构的表，降低单库压力。</li>
+</ul>
+<h3 id="垂直拆分"><a href="#垂直拆分" class="headerlink" title="垂直拆分"></a><strong>垂直拆分</strong></h3><ul>
+<li><strong>垂直分表</strong>：将一张表的不同字段拆成多张表（如 <code>user_base</code> 和 <code>user_detail</code>）。</li>
+<li><strong>垂直分库</strong>：不同业务数据存入不同数据库（如 <code>order_db</code> 和 <code>user_db</code>）。</li>
+</ul>
+<h3 id="分库分表的挑战"><a href="#分库分表的挑战" class="headerlink" title="分库分表的挑战"></a><strong>分库分表的挑战</strong></h3><ul>
+<li><strong>跨库 JOIN 受限</strong>：需改为应用层查询或使用中间件（如 ShardingSphere）。</li>
+<li><strong>事务一致性问题</strong>：需要分布式事务方案（如 TCC、最终一致性）。</li>
+</ul>
+<h2 id="MySQL-高可用架构"><a href="#MySQL-高可用架构" class="headerlink" title="MySQL 高可用架构"></a>MySQL 高可用架构</h2><h3 id="避免单点故障"><a href="#避免单点故障" class="headerlink" title="避免单点故障"></a><strong>避免单点故障</strong></h3><ul>
+<li><strong>主从复制</strong>：单主多从架构，保证数据可用性。</li>
+<li><strong>MHA（MySQL High Availability）</strong>：自动故障切换，支持主从切换。</li>
+<li><strong>PXC（Percona XtraDB Cluster）</strong>：多主集群，保证高可用。</li>
+</ul>
+<h3 id="不停机数据迁移"><a href="#不停机数据迁移" class="headerlink" title="不停机数据迁移"></a><strong>不停机数据迁移</strong></h3><ol>
+<li><strong>双写方案</strong><ul>
+<li>代码层面双写：新旧库同步写入。</li>
+<li>业务低峰期停主从同步，开启双写。</li>
+<li>逐步灰度切流，保证数据一致。</li>
+</ul>
+</li>
+<li><strong>Flink CDC 方案</strong><ul>
+<li>监听 Binlog 变更，实时同步数据。</li>
+</ul>
+</li>
+</ol>
+<h2 id="MySQL-存储与性能优化"><a href="#MySQL-存储与性能优化" class="headerlink" title="MySQL 存储与性能优化"></a>MySQL 存储与性能优化</h2><h3 id="WAL（Write-Ahead-Logging）"><a href="#WAL（Write-Ahead-Logging）" class="headerlink" title="WAL（Write-Ahead Logging）"></a><strong>WAL（Write-Ahead Logging）</strong></h3><ul>
+<li><strong>先写日志再写数据</strong>，确保数据持久化。</li>
+<li><strong>降低磁盘 IO</strong>，提高事务吞吐量。</li>
+</ul>
+<h3 id="Doublewrite-Buffer"><a href="#Doublewrite-Buffer" class="headerlink" title="Doublewrite Buffer"></a><strong>Doublewrite Buffer</strong></h3><ul>
+<li><strong>防止数据写入失败</strong>，避免数据损坏。</li>
+</ul>
+<h3 id="MySQL-缓存优化"><a href="#MySQL-缓存优化" class="headerlink" title="MySQL 缓存优化"></a><strong>MySQL 缓存优化</strong></h3><ul>
+<li><strong>Buffer Pool</strong>：缓存常用数据，减少磁盘 IO。</li>
+<li><strong>Query Cache（已废弃）</strong>：缓存查询结果，减少 SQL 解析时间。</li>
+</ul>
+<h2 id="MySQL-其他高级特性"><a href="#MySQL-其他高级特性" class="headerlink" title="MySQL 其他高级特性"></a>MySQL 其他高级特性</h2><h3 id="存在性查询：EXISTS-vs-IN"><a href="#存在性查询：EXISTS-vs-IN" class="headerlink" title="存在性查询：EXISTS vs. IN"></a><strong>存在性查询：EXISTS vs. IN</strong></h3><ul>
+<li><strong>EXISTS</strong>：适用于大数据集合，只关心是否存在。</li>
+<li><strong>IN</strong>：适用于小数据集合，直接匹配筛选。</li>
+</ul>
+<h3 id="存储过程"><a href="#存储过程" class="headerlink" title="存储过程"></a><strong>存储过程</strong></h3><ul>
+<li><strong>优点</strong>：封装逻辑，提高性能。</li>
+<li><strong>缺点</strong>：<ul>
+<li>可移植性差，不同数据库的 SQL 语法可能不兼容。</li>
+<li>调试困难，不利于代码管理（阿里开发手册不推荐）。</li>
+</ul>
+</li>
 </ul>
 
       
@@ -1168,77 +1323,6 @@
 <li>避免了传统的向下转换（downcasting）导致的类型错误。</li>
 </ul>
 <h2 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h2><p>以后可以尝试<strong>都使用 CRTP</strong> 来编写代码，以免去运行时开销。其实改动并不难。<br><img src="https://cdn-a.markji.com/files/671efd0edee1d69b5795e9e8_hd.png?e=1740932078154&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:eTV6e0Uq9JPfOinXXfpIMFBNfrQ=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/671efe26dee1d69b579632ad_hd.png?e=1740932078154&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:xdubiw1N2IuVkkZDpZFaa3Zt7zw=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/671efe71dee1d69b5796771c_hd.png?e=1740932078154&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:2SKkuT0tqcQk8W5ETJdWlTmGC0M=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/671effd53f407d0defb03c91_hd.png?e=1740932078154&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:266HrCtrSmLMkWx15DEJq9Tg2CI=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/671f0372dee1d69b57977b98_hd.png?e=1740932078154&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:5rrSzhrY_9WCbvminQU3CnWYDzk=" alt="图片1"><br><img src="/%E9%93%BEhttps:/cdn-a.markji.com/files/671f0407dee1d69b57979395_hd.png?e=1740932078154&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:0y2tMdhuqFIb51or_ieuJTP55wA=" alt="图片1"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://eatbreads.github.io/2025/03/01/%E9%A2%9C%E8%89%B2%E4%B8%8E%E5%85%89%E7%85%A7%E5%92%8C%E5%86%AF%E6%B0%8F%E5%85%89%E6%BA%90/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="eatbreads">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="小面包的小站">
-      <meta itemprop="description" content="这边会分享C++,Go,Java,Docker,包括一些C++多线程和模板的心得或者知识,或者一些认为有价值的东西,比如一些计算机常见问题,一些好用的库,学习过程中遇到的问题等">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 小面包的小站">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/03/01/%E9%A2%9C%E8%89%B2%E4%B8%8E%E5%85%89%E7%85%A7%E5%92%8C%E5%86%AF%E6%B0%8F%E5%85%89%E6%BA%90/" class="post-title-link" itemprop="url">颜色与光照和冯氏光源</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2025-03-01 22:27:42 / 修改时间：22:32:21" itemprop="dateCreated datePublished" datetime="2025-03-01T22:27:42+08:00">2025-03-01</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="颜色与光源"><a href="#颜色与光源" class="headerlink" title="颜色与光源"></a>颜色与光源</h1><p><img src="https://cdn-a.markji.com/files/67c15ba5dc26a985b3b34fdc_hd.png?e=1740841796029&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:yx4H1nkKytF1Cm7g3oJq7090FfY=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67c16188dc26a985b3b48403_hd.png?e=1740841796029&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:56MP6kELtAyQZFdJzSF3WMfqVcE=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67c16377b18af440dfe9778b_hd.png?e=1740841796029&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:tIJYO-KENMom4Ws2gUWyi-3_oZY=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67c16554dc26a985b3b53c79_hd.png?e=1740841796029&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:cglFWhSiTsRj49mrrMBojIWgER4=" alt="图片1"></p>
-<h2 id="冯氏光照"><a href="#冯氏光照" class="headerlink" title="冯氏光照"></a>冯氏光照</h2><p><img src="https://cdn-a.markji.com/files/67c1660eb18af440dfea20e9_hd.png?e=1740841796029&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:K_pslwGHQp1g_WlArTLIklZzsyg=" alt="图片1"><br>在顶点着色器（vertex shader）中实现冯氏光照会导致较差的效果，而在片元着色器（fragment shader）中实现，尽管计算成本较高，但能获得更好的渲染结果。</p>
 
       
     </div>
