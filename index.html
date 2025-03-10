@@ -121,7 +121,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -155,6 +155,171 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://eatbreads.github.io/2025/03/10/linux%E7%9F%A5%E8%AF%86%E7%AC%AC%E4%BA%8C%E5%BC%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="eatbreads">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小面包的小站">
+      <meta itemprop="description" content="这边会分享C++,Go,Java,Docker,包括一些C++多线程和模板的心得或者知识,或者一些认为有价值的东西,比如一些计算机常见问题,一些好用的库,学习过程中遇到的问题等">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 小面包的小站">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/03/10/linux%E7%9F%A5%E8%AF%86%E7%AC%AC%E4%BA%8C%E5%BC%B9/" class="post-title-link" itemprop="url">linux知识第二弹</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2025-03-10 23:35:08 / 修改时间：23:37:56" itemprop="dateCreated datePublished" datetime="2025-03-10T23:35:08+08:00">2025-03-10</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="Linux-知识总结"><a href="#Linux-知识总结" class="headerlink" title="Linux 知识总结"></a>Linux 知识总结</h3><h4 id="加载和卸载-Linux-内核模块"><a href="#加载和卸载-Linux-内核模块" class="headerlink" title="加载和卸载 Linux 内核模块"></a>加载和卸载 Linux 内核模块</h4><ul>
+<li>使用 <code>insmod</code> 或 <code>modprobe</code> 来加载内核模块（WSL 不支持，输入后显示一个都没启用）。</li>
+</ul>
+<h4 id="配置静态-IP"><a href="#配置静态-IP" class="headerlink" title="配置静态 IP"></a>配置静态 IP</h4><ol>
+<li>先使用 <code>ip link show</code> 查看可用的网卡。</li>
+<li>编辑 <code>/etc/network/interfaces</code> 并写入（替换为自己的网卡名称）：<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">auto eth0</span><br><span class="line">iface eth0 inet static</span><br><span class="line">    address 192.168.1.100</span><br><span class="line">    netmask 255.255.255.0</span><br><span class="line">    gateway 192.168.1.1</span><br><span class="line">    dns-nameservers 8.8.8.8 8.8.4.4</span><br></pre></td></tr></table></figure></li>
+<li>执行 <code>sudo systemctl restart networking</code> 重启网络。</li>
+</ol>
+<hr>
+<h4 id="Linux-的常见目录"><a href="#Linux-的常见目录" class="headerlink" title="Linux 的常见目录"></a>Linux 的常见目录</h4><ul>
+<li><strong><code>/bin</code></strong>：存放用户基本命令，如 <code>ls</code>、<code>cp</code>、<code>mv</code> 等。</li>
+<li><strong><code>/sbin</code></strong>：存放系统级命令，如 <code>ifconfig</code> 和 <code>reboot</code>。</li>
+<li><strong><code>/boot</code></strong>：存放启动程序和内核映像文件。</li>
+<li><strong><code>/etc</code></strong>：存放环境变量、系统配置等。</li>
+<li><strong><code>/lib</code></strong>：存放共享库和内核模块。</li>
+<li><strong><code>/mnt</code></strong>：作为文件系统的挂载点。</li>
+<li><strong><code>/opt</code></strong>：可选目录，存放第三方软件包。</li>
+<li><strong><code>/proc</code></strong>：虚拟文件系统，提供系统进程和内核信息。</li>
+<li><strong><code>/tmp</code></strong>：临时目录，重启系统后会清空。</li>
+<li><strong><code>/usr</code></strong>：存放用户程序及其库文件。</li>
+<li><strong><code>/var</code></strong>：存放经常变化的文件，如日志等。</li>
+</ul>
+<hr>
+<h4 id="SELinux"><a href="#SELinux" class="headerlink" title="SELinux"></a>SELinux</h4><ul>
+<li>是一个用于加强系统安全性的工具，类似于一个安全策略管理员，确保进程仅能访问所需的资源。</li>
+</ul>
+<hr>
+<h4 id="Linux-的日志系统"><a href="#Linux-的日志系统" class="headerlink" title="Linux 的日志系统"></a>Linux 的日志系统</h4><ul>
+<li>主要依赖 <code>syslog</code> 记录系统消息。</li>
+<li>使用 <code>journalctl</code> 查询日志。</li>
+<li>查看 <code>/var/log/syslog</code> 中的日志。</li>
+</ul>
+<hr>
+<h4 id="磁盘配额管理"><a href="#磁盘配额管理" class="headerlink" title="磁盘配额管理"></a>磁盘配额管理</h4><ul>
+<li>通过安装 <code>quota</code> 工具，并编写配置文件、重新挂载分区等来实现磁盘配额管理。</li>
+</ul>
+<hr>
+<h4 id="使用-netstat-查看网络连接"><a href="#使用-netstat-查看网络连接" class="headerlink" title="使用 netstat 查看网络连接"></a>使用 <code>netstat</code> 查看网络连接</h4><ul>
+<li><code>netstat -an</code>：显示所有的连接（包括待建立连接）。</li>
+<li><code>netstat -tuln</code>：显示所有监听的 TCP 和 UDP 端口。</li>
+</ul>
+<hr>
+<h4 id="查看和管理系统服务"><a href="#查看和管理系统服务" class="headerlink" title="查看和管理系统服务"></a>查看和管理系统服务</h4><ul>
+<li><strong>查看服务</strong>：<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl list-units --<span class="built_in">type</span>=service</span><br></pre></td></tr></table></figure></li>
+<li><strong>启动&#x2F;停止&#x2F;重启&#x2F;开机自启&#x2F;取消自启</strong>：<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start/stop/restart/enable/disable &lt;服务名&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<hr>
+<h4 id="使用-SSH-远程登录"><a href="#使用-SSH-远程登录" class="headerlink" title="使用 SSH 远程登录"></a>使用 SSH 远程登录</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh root@主机名</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="常见-Linux-系统故障及解决"><a href="#常见-Linux-系统故障及解决" class="headerlink" title="常见 Linux 系统故障及解决"></a>常见 Linux 系统故障及解决</h4><ul>
+<li><strong>磁盘耗尽导致系统无法正常运行</strong><ol>
+<li>确认故障：<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">df</span> -h</span><br></pre></td></tr></table></figure></li>
+<li>查找占用空间的目录和文件：<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">du</span> -sh /*</span><br></pre></td></tr></table></figure></li>
+<li>定位并清理大文件。</li>
+</ol>
+</li>
+</ul>
+<hr>
+<h4 id="strace-调试用户空间程序"><a href="#strace-调试用户空间程序" class="headerlink" title="strace 调试用户空间程序"></a><code>strace</code> 调试用户空间程序</h4><ul>
+<li><strong>重定向输出到文件</strong>：<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">strace -o output.txt ./main</span><br></pre></td></tr></table></figure></li>
+<li><strong>附加到正在运行的进程</strong>：<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">strace -p &lt;PID&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<hr>
+<h4 id="tcpdump-网络抓包分析"><a href="#tcpdump-网络抓包分析" class="headerlink" title="tcpdump 网络抓包分析"></a><code>tcpdump</code> 网络抓包分析</h4><ul>
+<li><strong>指定监听的网络接口&#x2F;端口</strong>：<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -i eth0 port 80</span><br></pre></td></tr></table></figure></li>
+<li><strong>保存数据包到文件</strong>：<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -w capture.pcap</span><br></pre></td></tr></table></figure></li>
+</ul>
+<hr>
+<h4 id="排查进程占用的文件-端口"><a href="#排查进程占用的文件-端口" class="headerlink" title="排查进程占用的文件&#x2F;端口"></a>排查进程占用的文件&#x2F;端口</h4><ul>
+<li><strong>查看某个文件被哪个进程占用</strong>：<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsof /path/file</span><br></pre></td></tr></table></figure></li>
+<li><strong>查看占用端口的进程</strong>：<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsof -i :8080</span><br></pre></td></tr></table></figure></li>
+<li><strong>杀死进程</strong>：<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">kill</span> -9 PID</span><br></pre></td></tr></table></figure></li>
+</ul>
+<hr>
+<h4 id="排查网络问题和故障"><a href="#排查网络问题和故障" class="headerlink" title="排查网络问题和故障"></a>排查网络问题和故障</h4><ol>
+<li>检查 IP 地址：<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ifconfig 或 ip addr</span><br></pre></td></tr></table></figure></li>
+<li>检查默认路由&#x2F;网关：<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">route -n</span><br></pre></td></tr></table></figure></li>
+<li>检查 DNS：<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> /etc/resolv.conf</span><br></pre></td></tr></table></figure></li>
+<li>测试与外部的连接：<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ping &lt;目标地址&gt;</span><br></pre></td></tr></table></figure></li>
+<li>如果仍然无网络连接，可尝试重启网络服务：<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart network</span><br></pre></td></tr></table></figure></li>
+</ol>
+<hr>
+<h4 id="排查内存泄漏"><a href="#排查内存泄漏" class="headerlink" title="排查内存泄漏"></a>排查内存泄漏</h4><ol>
+<li><strong>查看整体内存使用情况</strong>：<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">top</span><br></pre></td></tr></table></figure></li>
+<li><strong>按内存占用排序进程</strong>：<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps aux --<span class="built_in">sort</span>=-%mem</span><br></pre></td></tr></table></figure></li>
+<li><strong>使用 <code>valgrind</code> 分析程序的内存使用</strong>：<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">valgrind --leak-check=<span class="built_in">yes</span> ./main</span><br></pre></td></tr></table></figure></li>
+<li><strong>查看进程的内存映射情况</strong>：<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pmap &lt;PID&gt;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<hr>
+<h4 id="CFS（完全公平调度）"><a href="#CFS（完全公平调度）" class="headerlink" title="CFS（完全公平调度）"></a>CFS（完全公平调度）</h4><ul>
+<li><strong>CFS（Completely Fair Scheduler）</strong> 是 Linux 内核的调度策略。</li>
+<li>每个任务按照 <strong>权重</strong> 分配 CPU 时间，权重由任务的 <strong>nice 值</strong> 决定。</li>
+<li><strong>内部使用红黑树</strong> 管理任务，以确保公平性。</li>
+</ul>
+<hr>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1279,95 +1444,6 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/mnt/c/（C 盘路径）</span><br></pre></td></tr></table></figure>
 <p>可以直接访问 Windows 里的图片文件。  </p>
 <p>最终编译运行成功，并成功显示图片！ 🎉<br><img src="https://cdn-a.markji.com/files/67b7f45da5c2cef46265e459_hd.png?e=1740988820039&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:FVDLnFenUDMYp4etgqXF7xGFeyY=" alt="图片1"><br>&#96;&#96;&#96;</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://eatbreads.github.io/2025/03/02/SFINAE%E5%9C%A8c-%E6%A8%A1%E6%9D%BF%E4%B8%AD%E7%9A%84%E4%BD%BF%E7%94%A8%E5%8F%8A%E6%A0%87%E5%87%86%E5%BA%93%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="eatbreads">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="小面包的小站">
-      <meta itemprop="description" content="这边会分享C++,Go,Java,Docker,包括一些C++多线程和模板的心得或者知识,或者一些认为有价值的东西,比如一些计算机常见问题,一些好用的库,学习过程中遇到的问题等">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 小面包的小站">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/03/02/SFINAE%E5%9C%A8c-%E6%A8%A1%E6%9D%BF%E4%B8%AD%E7%9A%84%E4%BD%BF%E7%94%A8%E5%8F%8A%E6%A0%87%E5%87%86%E5%BA%93%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" class="post-title-link" itemprop="url">SFINAE在c++模板中的使用及标准库中的应用</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2025-03-02 23:35:44 / 修改时间：23:37:45" itemprop="dateCreated datePublished" datetime="2025-03-02T23:35:44+08:00">2025-03-02</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="代换失败不是错误（SFINAE）"><a href="#代换失败不是错误（SFINAE）" class="headerlink" title="代换失败不是错误（SFINAE）"></a>代换失败不是错误（SFINAE）</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>SFINAE（Substitution Failure Is Not An Error）意为<strong>代换失败不是错误</strong>，这是 C++ 模板机制中的一个重要特性。</p>
-<p><strong>核心思想</strong>：<br>当模板参数推导失败时，编译器不会报错，而是会尝试匹配其他可能的函数或模板。因此，它可以避免<strong>不合理的模板实例化</strong>，防止<strong>不该匹配的类型</strong>被错误实例化。<br><img src="https://cdn-a.markji.com/files/6718a31157833190dc44516e_hd.png?e=1740932078152&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:RUdsJ4FONhfWNo9_YiTTcVxvcrk=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/6718a366f0750c5d4663751b_hd.png?e=1740932078152&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:o6yHRfpeWxDBQnRrolze3ZVy3a0=" alt="图片1"><br><strong>PS：非常非常重要！</strong></p>
-<h2 id="代换失败的规则"><a href="#代换失败的规则" class="headerlink" title="代换失败的规则"></a>代换失败的规则</h2><p>任何<strong>导致代换的模板实参</strong>不符合 C++ 语法（即<strong>非良构</strong>）的情况，都会导致代换失败，而不会引发编译错误。  </p>
-<p><strong>PS：非良构</strong>表示不符合 C++ 的基本语法。<br><img src="https://cdn-a.markji.com/files/6718aa5af0750c5d46665066_hd.png?e=1740932078152&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:x751lLJmCrCiHlKE9qCWN48oK2g=" alt="图片1"></p>
-<h2 id="SFINAE-的具体使用"><a href="#SFINAE-的具体使用" class="headerlink" title="SFINAE 的具体使用"></a>SFINAE 的具体使用</h2><p>通常，即使不使用 SFINAE，C++ 也会在模板实例化后报错。但 SFINAE 的关键在于：  </p>
-<p>✅ <strong>SFINAE 使得错误发生在实例化前，而非实例化后。</strong><br>✅ <strong>能不实例化就不要实例化</strong>，因为某些模板实例化后可能产生难以理解的错误信息。<br>✅ <strong>使用 SFINAE，错误信息会变得更简单，比如 “未找到匹配的重载函数”。</strong><br>✅ <strong>模板实例化本身是有开销的</strong>，尤其对于复杂模板而言，实例化可能带来较大编译成本。<br><img src="https://cdn-a.markji.com/files/6718aebb12bf596766b9afe2_hd.png?e=1740932078152&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:Zqkct74cpIBK0S1gAb-IUjoCuN0=" alt="图片1"></p>
-<h2 id="标准库中的-SFINAE-——-enable-if-t"><a href="#标准库中的-SFINAE-——-enable-if-t" class="headerlink" title="标准库中的 SFINAE —— enable_if_t"></a>标准库中的 SFINAE —— <code>enable_if_t</code></h2><p>标准库中的 <code>std::enable_if_t</code> 是 SFINAE 的典型应用。  </p>
-<p>在前面的知识点中，我们讨论了对类型的行为要求，例如：</p>
-<ul>
-<li>是否具有 <code>type</code> 成员</li>
-<li>是否支持加减运算</li>
-</ul>
-<p>使用 <code>enable_if</code> 可以为模板增加约束，从而控制哪些类型可以实例化该模板。</p>
-<p><strong>PS：本质上，<code>enable_if</code> 是“使得模板可用，如果满足某个条件”。</strong></p>
-<h2 id="enable-if-t-的原理"><a href="#enable-if-t-的原理" class="headerlink" title="enable_if_t 的原理"></a><code>enable_if_t</code> 的原理</h2><ul>
-<li><code>enable_if</code> <strong>在第一参数为 <code>true</code> 时</strong>，才会定义 <code>type</code> 成员；</li>
-<li>如果第一参数为 <code>false</code>，则 <strong>没有 <code>type</code> 成员</strong>，从而导致代换失败（SFINAE 机制生效）。<br><img src="https://cdn-a.markji.com/files/6718e6c4ccfef1e7ef90aa39_hd.png?e=1740932078152&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:Qic1PBCiJefrDMGGuvz70TXe6bQ=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/6718e87eccfef1e7ef91d10e_hd.png?e=1740932078152&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:_9RzhzxTtQxZkuO8DX9FiOHPmPk=" alt="图片1"></li>
-</ul>
-<hr>
-<p>SFINAE 是 C++ 模板元编程的核心技巧之一，合理使用可以提高代码的可读性和健壮性。</p>
 
       
     </div>

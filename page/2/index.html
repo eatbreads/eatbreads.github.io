@@ -121,7 +121,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -155,6 +155,95 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://eatbreads.github.io/2025/03/02/SFINAE%E5%9C%A8c-%E6%A8%A1%E6%9D%BF%E4%B8%AD%E7%9A%84%E4%BD%BF%E7%94%A8%E5%8F%8A%E6%A0%87%E5%87%86%E5%BA%93%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="eatbreads">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小面包的小站">
+      <meta itemprop="description" content="这边会分享C++,Go,Java,Docker,包括一些C++多线程和模板的心得或者知识,或者一些认为有价值的东西,比如一些计算机常见问题,一些好用的库,学习过程中遇到的问题等">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 小面包的小站">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/03/02/SFINAE%E5%9C%A8c-%E6%A8%A1%E6%9D%BF%E4%B8%AD%E7%9A%84%E4%BD%BF%E7%94%A8%E5%8F%8A%E6%A0%87%E5%87%86%E5%BA%93%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" class="post-title-link" itemprop="url">SFINAE在c++模板中的使用及标准库中的应用</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2025-03-02 23:35:44 / 修改时间：23:37:45" itemprop="dateCreated datePublished" datetime="2025-03-02T23:35:44+08:00">2025-03-02</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="代换失败不是错误（SFINAE）"><a href="#代换失败不是错误（SFINAE）" class="headerlink" title="代换失败不是错误（SFINAE）"></a>代换失败不是错误（SFINAE）</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>SFINAE（Substitution Failure Is Not An Error）意为<strong>代换失败不是错误</strong>，这是 C++ 模板机制中的一个重要特性。</p>
+<p><strong>核心思想</strong>：<br>当模板参数推导失败时，编译器不会报错，而是会尝试匹配其他可能的函数或模板。因此，它可以避免<strong>不合理的模板实例化</strong>，防止<strong>不该匹配的类型</strong>被错误实例化。<br><img src="https://cdn-a.markji.com/files/6718a31157833190dc44516e_hd.png?e=1740932078152&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:RUdsJ4FONhfWNo9_YiTTcVxvcrk=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/6718a366f0750c5d4663751b_hd.png?e=1740932078152&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:o6yHRfpeWxDBQnRrolze3ZVy3a0=" alt="图片1"><br><strong>PS：非常非常重要！</strong></p>
+<h2 id="代换失败的规则"><a href="#代换失败的规则" class="headerlink" title="代换失败的规则"></a>代换失败的规则</h2><p>任何<strong>导致代换的模板实参</strong>不符合 C++ 语法（即<strong>非良构</strong>）的情况，都会导致代换失败，而不会引发编译错误。  </p>
+<p><strong>PS：非良构</strong>表示不符合 C++ 的基本语法。<br><img src="https://cdn-a.markji.com/files/6718aa5af0750c5d46665066_hd.png?e=1740932078152&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:x751lLJmCrCiHlKE9qCWN48oK2g=" alt="图片1"></p>
+<h2 id="SFINAE-的具体使用"><a href="#SFINAE-的具体使用" class="headerlink" title="SFINAE 的具体使用"></a>SFINAE 的具体使用</h2><p>通常，即使不使用 SFINAE，C++ 也会在模板实例化后报错。但 SFINAE 的关键在于：  </p>
+<p>✅ <strong>SFINAE 使得错误发生在实例化前，而非实例化后。</strong><br>✅ <strong>能不实例化就不要实例化</strong>，因为某些模板实例化后可能产生难以理解的错误信息。<br>✅ <strong>使用 SFINAE，错误信息会变得更简单，比如 “未找到匹配的重载函数”。</strong><br>✅ <strong>模板实例化本身是有开销的</strong>，尤其对于复杂模板而言，实例化可能带来较大编译成本。<br><img src="https://cdn-a.markji.com/files/6718aebb12bf596766b9afe2_hd.png?e=1740932078152&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:Zqkct74cpIBK0S1gAb-IUjoCuN0=" alt="图片1"></p>
+<h2 id="标准库中的-SFINAE-——-enable-if-t"><a href="#标准库中的-SFINAE-——-enable-if-t" class="headerlink" title="标准库中的 SFINAE —— enable_if_t"></a>标准库中的 SFINAE —— <code>enable_if_t</code></h2><p>标准库中的 <code>std::enable_if_t</code> 是 SFINAE 的典型应用。  </p>
+<p>在前面的知识点中，我们讨论了对类型的行为要求，例如：</p>
+<ul>
+<li>是否具有 <code>type</code> 成员</li>
+<li>是否支持加减运算</li>
+</ul>
+<p>使用 <code>enable_if</code> 可以为模板增加约束，从而控制哪些类型可以实例化该模板。</p>
+<p><strong>PS：本质上，<code>enable_if</code> 是“使得模板可用，如果满足某个条件”。</strong></p>
+<h2 id="enable-if-t-的原理"><a href="#enable-if-t-的原理" class="headerlink" title="enable_if_t 的原理"></a><code>enable_if_t</code> 的原理</h2><ul>
+<li><code>enable_if</code> <strong>在第一参数为 <code>true</code> 时</strong>，才会定义 <code>type</code> 成员；</li>
+<li>如果第一参数为 <code>false</code>，则 <strong>没有 <code>type</code> 成员</strong>，从而导致代换失败（SFINAE 机制生效）。<br><img src="https://cdn-a.markji.com/files/6718e6c4ccfef1e7ef90aa39_hd.png?e=1740932078152&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:Qic1PBCiJefrDMGGuvz70TXe6bQ=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/6718e87eccfef1e7ef91d10e_hd.png?e=1740932078152&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:_9RzhzxTtQxZkuO8DX9FiOHPmPk=" alt="图片1"></li>
+</ul>
+<hr>
+<p>SFINAE 是 C++ 模板元编程的核心技巧之一，合理使用可以提高代码的可读性和健壮性。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -871,83 +960,6 @@
 <li><strong>VBO</strong> 用于存储顶点数据，在初始化阶段配置完成后，VAO会记住这些配置。</li>
 <li>这种设计提高了性能，减少了重复绑定的开销。<br><img src="https://cdn-a.markji.com/files/67bd80bb2aecbcb9d81f88c5_hd.png?e=1740477180455&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:U0zMDH06f4fhpnCYyU3MjOSye08=" alt="Hexo Logo"><br><img src="https://cdn-a.markji.com/files/67bd86d02aecbcb9d8209e5f_hd.png?e=1740477180455&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:qAwFOT8E9BrvNYcWHdGv8j2J7-k=" alt="Hexo Logo"><br><img src="https://cdn-a.markji.com/files/67bd87ce54f5add59f684851_hd.png?e=1740477180455&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:ftgvcLVjBHs0_y4ikW_YjLKTOCU=" alt="Hexo Logo"></li>
 </ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://eatbreads.github.io/2025/02/25/opengl-qt%E5%88%9D%E5%B0%9D%E8%AF%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="eatbreads">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="小面包的小站">
-      <meta itemprop="description" content="这边会分享C++,Go,Java,Docker,包括一些C++多线程和模板的心得或者知识,或者一些认为有价值的东西,比如一些计算机常见问题,一些好用的库,学习过程中遇到的问题等">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 小面包的小站">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/02/25/opengl-qt%E5%88%9D%E5%B0%9D%E8%AF%95/" class="post-title-link" itemprop="url">opengl+qt初尝试</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2025-02-25 19:51:22 / 修改时间：19:54:58" itemprop="dateCreated datePublished" datetime="2025-02-25T19:51:22+08:00">2025-02-25</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="我的OpenGL-Qt初次使用日记"><a href="#我的OpenGL-Qt初次使用日记" class="headerlink" title="我的OpenGL + Qt初次使用日记"></a>我的OpenGL + Qt初次使用日记</h1><p>今天，我开启了OpenGL与Qt结合使用,以下是我初次使用过程中的操作记录。</p>
-<h2 id="1-创建Qt的MainWindow"><a href="#1-创建Qt的MainWindow" class="headerlink" title="1. 创建Qt的MainWindow"></a>1. 创建Qt的MainWindow</h2><p>我首先使用cmake来正常创建Qt项目的MainWindow</p>
-<h2 id="2-编辑菜单"><a href="#2-编辑菜单" class="headerlink" title="2. 编辑菜单"></a>2. 编辑菜单</h2><p>完成MainWindow的创建后，我着手编辑菜单。菜单编辑过程没有遇到太大阻碍</p>
-<h2 id="3-添加工具栏（Tool-Bar）和操作（Action）"><a href="#3-添加工具栏（Tool-Bar）和操作（Action）" class="headerlink" title="3. 添加工具栏（Tool Bar）和操作（Action）"></a>3. 添加工具栏（Tool Bar）和操作（Action）</h2><ul>
-<li><strong>添加工具栏</strong>：在编辑过程中，我很直观地发现右键点击相关区域就可以轻松加入一个工具栏。这个操作很简便，使得界面布局变得更加丰富和可定制。</li>
-<li><strong>添加操作（Action）</strong>：接着，我注意到点击下方左边的一个<code>New</code>选项，就可以增加一个<code>action</code>。</li>
-</ul>
-<p>虽然这是初次将OpenGL与Qt结合使用，但在这个过程中我对Qt框架的基本操作有了进一步的认识，也为后续探索OpenGL和Qt在图形渲染、界面构建等方面的复杂交互打下了良好的基础。<br><img src="https://cdn-a.markji.com/files/67bd0cb56b78148678378233_hd.png?e=1740447220182&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:xC85aDukPV9mDqOd6BJguO46DPo=" alt="Hexo Logo"><br><img src="https://cdn-a.markji.com/files/67bd0e53d983580075d9529f_hd.png?e=1740447220182&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:mfO3mCDVhiFVBF8UQOcDE1W7kDo=" alt="Hexo Logo"><br><img src="https://cdn-a.markji.com/files/67bd1042d983580075d9786a_hd.png?e=1740447220182&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:SNXpuQKWRq3iApZHEHn0rZSeBeg=" alt="Hexo Logo"><br><img src="https://cdn-a.markji.com/files/67bd11096b781486783851e4_hd.png?e=1740447220182&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:rdsdc-sw7JWtwHkcNHe-MBd9rtg=" alt="Hexo Logo"><br><img src="https://cdn-a.markji.com/files/67bd13d0d983580075d9e01d_hd.png?e=1740447220182&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:rJfmXzehMsalV0tv1Rph4rESeIw=" alt="Hexo Logo"></p>
 
       
     </div>
