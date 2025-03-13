@@ -121,7 +121,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-count">36</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -155,6 +155,192 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://eatbreads.github.io/2025/03/13/redis%E5%85%AB%E8%82%A1%E6%96%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="eatbreads">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小面包的小站">
+      <meta itemprop="description" content="这边会分享C++,Go,Java,Docker,包括一些C++多线程和模板的心得或者知识,或者一些认为有价值的东西,比如一些计算机常见问题,一些好用的库,学习过程中遇到的问题等">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 小面包的小站">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/03/13/redis%E5%85%AB%E8%82%A1%E6%96%87/" class="post-title-link" itemprop="url">redis八股文</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2025-03-13 22:11:08 / 修改时间：22:16:11" itemprop="dateCreated datePublished" datetime="2025-03-13T22:11:08+08:00">2025-03-13</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># Redis 基础使用</span></span><br><span class="line"></span><br><span class="line"><span class="section">## 进入 Redis 终端</span></span><br><span class="line">使用 <span class="code">`redis-cli`</span> 进入 Redis 交互终端。</span><br><span class="line"></span><br><span class="line"><span class="section">## Redis 支持的数据类型</span></span><br><span class="line">Redis 支持五种数据类型：</span><br><span class="line"><span class="bullet">-</span> <span class="strong">**String**</span></span><br><span class="line"><span class="bullet">-</span> <span class="strong">**Hash**</span></span><br><span class="line"><span class="bullet">-</span> <span class="strong">**List**</span></span><br><span class="line"><span class="bullet">-</span> <span class="strong">**Set**</span></span><br><span class="line"><span class="bullet">-</span> <span class="strong">**Sorted Set（有序集合）**</span></span><br><span class="line"></span><br><span class="line"><span class="section">### 1. String</span></span><br><span class="line"><span class="code">```sh</span></span><br><span class="line"><span class="code">set name mike</span></span><br><span class="line"><span class="code">get name</span></span><br><span class="line"><span class="code">del name</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-Hash"><a href="#2-Hash" class="headerlink" title="2. Hash"></a>2. Hash</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hset user name Alice</span><br><span class="line">hget user name</span><br><span class="line">hgetall user</span><br><span class="line">hdel user name</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>PS:</strong> <code>user</code> 在这里是表名，<code>name</code> 是 key。</p>
+</blockquote>
+<h3 id="3-List"><a href="#3-List" class="headerlink" title="3. List"></a>3. List</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">lpush queue task</span><br><span class="line">rpush queue task</span><br><span class="line">lpop queue</span><br><span class="line">rpop queue</span><br><span class="line">lrange queue 0 -1</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>PS:</strong> <code>-1</code> 表示倒数第一个，<code>lrange queue 0 -1</code> 表示遍历从 <code>0</code> 到最后一个元素。</p>
+</blockquote>
+<h3 id="4-Set"><a href="#4-Set" class="headerlink" title="4. Set"></a>4. Set</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sadd myset a</span><br><span class="line">sadd myset b</span><br><span class="line">sadd myset c</span><br><span class="line">smembers myset</span><br><span class="line">srem myset a</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-Sorted-Set"><a href="#5-Sorted-Set" class="headerlink" title="5. Sorted Set"></a>5. Sorted Set</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">zadd scores 100 Alice</span><br><span class="line">zadd scores 200 Bob</span><br><span class="line">zrange scores 0 -1 withscores</span><br><span class="line">zrevrange scores 0 -1 withscores</span><br><span class="line">zrem scores Alice</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>PS:</strong> 有序集合插入时需要提供权重值，<code>withscores</code> 表示按照权重遍历。</p>
+</blockquote>
+<hr>
+<h2 id="配置文件位置"><a href="#配置文件位置" class="headerlink" title="配置文件位置"></a>配置文件位置</h2><ul>
+<li>配置文件路径：<code>/etc/redis/redis.conf</code></li>
+<li>修改配置后需要重启 Redis：<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl restart redis</span><br></pre></td></tr></table></figure></li>
+<li>该配置文件可用于编辑 <strong>持久化</strong> 设置。</li>
+</ul>
+<hr>
+<h2 id="Redis-持久化"><a href="#Redis-持久化" class="headerlink" title="Redis 持久化"></a>Redis 持久化</h2><h3 id="1-RDB-快照持久化（保存数据到磁盘）"><a href="#1-RDB-快照持久化（保存数据到磁盘）" class="headerlink" title="1. RDB 快照持久化（保存数据到磁盘）"></a>1. RDB 快照持久化（保存数据到磁盘）</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">save 900 1   <span class="comment"># 900 秒（15 分钟）至少有 1 次写入操作，就保存 RDB</span></span><br><span class="line">save 300 10  <span class="comment"># 300 秒（5 分钟）至少有 10 次写入操作，就保存 RDB</span></span><br><span class="line">save 60 10000 <span class="comment"># 60 秒内有 10000 次写入操作，就保存 RDB</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-AOF-日志持久化"><a href="#2-AOF-日志持久化" class="headerlink" title="2. AOF 日志持久化"></a>2. AOF 日志持久化</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">appendonly <span class="built_in">yes</span>   <span class="comment"># 启用 AOF</span></span><br><span class="line">appendfilename <span class="string">&quot;appendonly.aof&quot;</span>  <span class="comment"># AOF 文件名</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Redis-使用场景"><a href="#Redis-使用场景" class="headerlink" title="Redis 使用场景"></a>Redis 使用场景</h2><ol>
+<li><p><strong>缓存</strong>  </p>
+<ul>
+<li>存储常用数据，如页面渲染等。</li>
+</ul>
+</li>
+<li><p><strong>实时系统</strong>  </p>
+<ul>
+<li>统计网站点击率、实时排行榜、点赞功能等。</li>
+</ul>
+</li>
+<li><p><strong>消息队列</strong>  </p>
+<ul>
+<li>使用 <code>List</code> 和 <code>Pub/Sub</code> 可实现轻量级消息队列。</li>
+</ul>
+</li>
+<li><p><strong>分布式锁</strong>  </p>
+<ul>
+<li>本质上与消息队列功能类似，可用于分布式环境下的锁管理。</li>
+</ul>
+</li>
+<li><p><strong>计数器</strong>  </p>
+<ul>
+<li>Redis 具有原子操作能力，适合作为计数器，例如在线人数统计等。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="Redis-为什么这么快？"><a href="#Redis-为什么这么快？" class="headerlink" title="Redis 为什么这么快？"></a>Redis 为什么这么快？</h2><ol>
+<li><strong>数据存储在内存</strong>（而非磁盘）。</li>
+<li><strong>使用高效的数据结构</strong> 进行数据存储和查找。</li>
+<li><strong>单线程 + I&#x2F;O 多路复用</strong>，避免了多线程的上下文切换，提高性能。</li>
+</ol>
+<hr>
+<h2 id="为什么-Redis-采用单线程？"><a href="#为什么-Redis-采用单线程？" class="headerlink" title="为什么 Redis 采用单线程？"></a>为什么 Redis 采用单线程？</h2><ul>
+<li>Redis 的瓶颈不在 <strong>CPU</strong>，而在 <strong>网络 I&#x2F;O 和键值对操作</strong>，因此使用单线程处理请求。</li>
+<li>持久化等操作由后台线程完成，并不会影响主线程的处理性能。</li>
+</ul>
+<hr>
+<h2 id="Redis-跳表实现"><a href="#Redis-跳表实现" class="headerlink" title="Redis 跳表实现"></a>Redis 跳表实现</h2><p>（略）</p>
+<hr>
+<h2 id="Redis-和-Memcached-的区别"><a href="#Redis-和-Memcached-的区别" class="headerlink" title="Redis 和 Memcached 的区别"></a>Redis 和 Memcached 的区别</h2><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>Redis</th>
+<th>Memcached</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>数据类型</td>
+<td>丰富（String、Hash、List、Set、Sorted Set）</td>
+<td>仅支持键值对（K-V）</td>
+</tr>
+<tr>
+<td>持久化</td>
+<td>支持（RDB、AOF）</td>
+<td>不支持</td>
+</tr>
+<tr>
+<td>事务</td>
+<td>支持（但不支持回滚）</td>
+<td>不支持</td>
+</tr>
+<tr>
+<td>内存占用</td>
+<td>较高</td>
+<td>较低</td>
+</tr>
+<tr>
+<td>速度</td>
+<td>快</td>
+<td>更快</td>
+</tr>
+<tr>
+<td>使用场景</td>
+<td>多种（缓存、队列、分布式锁等）</td>
+<td>主要用于缓存</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="Redis-事务-vs-MySQL-事务"><a href="#Redis-事务-vs-MySQL-事务" class="headerlink" title="Redis 事务 vs MySQL 事务"></a>Redis 事务 vs MySQL 事务</h2><ul>
+<li>Redis 事务本质上是 <strong>多个命令的原子性执行</strong>，执行期间不会被打断。</li>
+<li>但 Redis <strong>不支持事务回滚</strong>，一旦执行，无法撤销。</li>
+</ul>
+<hr>
+<blockquote>
+<p><strong>PS:</strong> <code>-1</code> 表示倒数第一个，范围遍历 <code>0</code> 到最后一个元素。<br><strong>PS:</strong> <code>user</code> 在这里是表名，<code>name</code> 是 key。</p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1354,96 +1540,6 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export PATH=$HOME/vcpkg:$PATH&#x27;</span> &gt;&gt; ~/.bashrc</span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br></pre></td></tr></table></figure>
 <p>这样就可以在终端中直接使用 <code>vcpkg</code> 了</p>
 <p><img src="https://cdn-a.markji.com/files/679de4005017c826b3e9f40f_hd.png?e=1741010058858&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:mZGz5l-YhfjDsvs3LRpJvTXC1hk=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/679de8315017c826b3ea3358_hd.png?e=1741010058858&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:Wz8CREnbJJWIZSXRYbQb1GB2qJY=" alt="图片1"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://eatbreads.github.io/2025/03/03/%E4%BD%BF%E7%94%A8vcxxrv%E6%9D%A5%E9%85%8D%E5%90%88wsl%E5%81%9A%E5%9B%BE%E5%BD%A2%E5%8C%96%E7%95%8C%E9%9D%A2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="eatbreads">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="小面包的小站">
-      <meta itemprop="description" content="这边会分享C++,Go,Java,Docker,包括一些C++多线程和模板的心得或者知识,或者一些认为有价值的东西,比如一些计算机常见问题,一些好用的库,学习过程中遇到的问题等">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 小面包的小站">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/03/03/%E4%BD%BF%E7%94%A8vcxxrv%E6%9D%A5%E9%85%8D%E5%90%88wsl%E5%81%9A%E5%9B%BE%E5%BD%A2%E5%8C%96%E7%95%8C%E9%9D%A2/" class="post-title-link" itemprop="url">使用vcxxrv来配合wsl做图形化界面</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2025-03-03 21:09:36 / 修改时间：21:13:26" itemprop="dateCreated datePublished" datetime="2025-03-03T21:09:36+08:00">2025-03-03</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># 使用 VcXsrv 给 WSL2 连接图形界面</span></span><br><span class="line"></span><br><span class="line"><span class="section">## 1. 下载 VcXsrv  </span></span><br><span class="line">首先，从官网下载安装 VcXsrv：  </span><br><span class="line">[<span class="string">https://sourceforge.net/projects/vcxsrv/</span>](<span class="link">https://sourceforge.net/projects/vcxsrv/</span>)  </span><br><span class="line"></span><br><span class="line"><span class="section">## 2. 更换源  </span></span><br><span class="line">执行以下命令更换源：</span><br><span class="line"><span class="code">```bash</span></span><br><span class="line"><span class="code">wget https://tuna.moe/oh-my-tuna/oh-my-tuna.py</span></span><br><span class="line"><span class="code">sudo python3 oh-my-tuna.py --global</span></span><br><span class="line"><span class="code">sudo apt-get update</span></span><br><span class="line"><span class="code">sudo apt-get upgrade</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="3-安装所需软件"><a href="#3-安装所需软件" class="headerlink" title="3. 安装所需软件"></a>3. 安装所需软件</h2><p>安装 <code>xfce4-terminal</code> 和 <code>xfce4</code>：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt-get install xfce4-terminal</span><br><span class="line"><span class="built_in">sudo</span> apt-get install xfce4</span><br></pre></td></tr></table></figure>
-<p>重启 <code>dbus</code> 服务：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> service dbus restart</span><br></pre></td></tr></table></figure>
-
-<h2 id="4-配置环境变量"><a href="#4-配置环境变量" class="headerlink" title="4. 配置环境变量"></a>4. 配置环境变量</h2><p>编辑 <code>~/.bashrc</code>：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.bashrc</span><br></pre></td></tr></table></figure>
-<p>添加以下内容（请将 <code>172.27.46.105</code> 替换为实际的 Windows IP 地址）：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> DISPLAY=172.27.46.105:0.0  <span class="comment"># 替换为你的 Windows IP 地址</span></span><br><span class="line"><span class="built_in">export</span> WAYLAND_DISPLAY=<span class="variable">$DISPLAY</span></span><br><span class="line"><span class="built_in">export</span> XDG_SESSION_TYPE=x11</span><br></pre></td></tr></table></figure>
-<p>保存并执行：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br></pre></td></tr></table></figure>
-
-<h2 id="5-启动图形界面"><a href="#5-启动图形界面" class="headerlink" title="5. 启动图形界面"></a>5. 启动图形界面</h2><p>执行以下命令启动 <code>xfce4</code>：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">startxfce4</span><br></pre></td></tr></table></figure>
-<p>然后就可以在 WSL2 中显示图形界面了。</p>
-<h2 id="6-OpenCV-相关问题"><a href="#6-OpenCV-相关问题" class="headerlink" title="6. OpenCV 相关问题"></a>6. OpenCV 相关问题</h2><p>使用 <code>apt</code> 安装 OpenCV 成功，但 <code>vcpkg</code> 方式失败，原因未知。<br>此外，有一个小技巧：WSL 可以直接使用 Windows 磁盘路径，例如：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/mnt/c/（C 盘路径）</span><br></pre></td></tr></table></figure>
-<p>可以直接访问 Windows 里的图片文件。  </p>
-<p>最终编译运行成功，并成功显示图片！ 🎉<br><img src="https://cdn-a.markji.com/files/67b7f45da5c2cef46265e459_hd.png?e=1740988820039&token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:FVDLnFenUDMYp4etgqXF7xGFeyY=" alt="图片1"><br>&#96;&#96;&#96;</p>
 
       
     </div>
