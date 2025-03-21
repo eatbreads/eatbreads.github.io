@@ -2,6 +2,24 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://eatbreads.github.io/personal/bb/index.html</loc>
+    
+    <lastmod>2025-03-21</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://eatbreads.github.io/life/book/index.html</loc>
+    
+    <lastmod>2025-03-21</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://eatbreads.github.io/posts/233853.html</loc>
     
     <lastmod>2025-03-21</lastmod>
@@ -236,7 +254,7 @@
   </url>
   
   <url>
-    <loc>https://eatbreads.github.io/posts/db6bb13c.html</loc>
+    <loc>https://eatbreads.github.io/posts/b90c4775.html</loc>
     
     <lastmod>2025-03-21</lastmod>
     
@@ -245,7 +263,7 @@
   </url>
   
   <url>
-    <loc>https://eatbreads.github.io/posts/b90c4775.html</loc>
+    <loc>https://eatbreads.github.io/posts/db6bb13c.html</loc>
     
     <lastmod>2025-03-21</lastmod>
     
@@ -416,24 +434,6 @@
   </url>
   
   <url>
-    <loc>https://eatbreads.github.io/personal/love/index.html</loc>
-    
-    <lastmod>2025-03-21</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://eatbreads.github.io/personal/bb/index.html</loc>
-    
-    <lastmod>2025-03-21</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://eatbreads.github.io/site/census/index.html</loc>
     
     <lastmod>2025-03-21</lastmod>
@@ -443,7 +443,7 @@
   </url>
   
   <url>
-    <loc>https://eatbreads.github.io/personal/about/index.html</loc>
+    <loc>https://eatbreads.github.io/personal/love/index.html</loc>
     
     <lastmod>2025-03-21</lastmod>
     
@@ -453,6 +453,15 @@
   
   <url>
     <loc>https://eatbreads.github.io/life/music/index.html</loc>
+    
+    <lastmod>2025-03-21</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://eatbreads.github.io/personal/about/index.html</loc>
     
     <lastmod>2025-03-21</lastmod>
     
@@ -497,7 +506,7 @@
   </url>
   
   <url>
-    <loc>https://eatbreads.github.io/box/animation/index.html</loc>
+    <loc>https://eatbreads.github.io/box/gallery/index.html</loc>
     
     <lastmod>2025-03-21</lastmod>
     
@@ -506,7 +515,7 @@
   </url>
   
   <url>
-    <loc>https://eatbreads.github.io/box/gallery/index.html</loc>
+    <loc>https://eatbreads.github.io/box/animation/index.html</loc>
     
     <lastmod>2025-03-21</lastmod>
     
