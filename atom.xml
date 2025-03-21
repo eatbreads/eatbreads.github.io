@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Fomalhaut🥝</title>
+  <title>欢迎来到小面包的小站🥝</title>
   
   
-  <link href="https://www.fomal.cc/atom.xml" rel="self"/>
+  <link href="https://eatbreads.github.io/atom.xml" rel="self"/>
   
-  <link href="https://www.fomal.cc/"/>
+  <link href="https://eatbreads.github.io/"/>
   <updated>2025-03-21T16:02:18.722Z</updated>
-  <id>https://www.fomal.cc/</id>
+  <id>https://eatbreads.github.io/</id>
   
   <author>
-    <name>Fomalhaut🥝</name>
+    <name>小面包🥝</name>
     
   </author>
   
@@ -18,8 +18,8 @@
   
   <entry>
     <title>协程八股</title>
-    <link href="https://www.fomal.cc/posts/706f5e8.html"/>
-    <id>https://www.fomal.cc/posts/706f5e8.html</id>
+    <link href="https://eatbreads.github.io/posts/706f5e8.html"/>
+    <id>https://eatbreads.github.io/posts/706f5e8.html</id>
     <published>2025-03-19T16:00:00.000Z</published>
     <updated>2025-03-21T16:02:18.722Z</updated>
     
@@ -34,23 +34,23 @@
     
     
     
-    <category term="编程" scheme="https://www.fomal.cc/categories/%E7%BC%96%E7%A8%8B/"/>
+    <category term="编程" scheme="https://eatbreads.github.io/categories/%E7%BC%96%E7%A8%8B/"/>
     
-    <category term="C++" scheme="https://www.fomal.cc/categories/%E7%BC%96%E7%A8%8B/C/"/>
+    <category term="C++" scheme="https://eatbreads.github.io/categories/%E7%BC%96%E7%A8%8B/C/"/>
     
     
-    <category term="协程" scheme="https://www.fomal.cc/tags/%E5%8D%8F%E7%A8%8B/"/>
+    <category term="协程" scheme="https://eatbreads.github.io/tags/%E5%8D%8F%E7%A8%8B/"/>
     
-    <category term="ucontext" scheme="https://www.fomal.cc/tags/ucontext/"/>
+    <category term="ucontext" scheme="https://eatbreads.github.io/tags/ucontext/"/>
     
-    <category term="异步IO" scheme="https://www.fomal.cc/tags/%E5%BC%82%E6%AD%A5IO/"/>
+    <category term="异步IO" scheme="https://eatbreads.github.io/tags/%E5%BC%82%E6%AD%A5IO/"/>
     
   </entry>
   
   <entry>
     <title>使用 vcpkg 运行 redis++ 遇到的问题</title>
-    <link href="https://www.fomal.cc/posts/be1ef227.html"/>
-    <id>https://www.fomal.cc/posts/be1ef227.html</id>
+    <link href="https://eatbreads.github.io/posts/be1ef227.html"/>
+    <id>https://eatbreads.github.io/posts/be1ef227.html</id>
     <published>2025-03-18T16:00:00.000Z</published>
     <updated>2025-03-21T16:02:18.696Z</updated>
     
@@ -66,25 +66,25 @@
     
     
     
-    <category term="C++" scheme="https://www.fomal.cc/categories/C/"/>
+    <category term="C++" scheme="https://eatbreads.github.io/categories/C/"/>
     
-    <category term="vcpkg" scheme="https://www.fomal.cc/categories/C/vcpkg/"/>
+    <category term="vcpkg" scheme="https://eatbreads.github.io/categories/C/vcpkg/"/>
     
-    <category term="Redis" scheme="https://www.fomal.cc/categories/C/vcpkg/Redis/"/>
+    <category term="Redis" scheme="https://eatbreads.github.io/categories/C/vcpkg/Redis/"/>
     
     
-    <category term="redis++" scheme="https://www.fomal.cc/tags/redis/"/>
+    <category term="redis++" scheme="https://eatbreads.github.io/tags/redis/"/>
     
-    <category term="vcpkg" scheme="https://www.fomal.cc/tags/vcpkg/"/>
+    <category term="vcpkg" scheme="https://eatbreads.github.io/tags/vcpkg/"/>
     
-    <category term="CMake" scheme="https://www.fomal.cc/tags/CMake/"/>
+    <category term="CMake" scheme="https://eatbreads.github.io/tags/CMake/"/>
     
   </entry>
   
   <entry>
     <title>使用 C++ 运行 Kafka 和 Elasticsearch</title>
-    <link href="https://www.fomal.cc/posts/b71a46cc.html"/>
-    <id>https://www.fomal.cc/posts/b71a46cc.html</id>
+    <link href="https://eatbreads.github.io/posts/b71a46cc.html"/>
+    <id>https://eatbreads.github.io/posts/b71a46cc.html</id>
     <published>2025-03-18T16:00:00.000Z</published>
     <updated>2025-03-21T16:02:18.715Z</updated>
     
@@ -100,25 +100,25 @@
     
     
     
-    <category term="C++" scheme="https://www.fomal.cc/categories/C/"/>
+    <category term="C++" scheme="https://eatbreads.github.io/categories/C/"/>
     
-    <category term="Kafka" scheme="https://www.fomal.cc/categories/C/Kafka/"/>
+    <category term="Kafka" scheme="https://eatbreads.github.io/categories/C/Kafka/"/>
     
-    <category term="Elasticsearch" scheme="https://www.fomal.cc/categories/C/Kafka/Elasticsearch/"/>
+    <category term="Elasticsearch" scheme="https://eatbreads.github.io/categories/C/Kafka/Elasticsearch/"/>
     
     
-    <category term="vcpkg" scheme="https://www.fomal.cc/tags/vcpkg/"/>
+    <category term="vcpkg" scheme="https://eatbreads.github.io/tags/vcpkg/"/>
     
-    <category term="Docker" scheme="https://www.fomal.cc/tags/Docker/"/>
+    <category term="Docker" scheme="https://eatbreads.github.io/tags/Docker/"/>
     
-    <category term="分布式" scheme="https://www.fomal.cc/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
+    <category term="分布式" scheme="https://eatbreads.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
     
   </entry>
   
   <entry>
     <title>消息队列的基础编写</title>
-    <link href="https://www.fomal.cc/posts/be5c987b.html"/>
-    <id>https://www.fomal.cc/posts/be5c987b.html</id>
+    <link href="https://eatbreads.github.io/posts/be5c987b.html"/>
+    <id>https://eatbreads.github.io/posts/be5c987b.html</id>
     <published>2025-03-18T16:00:00.000Z</published>
     <updated>2025-03-21T16:02:18.728Z</updated>
     
@@ -134,23 +134,23 @@
     
     
     
-    <category term="C++" scheme="https://www.fomal.cc/categories/C/"/>
+    <category term="C++" scheme="https://eatbreads.github.io/categories/C/"/>
     
-    <category term="消息队列" scheme="https://www.fomal.cc/categories/C/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/"/>
+    <category term="消息队列" scheme="https://eatbreads.github.io/categories/C/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/"/>
     
     
-    <category term="任务队列" scheme="https://www.fomal.cc/tags/%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97/"/>
+    <category term="任务队列" scheme="https://eatbreads.github.io/tags/%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97/"/>
     
-    <category term="设计模式" scheme="https://www.fomal.cc/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    <category term="设计模式" scheme="https://eatbreads.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
     
-    <category term="Google Test" scheme="https://www.fomal.cc/tags/Google-Test/"/>
+    <category term="Google Test" scheme="https://eatbreads.github.io/tags/Google-Test/"/>
     
   </entry>
   
   <entry>
     <title>Kafka 基础知识总结</title>
-    <link href="https://www.fomal.cc/posts/d00def19.html"/>
-    <id>https://www.fomal.cc/posts/d00def19.html</id>
+    <link href="https://eatbreads.github.io/posts/d00def19.html"/>
+    <id>https://eatbreads.github.io/posts/d00def19.html</id>
     <published>2025-03-18T16:00:00.000Z</published>
     <updated>2025-03-21T16:02:18.734Z</updated>
     
@@ -168,23 +168,23 @@
     
     
     
-    <category term="分布式系统" scheme="https://www.fomal.cc/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/"/>
+    <category term="分布式系统" scheme="https://eatbreads.github.io/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/"/>
     
-    <category term="Kafka" scheme="https://www.fomal.cc/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/Kafka/"/>
+    <category term="Kafka" scheme="https://eatbreads.github.io/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/Kafka/"/>
     
     
-    <category term="消息队列" scheme="https://www.fomal.cc/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/"/>
+    <category term="消息队列" scheme="https://eatbreads.github.io/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/"/>
     
-    <category term="实时流处理" scheme="https://www.fomal.cc/tags/%E5%AE%9E%E6%97%B6%E6%B5%81%E5%A4%84%E7%90%86/"/>
+    <category term="实时流处理" scheme="https://eatbreads.github.io/tags/%E5%AE%9E%E6%97%B6%E6%B5%81%E5%A4%84%E7%90%86/"/>
     
-    <category term="大数据" scheme="https://www.fomal.cc/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    <category term="大数据" scheme="https://eatbreads.github.io/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
     
   </entry>
   
   <entry>
     <title>docker一点小记录</title>
-    <link href="https://www.fomal.cc/posts/bc68fe1f.html"/>
-    <id>https://www.fomal.cc/posts/bc68fe1f.html</id>
+    <link href="https://eatbreads.github.io/posts/bc68fe1f.html"/>
+    <id>https://eatbreads.github.io/posts/bc68fe1f.html</id>
     <published>2025-03-13T14:21:56.000Z</published>
     <updated>2025-03-21T16:02:18.702Z</updated>
     
@@ -207,8 +207,8 @@
   
   <entry>
     <title>redis八股文</title>
-    <link href="https://www.fomal.cc/posts/c74dfdcd.html"/>
-    <id>https://www.fomal.cc/posts/c74dfdcd.html</id>
+    <link href="https://eatbreads.github.io/posts/c74dfdcd.html"/>
+    <id>https://eatbreads.github.io/posts/c74dfdcd.html</id>
     <published>2025-03-13T14:11:08.000Z</published>
     <updated>2025-03-21T16:02:18.713Z</updated>
     
@@ -227,8 +227,8 @@
   
   <entry>
     <title>linux知识第二弹</title>
-    <link href="https://www.fomal.cc/posts/6f07d871.html"/>
-    <id>https://www.fomal.cc/posts/6f07d871.html</id>
+    <link href="https://eatbreads.github.io/posts/6f07d871.html"/>
+    <id>https://eatbreads.github.io/posts/6f07d871.html</id>
     <published>2025-03-10T15:35:08.000Z</published>
     <updated>2025-03-21T16:02:18.705Z</updated>
     
@@ -250,8 +250,8 @@
   
   <entry>
     <title>linux一些好用的操作</title>
-    <link href="https://www.fomal.cc/posts/83cfdf8d.html"/>
-    <id>https://www.fomal.cc/posts/83cfdf8d.html</id>
+    <link href="https://eatbreads.github.io/posts/83cfdf8d.html"/>
+    <id>https://eatbreads.github.io/posts/83cfdf8d.html</id>
     <published>2025-03-09T15:43:14.000Z</published>
     <updated>2025-03-21T16:02:18.704Z</updated>
     
@@ -274,8 +274,8 @@
   
   <entry>
     <title>MySQL 进阶与架构优化</title>
-    <link href="https://www.fomal.cc/posts/7d06a385.html"/>
-    <id>https://www.fomal.cc/posts/7d06a385.html</id>
+    <link href="https://eatbreads.github.io/posts/7d06a385.html"/>
+    <id>https://eatbreads.github.io/posts/7d06a385.html</id>
     <published>2025-03-07T16:00:00.000Z</published>
     <updated>2025-03-21T16:02:18.693Z</updated>
     
@@ -293,21 +293,21 @@
     
     
     
-    <category term="数据库" scheme="https://www.fomal.cc/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    <category term="数据库" scheme="https://eatbreads.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
     
     
-    <category term="MySQL" scheme="https://www.fomal.cc/tags/MySQL/"/>
+    <category term="MySQL" scheme="https://eatbreads.github.io/tags/MySQL/"/>
     
-    <category term="数据库" scheme="https://www.fomal.cc/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    <category term="数据库" scheme="https://eatbreads.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
     
-    <category term="优化" scheme="https://www.fomal.cc/tags/%E4%BC%98%E5%8C%96/"/>
+    <category term="优化" scheme="https://eatbreads.github.io/tags/%E4%BC%98%E5%8C%96/"/>
     
   </entry>
   
   <entry>
     <title>MySQL 核心知识点整理</title>
-    <link href="https://www.fomal.cc/posts/cdec3315.html"/>
-    <id>https://www.fomal.cc/posts/cdec3315.html</id>
+    <link href="https://eatbreads.github.io/posts/cdec3315.html"/>
+    <id>https://eatbreads.github.io/posts/cdec3315.html</id>
     <published>2025-03-07T16:00:00.000Z</published>
     <updated>2025-03-21T16:02:18.706Z</updated>
     
@@ -325,19 +325,19 @@
     
     
     
-    <category term="数据库" scheme="https://www.fomal.cc/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    <category term="数据库" scheme="https://eatbreads.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
     
     
-    <category term="MySQL" scheme="https://www.fomal.cc/tags/MySQL/"/>
+    <category term="MySQL" scheme="https://eatbreads.github.io/tags/MySQL/"/>
     
-    <category term="数据库" scheme="https://www.fomal.cc/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    <category term="数据库" scheme="https://eatbreads.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
     
   </entry>
   
   <entry>
     <title>opengl加入摄像机移动</title>
-    <link href="https://www.fomal.cc/posts/5da58852.html"/>
-    <id>https://www.fomal.cc/posts/5da58852.html</id>
+    <link href="https://eatbreads.github.io/posts/5da58852.html"/>
+    <id>https://eatbreads.github.io/posts/5da58852.html</id>
     <published>2025-03-05T15:39:37.000Z</published>
     <updated>2025-03-21T16:02:18.709Z</updated>
     
@@ -362,8 +362,8 @@
   
   <entry>
     <title>整理的一点网络方面的八股文</title>
-    <link href="https://www.fomal.cc/posts/1b342089.html"/>
-    <id>https://www.fomal.cc/posts/1b342089.html</id>
+    <link href="https://eatbreads.github.io/posts/1b342089.html"/>
+    <id>https://eatbreads.github.io/posts/1b342089.html</id>
     <published>2025-03-05T15:36:25.000Z</published>
     <updated>2025-03-21T16:02:18.726Z</updated>
     
@@ -386,8 +386,8 @@
   
   <entry>
     <title>加入旋转</title>
-    <link href="https://www.fomal.cc/posts/5985ea05.html"/>
-    <id>https://www.fomal.cc/posts/5985ea05.html</id>
+    <link href="https://eatbreads.github.io/posts/5985ea05.html"/>
+    <id>https://eatbreads.github.io/posts/5985ea05.html</id>
     <published>2025-03-04T13:29:26.000Z</published>
     <updated>2025-03-21T16:02:18.732Z</updated>
     
@@ -409,8 +409,8 @@
   
   <entry>
     <title>关于opengl使用的小心得</title>
-    <link href="https://www.fomal.cc/posts/a608763a.html"/>
-    <id>https://www.fomal.cc/posts/a608763a.html</id>
+    <link href="https://eatbreads.github.io/posts/a608763a.html"/>
+    <id>https://eatbreads.github.io/posts/a608763a.html</id>
     <published>2025-03-04T13:20:29.000Z</published>
     <updated>2025-03-21T16:02:18.718Z</updated>
     
@@ -434,8 +434,8 @@
   
   <entry>
     <title>使用vcpkg执行包管理</title>
-    <link href="https://www.fomal.cc/posts/25c6d8ad.html"/>
-    <id>https://www.fomal.cc/posts/25c6d8ad.html</id>
+    <link href="https://eatbreads.github.io/posts/25c6d8ad.html"/>
+    <id>https://eatbreads.github.io/posts/25c6d8ad.html</id>
     <published>2025-03-03T13:11:22.000Z</published>
     <updated>2025-03-21T16:02:18.716Z</updated>
     
@@ -456,8 +456,8 @@
   
   <entry>
     <title>使用vcxxrv来配合wsl做图形化界面</title>
-    <link href="https://www.fomal.cc/posts/728f80ac.html"/>
-    <id>https://www.fomal.cc/posts/728f80ac.html</id>
+    <link href="https://eatbreads.github.io/posts/728f80ac.html"/>
+    <id>https://eatbreads.github.io/posts/728f80ac.html</id>
     <published>2025-03-03T13:09:36.000Z</published>
     <updated>2025-03-21T16:02:18.717Z</updated>
     
@@ -476,8 +476,8 @@
   
   <entry>
     <title>SFINAE在c++模板中的使用及标准库中的应用</title>
-    <link href="https://www.fomal.cc/posts/b2bfdc17.html"/>
-    <id>https://www.fomal.cc/posts/b2bfdc17.html</id>
+    <link href="https://eatbreads.github.io/posts/b2bfdc17.html"/>
+    <id>https://eatbreads.github.io/posts/b2bfdc17.html</id>
     <published>2025-03-02T15:35:44.000Z</published>
     <updated>2025-03-21T16:02:18.695Z</updated>
     
@@ -498,8 +498,8 @@
   
   <entry>
     <title>奇异模板递归</title>
-    <link href="https://www.fomal.cc/posts/233853.html"/>
-    <id>https://www.fomal.cc/posts/233853.html</id>
+    <link href="https://eatbreads.github.io/posts/233853.html"/>
+    <id>https://eatbreads.github.io/posts/233853.html</id>
     <published>2025-03-02T15:32:28.000Z</published>
     <updated>2025-03-21T16:02:18.735Z</updated>
     
@@ -521,8 +521,8 @@
   
   <entry>
     <title>颜色与光照和冯氏光源</title>
-    <link href="https://www.fomal.cc/posts/6f91cf88.html"/>
-    <id>https://www.fomal.cc/posts/6f91cf88.html</id>
+    <link href="https://eatbreads.github.io/posts/6f91cf88.html"/>
+    <id>https://eatbreads.github.io/posts/6f91cf88.html</id>
     <published>2025-03-01T14:27:42.000Z</published>
     <updated>2025-03-21T16:02:18.735Z</updated>
     
