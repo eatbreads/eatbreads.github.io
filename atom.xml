@@ -6,7 +6,7 @@
   <link href="https://eatbreads.github.io/atom.xml" rel="self"/>
   
   <link href="https://eatbreads.github.io/"/>
-  <updated>2025-03-21T16:02:18.722Z</updated>
+  <updated>2025-03-22T15:40:13.288Z</updated>
   <id>https://eatbreads.github.io/</id>
   
   <author>
@@ -15,6 +15,19 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>关于grae的使用</title>
+    <link href="https://eatbreads.github.io/posts/5315a699.html"/>
+    <id>https://eatbreads.github.io/posts/5315a699.html</id>
+    <published>2025-03-22T15:40:13.000Z</published>
+    <updated>2025-03-22T15:40:13.288Z</updated>
+    
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>协程八股</title>
@@ -509,30 +522,6 @@
       
     <summary type="html">&lt;h1&gt;摄像机&lt;/h1&gt;
 &lt;p&gt;&lt;img src=&quot;https://cdn-a.markji.com/files/67c0333fdc26a985b391278b_hd.png?e=1740672193731&amp;amp;token=xX63b9jqTlDOcGmctt5K9254r</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>opengl的缩放/位移/旋转和坐标系统</title>
-    <link href="https://eatbreads.github.io/posts/4d5b731c.html"/>
-    <id>https://eatbreads.github.io/posts/4d5b731c.html</id>
-    <published>2025-02-27T16:04:10.000Z</published>
-    <updated>2025-03-21T16:02:18.723Z</updated>
-    
-    <content type="html"><![CDATA[<h1>缩放/位移/旋转</h1><ul><li><strong>点乘</strong>：就是横乘竖。</li><li><strong>叉乘</strong>：会创建出一个和两个向量垂直的向量。<br><img src="https://cdn-a.markji.com/files/67bfcf0eb18af440dfb39223_hd.png?e=1740672193731&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:WLd74iKLtGMBPrpCch2taAoly-Q=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67bfcfc8dc26a985b37f91a1_hd.png?e=1740672193731&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:tAkycbKopfaafy7arSAvSkbnmsA=" alt="图片1"></li></ul><h2 id="旋转">旋转</h2><p>大多数的旋转采用弧度制而不是角度制，故需要将弧度转为角度。旋转公式略。<br><img src="https://cdn-a.markji.com/files/67c004e9dc26a985b388e9ad_hd.png?e=1740672193731&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:qfsteOTme2Y5PpwXXqBTsiQQ8kM=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67c005b3b18af440dfbe23f8_hd.png?e=1740672193731&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:MC_Ak6BjrwHv0_CN5IoPuH30IQM=" alt="图片1"></p><h2 id="坐标系统">坐标系统</h2><p><img src="https://cdn-a.markji.com/files/67c007f8b18af440dfbe893f_hd.png?e=1740672193731&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:CctZ1--1Y3ldRs97Ak3WZH9Csqo=" alt="图片1"></p><h3 id="画箱子：">画箱子：</h3><ol><li>先把顶点数据拷贝过去，绘制 36 个点。</li><li>然后加旋转。</li><li>在顶点着色器中将它们点乘起来。</li><li>加入透视投影，创建 MVP（模型/视图/投影）矩阵：<ul><li><code>model</code>：模型矩阵。</li><li><code>view</code>：视图矩阵。</li><li><code>projection</code>：投影矩阵，系统可以自动计算。</li></ul></li><li>将 <code>projection</code> 矩阵传入顶点着色器，并与 <code>model</code> 矩阵一起点乘。</li><li>最后再加入 <code>view</code> 矩阵。<br><img src="https://cdn-a.markji.com/files/67c010d1dc26a985b38ad5da_hd.png?e=1740672193731&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:junmocf3g8CkOepaXmiQuba3ARQ=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67c011b7dc26a985b38afbb5_hd.png?e=1740672193731&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:8wSzaXEeYsmDQMrnvc5CTSympko=" alt="图片1"></li></ol><h2 id="更多立方体">更多立方体</h2><p><img src="https://cdn-a.markji.com/files/67c01387b18af440dfc097df_hd.png?e=1740672193731&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:0GMhjI6i9eUr8AXemv4kbX_Krho=" alt="图片1"></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1&gt;缩放/位移/旋转&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;点乘&lt;/strong&gt;：就是横乘竖。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;叉乘&lt;/strong&gt;：会创建出一个和两个向量垂直的向量。&lt;br&gt;
-&lt;img src=&quot;https://cdn-a.markji.com/</summary>
       
     
     
