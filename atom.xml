@@ -226,29 +226,6 @@
   </entry>
   
   <entry>
-    <title>linux知识第二弹</title>
-    <link href="https://eatbreads.github.io/posts/6f07d871.html"/>
-    <id>https://eatbreads.github.io/posts/6f07d871.html</id>
-    <published>2025-03-10T15:35:08.000Z</published>
-    <updated>2025-03-21T16:02:18.705Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="Linux-知识总结">Linux 知识总结</h3><h4 id="加载和卸载-Linux-内核模块">加载和卸载 Linux 内核模块</h4><ul><li>使用 <code>insmod</code> 或 <code>modprobe</code> 来加载内核模块（WSL 不支持，输入后显示一个都没启用）。</li></ul><h4 id="配置静态-IP">配置静态 IP</h4><ol><li>先使用 <code>ip link show</code> 查看可用的网卡。</li><li>编辑 <code>/etc/network/interfaces</code> 并写入（替换为自己的网卡名称）：<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">auto eth0</span><br><span class="line">iface eth0 inet static</span><br><span class="line">    address 192.168.1.100</span><br><span class="line">    netmask 255.255.255.0</span><br><span class="line">    gateway 192.168.1.1</span><br><span class="line">    dns-nameservers 8.8.8.8 8.8.4.4</span><br></pre></td></tr></table></figure></li><li>执行 <code>sudo systemctl restart networking</code> 重启网络。</li></ol><hr><h4 id="Linux-的常见目录">Linux 的常见目录</h4><ul><li><strong><code>/bin</code></strong>：存放用户基本命令，如 <code>ls</code>、<code>cp</code>、<code>mv</code> 等。</li><li><strong><code>/sbin</code></strong>：存放系统级命令，如 <code>ifconfig</code> 和 <code>reboot</code>。</li><li><strong><code>/boot</code></strong>：存放启动程序和内核映像文件。</li><li><strong><code>/etc</code></strong>：存放环境变量、系统配置等。</li><li><strong><code>/lib</code></strong>：存放共享库和内核模块。</li><li><strong><code>/mnt</code></strong>：作为文件系统的挂载点。</li><li><strong><code>/opt</code></strong>：可选目录，存放第三方软件包。</li><li><strong><code>/proc</code></strong>：虚拟文件系统，提供系统进程和内核信息。</li><li><strong><code>/tmp</code></strong>：临时目录，重启系统后会清空。</li><li><strong><code>/usr</code></strong>：存放用户程序及其库文件。</li><li><strong><code>/var</code></strong>：存放经常变化的文件，如日志等。</li></ul><hr><h4 id="SELinux">SELinux</h4><ul><li>是一个用于加强系统安全性的工具，类似于一个安全策略管理员，确保进程仅能访问所需的资源。</li></ul><hr><h4 id="Linux-的日志系统">Linux 的日志系统</h4><ul><li>主要依赖 <code>syslog</code> 记录系统消息。</li><li>使用 <code>journalctl</code> 查询日志。</li><li>查看 <code>/var/log/syslog</code> 中的日志。</li></ul><hr><h4 id="磁盘配额管理">磁盘配额管理</h4><ul><li>通过安装 <code>quota</code> 工具，并编写配置文件、重新挂载分区等来实现磁盘配额管理。</li></ul><hr><h4 id="使用-netstat-查看网络连接">使用 <code>netstat</code> 查看网络连接</h4><ul><li><code>netstat -an</code>：显示所有的连接（包括待建立连接）。</li><li><code>netstat -tuln</code>：显示所有监听的 TCP 和 UDP 端口。</li></ul><hr><h4 id="查看和管理系统服务">查看和管理系统服务</h4><ul><li><strong>查看服务</strong>：<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl list-units --<span class="built_in">type</span>=service</span><br></pre></td></tr></table></figure></li><li><strong>启动/停止/重启/开机自启/取消自启</strong>：<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start/stop/restart/enable/disable &lt;服务名&gt;</span><br></pre></td></tr></table></figure></li></ul><hr><h4 id="使用-SSH-远程登录">使用 SSH 远程登录</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh root@主机名</span><br></pre></td></tr></table></figure><hr><h4 id="常见-Linux-系统故障及解决">常见 Linux 系统故障及解决</h4><ul><li><strong>磁盘耗尽导致系统无法正常运行</strong><ol><li>确认故障：<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">df</span> -h</span><br></pre></td></tr></table></figure></li><li>查找占用空间的目录和文件：<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">du</span> -sh /*</span><br></pre></td></tr></table></figure></li><li>定位并清理大文件。</li></ol></li></ul><hr><h4 id="strace-调试用户空间程序"><code>strace</code> 调试用户空间程序</h4><ul><li><strong>重定向输出到文件</strong>：<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">strace -o output.txt ./main</span><br></pre></td></tr></table></figure></li><li><strong>附加到正在运行的进程</strong>：<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">strace -p &lt;PID&gt;</span><br></pre></td></tr></table></figure></li></ul><hr><h4 id="tcpdump-网络抓包分析"><code>tcpdump</code> 网络抓包分析</h4><ul><li><strong>指定监听的网络接口/端口</strong>：<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -i eth0 port 80</span><br></pre></td></tr></table></figure></li><li><strong>保存数据包到文件</strong>：<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -w capture.pcap</span><br></pre></td></tr></table></figure></li></ul><hr><h4 id="排查进程占用的文件-端口">排查进程占用的文件/端口</h4><ul><li><strong>查看某个文件被哪个进程占用</strong>：<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsof /path/file</span><br></pre></td></tr></table></figure></li><li><strong>查看占用端口的进程</strong>：<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsof -i :8080</span><br></pre></td></tr></table></figure></li><li><strong>杀死进程</strong>：<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">kill</span> -9 PID</span><br></pre></td></tr></table></figure></li></ul><hr><h4 id="排查网络问题和故障">排查网络问题和故障</h4><ol><li>检查 IP 地址：<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ifconfig 或 ip addr</span><br></pre></td></tr></table></figure></li><li>检查默认路由/网关：<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">route -n</span><br></pre></td></tr></table></figure></li><li>检查 DNS：<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> /etc/resolv.conf</span><br></pre></td></tr></table></figure></li><li>测试与外部的连接：<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ping &lt;目标地址&gt;</span><br></pre></td></tr></table></figure></li><li>如果仍然无网络连接，可尝试重启网络服务：<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart network</span><br></pre></td></tr></table></figure></li></ol><hr><h4 id="排查内存泄漏">排查内存泄漏</h4><ol><li><strong>查看整体内存使用情况</strong>：<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">top</span><br></pre></td></tr></table></figure></li><li><strong>按内存占用排序进程</strong>：<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps aux --<span class="built_in">sort</span>=-%mem</span><br></pre></td></tr></table></figure></li><li><strong>使用 <code>valgrind</code> 分析程序的内存使用</strong>：<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">valgrind --leak-check=<span class="built_in">yes</span> ./main</span><br></pre></td></tr></table></figure></li><li><strong>查看进程的内存映射情况</strong>：<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pmap &lt;PID&gt;</span><br></pre></td></tr></table></figure></li></ol><hr><h4 id="CFS（完全公平调度）">CFS（完全公平调度）</h4><ul><li><strong>CFS（Completely Fair Scheduler）</strong> 是 Linux 内核的调度策略。</li><li>每个任务按照 <strong>权重</strong> 分配 CPU 时间，权重由任务的 <strong>nice 值</strong> 决定。</li><li><strong>内部使用红黑树</strong> 管理任务，以确保公平性。</li></ul><hr>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h3 id=&quot;Linux-知识总结&quot;&gt;Linux 知识总结&lt;/h3&gt;
-&lt;h4 id=&quot;加载和卸载-Linux-内核模块&quot;&gt;加载和卸载 Linux 内核模块&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;使用 &lt;code&gt;insmod&lt;/code&gt; 或 &lt;code&gt;modprobe&lt;/code&gt; </summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
     <title>linux一些好用的操作</title>
     <link href="https://eatbreads.github.io/posts/83cfdf8d.html"/>
     <id>https://eatbreads.github.io/posts/83cfdf8d.html</id>
@@ -433,28 +410,6 @@
   </entry>
   
   <entry>
-    <title>使用vcpkg执行包管理</title>
-    <link href="https://eatbreads.github.io/posts/25c6d8ad.html"/>
-    <id>https://eatbreads.github.io/posts/25c6d8ad.html</id>
-    <published>2025-03-03T13:11:22.000Z</published>
-    <updated>2025-03-21T16:02:18.716Z</updated>
-    
-    <content type="html"><![CDATA[<h1>尝试使用 vcpkg 运行项目</h1><h2 id="1-vcpkg-介绍">1. vcpkg 介绍</h2><p><code>vcpkg</code> 安装库时，不会与系统中已存在的库发生冲突。它默认将安装的库存放在 <code>vcpkg_installed</code> 目录中，并通过 CMake 或编译命令来链接这些库。</p><h2 id="2-安装-vcpkg">2. 安装 vcpkg</h2><p>进入 <code>home</code> 目录：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~</span><br></pre></td></tr></table></figure><p>克隆 vcpkg 仓库：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/microsoft/vcpkg.git</span><br></pre></td></tr></table></figure><p>进入 vcpkg 目录：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> vcpkg</span><br></pre></td></tr></table></figure><p>编译 vcpkg：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bootstrap-vcpkg.sh</span><br></pre></td></tr></table></figure><h2 id="3-配置环境变量">3. 配置环境变量</h2><p>将 vcpkg 添加到环境变量，使其可以全局使用：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export PATH=$HOME/vcpkg:$PATH&#x27;</span> &gt;&gt; ~/.bashrc</span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br></pre></td></tr></table></figure><p>这样就可以在终端中直接使用 <code>vcpkg</code> 了</p><p><img src="https://cdn-a.markji.com/files/679de4005017c826b3e9f40f_hd.png?e=1741010058858&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:mZGz5l-YhfjDsvs3LRpJvTXC1hk=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/679de8315017c826b3ea3358_hd.png?e=1741010058858&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:Wz8CREnbJJWIZSXRYbQb1GB2qJY=" alt="图片1"></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1&gt;尝试使用 vcpkg 运行项目&lt;/h1&gt;
-&lt;h2 id=&quot;1-vcpkg-介绍&quot;&gt;1. vcpkg 介绍&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;vcpkg&lt;/code&gt; 安装库时，不会与系统中已存在的库发生冲突。它默认将安装的库存放在 &lt;code&gt;vcpkg_installed&lt;/</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
     <title>使用vcxxrv来配合wsl做图形化界面</title>
     <link href="https://eatbreads.github.io/posts/728f80ac.html"/>
     <id>https://eatbreads.github.io/posts/728f80ac.html</id>
@@ -533,6 +488,51 @@
       
     <summary type="html">&lt;h1&gt;颜色与光源&lt;/h1&gt;
 &lt;p&gt;&lt;img src=&quot;https://cdn-a.markji.com/files/67c15ba5dc26a985b3b34fdc_hd.png?e=1740841796029&amp;amp;token=xX63b9jqTlDOcGmctt5K925</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>opengl的摄像机相关</title>
+    <link href="https://eatbreads.github.io/posts/b90c4775.html"/>
+    <id>https://eatbreads.github.io/posts/b90c4775.html</id>
+    <published>2025-02-27T16:07:30.000Z</published>
+    <updated>2025-03-21T16:02:18.710Z</updated>
+    
+    <content type="html"><![CDATA[<h1>摄像机</h1><p><img src="https://cdn-a.markji.com/files/67c0333fdc26a985b391278b_hd.png?e=1740672193731&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:2EL6zFizoQrig0PpFEvC1WXiXAU=" alt="图片1"><br>原本应该是先旋转再位移。<br><img src="https://cdn-a.markji.com/files/67c0350ab18af440dfc68363_hd.png?e=1740672193731&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:CQwgolnwpqRTgZCsQZg1aJ8kuQ0=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67c03694b18af440dfc6a40c_hd.png?e=1740672193732&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:2PMBZtj_iOf9MVA2sROAFDYsIPQ=" alt="图片1"></p><h2 id="顺时针旋转">顺时针旋转</h2><blockquote><p>注意：改成 <code>-sin</code> 就会变成顺时针旋转。</p></blockquote><h2 id="左右移动">左右移动</h2><p>给摄像机加入左右移动的功能。<br><img src="https://cdn-a.markji.com/files/67c03a00b18af440dfc6f9b1_hd.png?e=1740672193732&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:yqDp-z7SEfSo2nSK76P6t1w7B64=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67c03aaadc26a985b391fe4a_hd.png?e=1740672193732&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:INIm9mGfjw-2mJW7pYlfYXIi0T0=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67c055a1dc26a985b3975b4c_hd.png?e=1740672193732&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:-Lv1hO4hyiGQ90t7SmV9kmKlK70=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67c0569edc26a985b3977a34_hd.png?e=1740672193732&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:XXw_CNlGRgL795b_uejwQyVPWCQ=" alt="图片1"></p><h2 id="封装成-Camera-类">封装成 Camera 类</h2><p>这些功能都可以封装成一个 <code>Camera</code> 类。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1&gt;摄像机&lt;/h1&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn-a.markji.com/files/67c0333fdc26a985b391278b_hd.png?e=1740672193731&amp;amp;token=xX63b9jqTlDOcGmctt5K9254r</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>opengl的缩放/位移/旋转和坐标系统</title>
+    <link href="https://eatbreads.github.io/posts/4d5b731c.html"/>
+    <id>https://eatbreads.github.io/posts/4d5b731c.html</id>
+    <published>2025-02-27T16:04:10.000Z</published>
+    <updated>2025-03-21T16:02:18.723Z</updated>
+    
+    <content type="html"><![CDATA[<h1>缩放/位移/旋转</h1><ul><li><strong>点乘</strong>：就是横乘竖。</li><li><strong>叉乘</strong>：会创建出一个和两个向量垂直的向量。<br><img src="https://cdn-a.markji.com/files/67bfcf0eb18af440dfb39223_hd.png?e=1740672193731&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:WLd74iKLtGMBPrpCch2taAoly-Q=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67bfcfc8dc26a985b37f91a1_hd.png?e=1740672193731&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:tAkycbKopfaafy7arSAvSkbnmsA=" alt="图片1"></li></ul><h2 id="旋转">旋转</h2><p>大多数的旋转采用弧度制而不是角度制，故需要将弧度转为角度。旋转公式略。<br><img src="https://cdn-a.markji.com/files/67c004e9dc26a985b388e9ad_hd.png?e=1740672193731&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:qfsteOTme2Y5PpwXXqBTsiQQ8kM=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67c005b3b18af440dfbe23f8_hd.png?e=1740672193731&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:MC_Ak6BjrwHv0_CN5IoPuH30IQM=" alt="图片1"></p><h2 id="坐标系统">坐标系统</h2><p><img src="https://cdn-a.markji.com/files/67c007f8b18af440dfbe893f_hd.png?e=1740672193731&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:CctZ1--1Y3ldRs97Ak3WZH9Csqo=" alt="图片1"></p><h3 id="画箱子：">画箱子：</h3><ol><li>先把顶点数据拷贝过去，绘制 36 个点。</li><li>然后加旋转。</li><li>在顶点着色器中将它们点乘起来。</li><li>加入透视投影，创建 MVP（模型/视图/投影）矩阵：<ul><li><code>model</code>：模型矩阵。</li><li><code>view</code>：视图矩阵。</li><li><code>projection</code>：投影矩阵，系统可以自动计算。</li></ul></li><li>将 <code>projection</code> 矩阵传入顶点着色器，并与 <code>model</code> 矩阵一起点乘。</li><li>最后再加入 <code>view</code> 矩阵。<br><img src="https://cdn-a.markji.com/files/67c010d1dc26a985b38ad5da_hd.png?e=1740672193731&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:junmocf3g8CkOepaXmiQuba3ARQ=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67c011b7dc26a985b38afbb5_hd.png?e=1740672193731&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:8wSzaXEeYsmDQMrnvc5CTSympko=" alt="图片1"></li></ol><h2 id="更多立方体">更多立方体</h2><p><img src="https://cdn-a.markji.com/files/67c01387b18af440dfc097df_hd.png?e=1740672193731&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:0GMhjI6i9eUr8AXemv4kbX_Krho=" alt="图片1"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1&gt;缩放/位移/旋转&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;点乘&lt;/strong&gt;：就是横乘竖。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;叉乘&lt;/strong&gt;：会创建出一个和两个向量垂直的向量。&lt;br&gt;
+&lt;img src=&quot;https://cdn-a.markji.com/</summary>
       
     
     
