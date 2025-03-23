@@ -6,7 +6,7 @@
   <link href="https://eatbreads.github.io/atom.xml" rel="self"/>
   
   <link href="https://eatbreads.github.io/"/>
-  <updated>2025-03-21T16:02:18.722Z</updated>
+  <updated>2025-03-23T15:56:48.874Z</updated>
   <id>https://eatbreads.github.io/</id>
   
   <author>
@@ -15,6 +15,52 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>h264封装到RTP数据包进行传输</title>
+    <link href="https://eatbreads.github.io/posts/5b7142ef.html"/>
+    <id>https://eatbreads.github.io/posts/5b7142ef.html</id>
+    <published>2025-03-23T15:54:39.000Z</published>
+    <updated>2025-03-23T15:56:48.874Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="h264封装到RTP数据包进行传输"><a href="#h264封装到RTP数据包进行传输" class="headerlink" title="h264封装到RTP数据包进行传输"></a>h264封装到RTP数据包进行传输</h1><h2 id="RTP数据包结构"><a href="#RTP数据包结构" class="headerlink" title="RTP数据包结构"></a>RTP数据包结构</h2><p>报文下面的数据称为有效载荷(payload)</p><h2 id="h264编码原理"><a href="#h264编码原理" class="headerlink" title="h264编码原理"></a>h264编码原理</h2><p>h264是一种视频压缩技术,主要包含三种帧:</p><ul><li>i帧(关键帧): 不借助其他帧的独立完整帧</li><li>p帧: 需要参考前面帧的预测帧</li><li>b帧: 需要参考前后帧的双向预测帧</li></ul><p>使用GOP(Group Of Pictures)组来防止丢包。因为p帧这种全部参考前面帧的,一旦丢包后面就都会乱掉。</p><h2 id="h264结构"><a href="#h264结构" class="headerlink" title="h264结构"></a>h264结构</h2><p>h264分为两层:</p><ul><li>网络提取层(NAL)</li><li>视讯编码层(VCL)</li></ul><p>编码后的数据流在网络提取层中传输。例如一个由100张图片组成的视频,每张图片压缩后都会得到一个独立的NAL单元(总共100个NAL)。</p><p>NAL的第一个字节用于标识当前帧类型(i/p/b帧)。</p><h2 id="IDR帧"><a href="#IDR帧" class="headerlink" title="IDR帧"></a>IDR帧</h2><p>IDR帧是一种特殊的I帧:</p><ul><li>I帧是关键帧,可以独立解码</li><li>当IDR帧出现时会清空之前的参考帧(即时刷新Refresh)</li></ul><h2 id="MP4与h264"><a href="#MP4与h264" class="headerlink" title="MP4与h264"></a>MP4与h264</h2><p>使用ffmpeg可以将MP4解析成h264文件:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i test.mp4 -codec copy -bsf:h264 mp4toannexb -f h264 test.h264</span><br></pre></td></tr></table></figure></p><p>PS: MP4本质上是在h264基础上添加了头尾信息的封装格式,所以解封装过程主要是数据拷贝。</p>]]></content>
+    
+    
+    <summary type="html">介绍h264视频编码及其RTP封装传输相关知识</summary>
+    
+    
+    
+    <category term="音视频开发" scheme="https://eatbreads.github.io/categories/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%BC%80%E5%8F%91/"/>
+    
+    
+    <category term="网络协议" scheme="https://eatbreads.github.io/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/"/>
+    
+    <category term="音视频" scheme="https://eatbreads.github.io/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>RTSP协议</title>
+    <link href="https://eatbreads.github.io/posts/9577f504.html"/>
+    <id>https://eatbreads.github.io/posts/9577f504.html</id>
+    <published>2025-03-23T15:48:20.000Z</published>
+    <updated>2025-03-23T15:56:41.078Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="RTSP协议"><a href="#RTSP协议" class="headerlink" title="RTSP协议"></a>RTSP协议</h1><h2 id="协议组成"><a href="#协议组成" class="headerlink" title="协议组成"></a>协议组成</h2><p>包括RTSP、RTP、RTCP三个协议：</p><ul><li>RTSP: 负责建立连接通道</li><li>RTP(Real Time Transport Protocol 实时传输协议): 负责传输数据</li><li>RTCP: 负责传输质量控制</li></ul><h2 id="传输协议要求"><a href="#传输协议要求" class="headerlink" title="传输协议要求"></a>传输协议要求</h2><ul><li>RTSP需要使用TCP协议</li><li>RTP和RTCP既可以使用TCP也可以使用UDP<br><img src="https://cdn-a.markji.com/files/67dfde4b63fe6caddd0ed86a_hd.png?e=1742731753507&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:nANoNala-Z_7NOgpyiexGRAhdq8=" alt="图片1"><h2 id="SDP描述"><a href="#SDP描述" class="headerlink" title="SDP描述"></a>SDP描述</h2>SDP包含两个层次的描述:</li><li>会话级描述</li><li>媒体级描述(比如同时存在视频和音频就会有两个媒体级别)<br><img src="https://cdn-a.markji.com/files/67dfe27f5e2541566caed143_hd.png?e=1742731753507&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:wwCw9QuKdbiHiMfo2S64WUdijew=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67dfe43263fe6caddd0f8543_hd.png?e=1742731753507&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:8nsOtckGYkk8m6-wYgBJTcupiLU=" alt="图片1"><h2 id="端口分配"><a href="#端口分配" class="headerlink" title="端口分配"></a>端口分配</h2></li><li>RTP使用低端口号</li><li>RTCP使用高端口号</li></ul><h2 id="实现说明"><a href="#实现说明" class="headerlink" title="实现说明"></a>实现说明</h2><p>在实际代码实现中并没有真正建立两个通道,因为使用TCP时可以直接合并RTP和RTCP。<br><img src="https://cdn-a.markji.com/files/67dfe5715e2541566caf4522_hd.png?e=1742731753507&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:q9x1WpsovlA-kT3z1bqaXDniV_g=" alt="图片1"></p>]]></content>
+    
+    
+    <summary type="html">RTSP协议及相关协议介绍</summary>
+    
+    
+    
+    <category term="网络编程" scheme="https://eatbreads.github.io/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/"/>
+    
+    
+    <category term="网络协议" scheme="https://eatbreads.github.io/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/"/>
+    
+    <category term="流媒体" scheme="https://eatbreads.github.io/tags/%E6%B5%81%E5%AA%92%E4%BD%93/"/>
+    
+  </entry>
   
   <entry>
     <title>协程八股</title>
@@ -488,51 +534,6 @@
       
     <summary type="html">&lt;h1&gt;颜色与光源&lt;/h1&gt;
 &lt;p&gt;&lt;img src=&quot;https://cdn-a.markji.com/files/67c15ba5dc26a985b3b34fdc_hd.png?e=1740841796029&amp;amp;token=xX63b9jqTlDOcGmctt5K925</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>opengl的摄像机相关</title>
-    <link href="https://eatbreads.github.io/posts/b90c4775.html"/>
-    <id>https://eatbreads.github.io/posts/b90c4775.html</id>
-    <published>2025-02-27T16:07:30.000Z</published>
-    <updated>2025-03-21T16:02:18.710Z</updated>
-    
-    <content type="html"><![CDATA[<h1>摄像机</h1><p><img src="https://cdn-a.markji.com/files/67c0333fdc26a985b391278b_hd.png?e=1740672193731&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:2EL6zFizoQrig0PpFEvC1WXiXAU=" alt="图片1"><br>原本应该是先旋转再位移。<br><img src="https://cdn-a.markji.com/files/67c0350ab18af440dfc68363_hd.png?e=1740672193731&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:CQwgolnwpqRTgZCsQZg1aJ8kuQ0=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67c03694b18af440dfc6a40c_hd.png?e=1740672193732&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:2PMBZtj_iOf9MVA2sROAFDYsIPQ=" alt="图片1"></p><h2 id="顺时针旋转">顺时针旋转</h2><blockquote><p>注意：改成 <code>-sin</code> 就会变成顺时针旋转。</p></blockquote><h2 id="左右移动">左右移动</h2><p>给摄像机加入左右移动的功能。<br><img src="https://cdn-a.markji.com/files/67c03a00b18af440dfc6f9b1_hd.png?e=1740672193732&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:yqDp-z7SEfSo2nSK76P6t1w7B64=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67c03aaadc26a985b391fe4a_hd.png?e=1740672193732&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:INIm9mGfjw-2mJW7pYlfYXIi0T0=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67c055a1dc26a985b3975b4c_hd.png?e=1740672193732&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:-Lv1hO4hyiGQ90t7SmV9kmKlK70=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67c0569edc26a985b3977a34_hd.png?e=1740672193732&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:XXw_CNlGRgL795b_uejwQyVPWCQ=" alt="图片1"></p><h2 id="封装成-Camera-类">封装成 Camera 类</h2><p>这些功能都可以封装成一个 <code>Camera</code> 类。</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1&gt;摄像机&lt;/h1&gt;
-&lt;p&gt;&lt;img src=&quot;https://cdn-a.markji.com/files/67c0333fdc26a985b391278b_hd.png?e=1740672193731&amp;amp;token=xX63b9jqTlDOcGmctt5K9254r</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>opengl的缩放/位移/旋转和坐标系统</title>
-    <link href="https://eatbreads.github.io/posts/4d5b731c.html"/>
-    <id>https://eatbreads.github.io/posts/4d5b731c.html</id>
-    <published>2025-02-27T16:04:10.000Z</published>
-    <updated>2025-03-21T16:02:18.723Z</updated>
-    
-    <content type="html"><![CDATA[<h1>缩放/位移/旋转</h1><ul><li><strong>点乘</strong>：就是横乘竖。</li><li><strong>叉乘</strong>：会创建出一个和两个向量垂直的向量。<br><img src="https://cdn-a.markji.com/files/67bfcf0eb18af440dfb39223_hd.png?e=1740672193731&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:WLd74iKLtGMBPrpCch2taAoly-Q=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67bfcfc8dc26a985b37f91a1_hd.png?e=1740672193731&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:tAkycbKopfaafy7arSAvSkbnmsA=" alt="图片1"></li></ul><h2 id="旋转">旋转</h2><p>大多数的旋转采用弧度制而不是角度制，故需要将弧度转为角度。旋转公式略。<br><img src="https://cdn-a.markji.com/files/67c004e9dc26a985b388e9ad_hd.png?e=1740672193731&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:qfsteOTme2Y5PpwXXqBTsiQQ8kM=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67c005b3b18af440dfbe23f8_hd.png?e=1740672193731&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:MC_Ak6BjrwHv0_CN5IoPuH30IQM=" alt="图片1"></p><h2 id="坐标系统">坐标系统</h2><p><img src="https://cdn-a.markji.com/files/67c007f8b18af440dfbe893f_hd.png?e=1740672193731&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:CctZ1--1Y3ldRs97Ak3WZH9Csqo=" alt="图片1"></p><h3 id="画箱子：">画箱子：</h3><ol><li>先把顶点数据拷贝过去，绘制 36 个点。</li><li>然后加旋转。</li><li>在顶点着色器中将它们点乘起来。</li><li>加入透视投影，创建 MVP（模型/视图/投影）矩阵：<ul><li><code>model</code>：模型矩阵。</li><li><code>view</code>：视图矩阵。</li><li><code>projection</code>：投影矩阵，系统可以自动计算。</li></ul></li><li>将 <code>projection</code> 矩阵传入顶点着色器，并与 <code>model</code> 矩阵一起点乘。</li><li>最后再加入 <code>view</code> 矩阵。<br><img src="https://cdn-a.markji.com/files/67c010d1dc26a985b38ad5da_hd.png?e=1740672193731&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:junmocf3g8CkOepaXmiQuba3ARQ=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67c011b7dc26a985b38afbb5_hd.png?e=1740672193731&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:8wSzaXEeYsmDQMrnvc5CTSympko=" alt="图片1"></li></ol><h2 id="更多立方体">更多立方体</h2><p><img src="https://cdn-a.markji.com/files/67c01387b18af440dfc097df_hd.png?e=1740672193731&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:0GMhjI6i9eUr8AXemv4kbX_Krho=" alt="图片1"></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1&gt;缩放/位移/旋转&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;点乘&lt;/strong&gt;：就是横乘竖。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;叉乘&lt;/strong&gt;：会创建出一个和两个向量垂直的向量。&lt;br&gt;
-&lt;img src=&quot;https://cdn-a.markji.com/</summary>
       
     
     
