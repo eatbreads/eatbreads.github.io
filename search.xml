@@ -4,19 +4,6 @@
   
     
     <entry>
-      <title>关于grae的使用</title>
-      <link href="/posts/5315a699.html"/>
-      <url>/posts/5315a699.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>协程八股</title>
       <link href="/posts/706f5e8.html"/>
       <url>/posts/706f5e8.html</url>
@@ -604,6 +591,33 @@
             <tag> C++ </tag>
             
             <tag> 包管理 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>RTSP协议</title>
+      <link href="/posts/9577f504.html"/>
+      <url>/posts/9577f504.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="RTSP协议"><a href="#RTSP协议" class="headerlink" title="RTSP协议"></a>RTSP协议</h1><h2 id="协议组成"><a href="#协议组成" class="headerlink" title="协议组成"></a>协议组成</h2><p>包括RTSP、RTP、RTCP三个协议：</p><ul><li>RTSP: 负责建立连接通道</li><li>RTP(Real Time Transport Protocol 实时传输协议): 负责传输数据</li><li>RTCP: 负责传输质量控制</li></ul><h2 id="传输协议要求"><a href="#传输协议要求" class="headerlink" title="传输协议要求"></a>传输协议要求</h2><ul><li>RTSP需要使用TCP协议</li><li>RTP和RTCP既可以使用TCP也可以使用UDP<br><img src="https://cdn-a.markji.com/files/67dfde4b63fe6caddd0ed86a_hd.png?e=1742731753507&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:nANoNala-Z_7NOgpyiexGRAhdq8=" alt="图片1"><h2 id="SDP描述"><a href="#SDP描述" class="headerlink" title="SDP描述"></a>SDP描述</h2>SDP包含两个层次的描述:</li><li>会话级描述</li><li>媒体级描述(比如同时存在视频和音频就会有两个媒体级别)<br><img src="https://cdn-a.markji.com/files/67dfe27f5e2541566caed143_hd.png?e=1742731753507&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:wwCw9QuKdbiHiMfo2S64WUdijew=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67dfe43263fe6caddd0f8543_hd.png?e=1742731753507&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:8nsOtckGYkk8m6-wYgBJTcupiLU=" alt="图片1"><h2 id="端口分配"><a href="#端口分配" class="headerlink" title="端口分配"></a>端口分配</h2></li><li>RTP使用低端口号</li><li>RTCP使用高端口号</li></ul><h2 id="实现说明"><a href="#实现说明" class="headerlink" title="实现说明"></a>实现说明</h2><p>在实际代码实现中并没有真正建立两个通道,因为使用TCP时可以直接合并RTP和RTCP。<br><img src="https://cdn-a.markji.com/files/67dfe5715e2541566caf4522_hd.png?e=1742731753507&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:q9x1WpsovlA-kT3z1bqaXDniV_g=" alt="图片1"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 网络编程 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 网络协议 </tag>
+            
+            <tag> 流媒体 </tag>
             
         </tags>
       
