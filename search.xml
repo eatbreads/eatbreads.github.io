@@ -653,6 +653,33 @@
     
     
     <entry>
+      <title>音视频中同时传输h264和aac</title>
+      <link href="/posts/f5f059ad.html"/>
+      <url>/posts/f5f059ad.html</url>
+      
+        <content type="html"><![CDATA[<h1>音视频同步传输</h1><h2 id="实现原理">实现原理</h2><p><img src="https://cdn-a.markji.com/files/67e123a54e1cf4bdf4e16b2c_hd.png?e=1742833810864&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:hljxLZt4MgMKbfZllhhTpnKHXX4=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67e1255a8d016adbb48f30ae_hd.png?e=1742833810864&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:cflNaN-tUpP_17v5oxghxc8X8Wk=" alt="图片1"><br>本质上是创建了两个线程,然后分别处理视频和音频的传输:</p><ul><li>一个线程负责h264视频数据的传输</li><li>另一个线程负责aac音频数据的传输</li></ul><p>通过多线程实现音视频的并行传输。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 音视频开发 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 音视频 </tag>
+            
+            <tag> 多线程 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>AAC音频解码</title>
       <link href="/posts/4aa94b70.html"/>
       <url>/posts/4aa94b70.html</url>
