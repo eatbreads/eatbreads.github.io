@@ -2,18 +2,36 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://eatbreads.github.io/posts/f5f059ad.html</loc>
+    <loc>https://eatbreads.github.io/posts/4aa94b70.html</loc>
     
-    <lastmod>2025-03-24</lastmod>
+    <lastmod>2025-03-25</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://eatbreads.github.io/posts/4aa94b70.html</loc>
+    <loc>https://eatbreads.github.io/posts/f5f059ad.html</loc>
     
-    <lastmod>2025-03-24</lastmod>
+    <lastmod>2025-03-25</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://eatbreads.github.io/posts/78dc036a.html</loc>
+    
+    <lastmod>2025-03-25</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://eatbreads.github.io/posts/41c91819.html</loc>
+    
+    <lastmod>2025-03-25</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -773,6 +791,13 @@
     <priority>0.2</priority>
   </url>
   
+  <url>
+    <loc>https://eatbreads.github.io/tags/Qt/</loc>
+    <lastmod>2025-03-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
 
   
   <url>
@@ -882,6 +907,13 @@
   
   <url>
     <loc>https://eatbreads.github.io/categories/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%BC%80%E5%8F%91/</loc>
+    <lastmod>2025-03-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://eatbreads.github.io/categories/Qt%E5%BC%80%E5%8F%91/</loc>
     <lastmod>2025-03-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

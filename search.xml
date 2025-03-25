@@ -4,6 +4,116 @@
   
     
     <entry>
+      <title>RTSP客户端</title>
+      <link href="/posts/78dc036a.html"/>
+      <url>/posts/78dc036a.html</url>
+      
+        <content type="html"><![CDATA[<h1>RTSP客户端实现</h1><h2 id="客户端类型">客户端类型</h2><p>有两种实现方式:</p><ul><li>拉流客户端</li><li>推流客户端</li></ul><p>之前的实现都是直接使用ffmpeg来推流到服务器。</p><h2 id="拉流命令">拉流命令</h2><h3 id="从RTSP拉流">从RTSP拉流</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -rtsp_transport tcp -i rtsp://your_rtsp_url -c copy output.mp4</span><br></pre></td></tr></table></figure><h3 id="从RTMP拉流">从RTMP拉流</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i rtmp://your_rtmp_url -c copy output.mp4</span><br></pre></td></tr></table></figure><h2 id="推流命令">推流命令</h2><h3 id="RTMP推流">RTMP推流</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -re -i input.mp4 -c:v libx264 -b:v 1M -c:a aac -b:a 128k -f flv rtmp://your_rtmp_server/live/stream</span><br></pre></td></tr></table></figure><h3 id="RTSP推流">RTSP推流</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -re -i input.mp4 -c:v libx264 -preset ultrafast -tune zerolatency -c:a aac -f rtsp rtsp://your_rtsp_server/live</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 音视频开发 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 流媒体 </tag>
+            
+            <tag> 音视频 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>在Qt中调用摄像头</title>
+      <link href="/posts/41c91819.html"/>
+      <url>/posts/41c91819.html</url>
+      
+        <content type="html"><![CDATA[<h1>Qt摄像头调用</h1><h2 id="视频帧处理">视频帧处理</h2><p>Qt 6 采集的视频帧是 QVideoFrame 格式,需要转换为 QImage 才能进行进一步处理,比如编码成 H.264 并保存为 MP4 文件。</p><h2 id="编码支持">编码支持</h2><p>Qt 本身不包含 H.264 或 AAC 编码功能，因此需要使用 FFmpeg 来进行编码和存储。</p><h2 id="extern关键字说明">extern关键字说明</h2><ul><li>extern主要用来告知编译器去外部查找定义,表示这里只是声明而没有定义,常用于头文件中声明全局变量</li><li>extern &quot;C&quot;用于告诉编译器这些引入的内容是C语言代码,不需要按照C++的命名规则来解析符号,避免解析错误</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> Qt开发 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> C++ </tag>
+            
+            <tag> 音视频 </tag>
+            
+            <tag> Qt </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>AAC音频解码</title>
+      <link href="/posts/4aa94b70.html"/>
+      <url>/posts/4aa94b70.html</url>
+      
+        <content type="html"><![CDATA[<h1>AAC音频解码</h1><p><img src="https://cdn-a.markji.com/files/67e113fc4e1cf4bdf4de9b84_hd.png?e=1742833810864&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:jrtlGiHKozQdoQswVZm1Z4IsCJ0=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67e115d84e1cf4bdf4dedd66_hd.png?e=1742833810864&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:XozHbjRj5GhfN44zC1HRMKtnk74=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67e118ab8d016adbb48d03ce_hd.png?e=1742833810864&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:xHd469LPFP1CY2K6iv9cMipU45k=" alt="图片1"><br>本质和h264封装进RTP数据包差不多,这里是把AAC封装进RTP数据包中进行传输。</p><h2 id="应用场景">应用场景</h2><p>此时就可以实现从客户端上传到服务器,然后服务器执行播放功能。<br><img src="https://cdn-a.markji.com/files/67e11ab44e1cf4bdf4dfbcf0_hd.png?e=1742833810864&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:bfm5HqgqC3YcfPDerCySHvwLGow=" alt="图片1"></p><h2 id="播放命令">播放命令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffplay -i rtsp://127.0.0.1:8554</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 音视频开发 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 网络协议 </tag>
+            
+            <tag> 音视频 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>音视频中同时传输h264和aac</title>
+      <link href="/posts/f5f059ad.html"/>
+      <url>/posts/f5f059ad.html</url>
+      
+        <content type="html"><![CDATA[<h1>音视频同步传输</h1><h2 id="实现原理">实现原理</h2><p><img src="https://cdn-a.markji.com/files/67e123a54e1cf4bdf4e16b2c_hd.png?e=1742833810864&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:hljxLZt4MgMKbfZllhhTpnKHXX4=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67e1255a8d016adbb48f30ae_hd.png?e=1742833810864&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:cflNaN-tUpP_17v5oxghxc8X8Wk=" alt="图片1"><br>本质上是创建了两个线程,然后分别处理视频和音频的传输:</p><ul><li>一个线程负责h264视频数据的传输</li><li>另一个线程负责aac音频数据的传输</li></ul><p>通过多线程实现音视频的并行传输。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 音视频开发 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 音视频 </tag>
+            
+            <tag> 多线程 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>h264封装到RTP数据包进行传输</title>
       <link href="/posts/5b7142ef.html"/>
       <url>/posts/5b7142ef.html</url>
@@ -645,60 +755,6 @@
             <tag> C++ </tag>
             
             <tag> 包管理 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>音视频中同时传输h264和aac</title>
-      <link href="/posts/f5f059ad.html"/>
-      <url>/posts/f5f059ad.html</url>
-      
-        <content type="html"><![CDATA[<h1>音视频同步传输</h1><h2 id="实现原理">实现原理</h2><p><img src="https://cdn-a.markji.com/files/67e123a54e1cf4bdf4e16b2c_hd.png?e=1742833810864&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:hljxLZt4MgMKbfZllhhTpnKHXX4=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67e1255a8d016adbb48f30ae_hd.png?e=1742833810864&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:cflNaN-tUpP_17v5oxghxc8X8Wk=" alt="图片1"><br>本质上是创建了两个线程,然后分别处理视频和音频的传输:</p><ul><li>一个线程负责h264视频数据的传输</li><li>另一个线程负责aac音频数据的传输</li></ul><p>通过多线程实现音视频的并行传输。</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> 音视频开发 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 音视频 </tag>
-            
-            <tag> 多线程 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>AAC音频解码</title>
-      <link href="/posts/4aa94b70.html"/>
-      <url>/posts/4aa94b70.html</url>
-      
-        <content type="html"><![CDATA[<h1>AAC音频解码</h1><p><img src="https://cdn-a.markji.com/files/67e113fc4e1cf4bdf4de9b84_hd.png?e=1742833810864&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:jrtlGiHKozQdoQswVZm1Z4IsCJ0=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67e115d84e1cf4bdf4dedd66_hd.png?e=1742833810864&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:XozHbjRj5GhfN44zC1HRMKtnk74=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67e118ab8d016adbb48d03ce_hd.png?e=1742833810864&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:xHd469LPFP1CY2K6iv9cMipU45k=" alt="图片1"><br>本质和h264封装进RTP数据包差不多,这里是把AAC封装进RTP数据包中进行传输。</p><h2 id="应用场景">应用场景</h2><p>此时就可以实现从客户端上传到服务器,然后服务器执行播放功能。<br><img src="https://cdn-a.markji.com/files/67e11ab44e1cf4bdf4dfbcf0_hd.png?e=1742833810864&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:bfm5HqgqC3YcfPDerCySHvwLGow=" alt="图片1"></p><h2 id="播放命令">播放命令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffplay -i rtsp://127.0.0.1:8554</span><br></pre></td></tr></table></figure>]]></content>
-      
-      
-      <categories>
-          
-          <category> 音视频开发 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 网络协议 </tag>
-            
-            <tag> 音视频 </tag>
             
         </tags>
       

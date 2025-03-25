@@ -6,7 +6,7 @@
   <link href="https://eatbreads.github.io/atom.xml" rel="self"/>
   
   <link href="https://eatbreads.github.io/"/>
-  <updated>2025-03-23T15:56:48.874Z</updated>
+  <updated>2025-03-25T14:11:43.164Z</updated>
   <id>https://eatbreads.github.io/</id>
   
   <author>
@@ -15,6 +15,100 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>RTSP客户端</title>
+    <link href="https://eatbreads.github.io/posts/78dc036a.html"/>
+    <id>https://eatbreads.github.io/posts/78dc036a.html</id>
+    <published>2025-03-25T15:51:53.000Z</published>
+    <updated>2025-03-25T14:11:43.164Z</updated>
+    
+    <content type="html"><![CDATA[<h1>RTSP客户端实现</h1><h2 id="客户端类型">客户端类型</h2><p>有两种实现方式:</p><ul><li>拉流客户端</li><li>推流客户端</li></ul><p>之前的实现都是直接使用ffmpeg来推流到服务器。</p><h2 id="拉流命令">拉流命令</h2><h3 id="从RTSP拉流">从RTSP拉流</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -rtsp_transport tcp -i rtsp://your_rtsp_url -c copy output.mp4</span><br></pre></td></tr></table></figure><h3 id="从RTMP拉流">从RTMP拉流</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i rtmp://your_rtmp_url -c copy output.mp4</span><br></pre></td></tr></table></figure><h2 id="推流命令">推流命令</h2><h3 id="RTMP推流">RTMP推流</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -re -i input.mp4 -c:v libx264 -b:v 1M -c:a aac -b:a 128k -f flv rtmp://your_rtmp_server/live/stream</span><br></pre></td></tr></table></figure><h3 id="RTSP推流">RTSP推流</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -re -i input.mp4 -c:v libx264 -preset ultrafast -tune zerolatency -c:a aac -f rtsp rtsp://your_rtsp_server/live</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+    <summary type="html">RTSP客户端的推流和拉流实现</summary>
+    
+    
+    
+    <category term="音视频开发" scheme="https://eatbreads.github.io/categories/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%BC%80%E5%8F%91/"/>
+    
+    
+    <category term="流媒体" scheme="https://eatbreads.github.io/tags/%E6%B5%81%E5%AA%92%E4%BD%93/"/>
+    
+    <category term="音视频" scheme="https://eatbreads.github.io/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>在Qt中调用摄像头</title>
+    <link href="https://eatbreads.github.io/posts/41c91819.html"/>
+    <id>https://eatbreads.github.io/posts/41c91819.html</id>
+    <published>2025-03-25T14:02:46.000Z</published>
+    <updated>2025-03-25T14:11:43.162Z</updated>
+    
+    <content type="html"><![CDATA[<h1>Qt摄像头调用</h1><h2 id="视频帧处理">视频帧处理</h2><p>Qt 6 采集的视频帧是 QVideoFrame 格式,需要转换为 QImage 才能进行进一步处理,比如编码成 H.264 并保存为 MP4 文件。</p><h2 id="编码支持">编码支持</h2><p>Qt 本身不包含 H.264 或 AAC 编码功能，因此需要使用 FFmpeg 来进行编码和存储。</p><h2 id="extern关键字说明">extern关键字说明</h2><ul><li>extern主要用来告知编译器去外部查找定义,表示这里只是声明而没有定义,常用于头文件中声明全局变量</li><li>extern &quot;C&quot;用于告诉编译器这些引入的内容是C语言代码,不需要按照C++的命名规则来解析符号,避免解析错误</li></ul>]]></content>
+    
+    
+    <summary type="html">Qt摄像头调用及视频处理相关知识</summary>
+    
+    
+    
+    <category term="Qt开发" scheme="https://eatbreads.github.io/categories/Qt%E5%BC%80%E5%8F%91/"/>
+    
+    
+    <category term="C++" scheme="https://eatbreads.github.io/tags/C/"/>
+    
+    <category term="音视频" scheme="https://eatbreads.github.io/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/"/>
+    
+    <category term="Qt" scheme="https://eatbreads.github.io/tags/Qt/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>AAC音频解码</title>
+    <link href="https://eatbreads.github.io/posts/4aa94b70.html"/>
+    <id>https://eatbreads.github.io/posts/4aa94b70.html</id>
+    <published>2025-03-24T15:51:53.000Z</published>
+    <updated>2025-03-25T14:11:43.168Z</updated>
+    
+    <content type="html"><![CDATA[<h1>AAC音频解码</h1><p><img src="https://cdn-a.markji.com/files/67e113fc4e1cf4bdf4de9b84_hd.png?e=1742833810864&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:jrtlGiHKozQdoQswVZm1Z4IsCJ0=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67e115d84e1cf4bdf4dedd66_hd.png?e=1742833810864&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:XozHbjRj5GhfN44zC1HRMKtnk74=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67e118ab8d016adbb48d03ce_hd.png?e=1742833810864&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:xHd469LPFP1CY2K6iv9cMipU45k=" alt="图片1"><br>本质和h264封装进RTP数据包差不多,这里是把AAC封装进RTP数据包中进行传输。</p><h2 id="应用场景">应用场景</h2><p>此时就可以实现从客户端上传到服务器,然后服务器执行播放功能。<br><img src="https://cdn-a.markji.com/files/67e11ab44e1cf4bdf4dfbcf0_hd.png?e=1742833810864&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:bfm5HqgqC3YcfPDerCySHvwLGow=" alt="图片1"></p><h2 id="播放命令">播放命令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffplay -i rtsp://127.0.0.1:8554</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+    <summary type="html">AAC音频编码及其RTP封装传输</summary>
+    
+    
+    
+    <category term="音视频开发" scheme="https://eatbreads.github.io/categories/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%BC%80%E5%8F%91/"/>
+    
+    
+    <category term="网络协议" scheme="https://eatbreads.github.io/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/"/>
+    
+    <category term="音视频" scheme="https://eatbreads.github.io/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>音视频中同时传输h264和aac</title>
+    <link href="https://eatbreads.github.io/posts/f5f059ad.html"/>
+    <id>https://eatbreads.github.io/posts/f5f059ad.html</id>
+    <published>2025-03-24T15:51:53.000Z</published>
+    <updated>2025-03-25T14:11:43.168Z</updated>
+    
+    <content type="html"><![CDATA[<h1>音视频同步传输</h1><h2 id="实现原理">实现原理</h2><p><img src="https://cdn-a.markji.com/files/67e123a54e1cf4bdf4e16b2c_hd.png?e=1742833810864&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:hljxLZt4MgMKbfZllhhTpnKHXX4=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67e1255a8d016adbb48f30ae_hd.png?e=1742833810864&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:cflNaN-tUpP_17v5oxghxc8X8Wk=" alt="图片1"><br>本质上是创建了两个线程,然后分别处理视频和音频的传输:</p><ul><li>一个线程负责h264视频数据的传输</li><li>另一个线程负责aac音频数据的传输</li></ul><p>通过多线程实现音视频的并行传输。</p>]]></content>
+    
+    
+    <summary type="html">实现音视频的同步传输</summary>
+    
+    
+    
+    <category term="音视频开发" scheme="https://eatbreads.github.io/categories/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%BC%80%E5%8F%91/"/>
+    
+    
+    <category term="音视频" scheme="https://eatbreads.github.io/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/"/>
+    
+    <category term="多线程" scheme="https://eatbreads.github.io/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+  </entry>
   
   <entry>
     <title>h264封装到RTP数据包进行传输</title>
@@ -447,92 +541,6 @@
 &lt;li&gt;用于存储顶点数据，如位置、颜色、法线、纹理坐标等。&lt;/li&gt;
 &lt;li&gt;作用是直接把数组存到 GPU 的缓存中，提高渲染效率。&lt;/li&gt;
 &lt;/ul</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>使用vcxxrv来配合wsl做图形化界面</title>
-    <link href="https://eatbreads.github.io/posts/728f80ac.html"/>
-    <id>https://eatbreads.github.io/posts/728f80ac.html</id>
-    <published>2025-03-03T13:09:36.000Z</published>
-    <updated>2025-03-21T16:02:18.717Z</updated>
-    
-    <content type="html"><![CDATA[<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># 使用 VcXsrv 给 WSL2 连接图形界面</span></span><br><span class="line"></span><br><span class="line"><span class="section">## 1. 下载 VcXsrv  </span></span><br><span class="line">首先，从官网下载安装 VcXsrv：  </span><br><span class="line">[<span class="string">https://sourceforge.net/projects/vcxsrv/</span>](<span class="link">https://sourceforge.net/projects/vcxsrv/</span>)  </span><br><span class="line"></span><br><span class="line"><span class="section">## 2. 更换源  </span></span><br><span class="line">执行以下命令更换源：</span><br><span class="line"><span class="code">```bash</span></span><br><span class="line"><span class="code">wget https://tuna.moe/oh-my-tuna/oh-my-tuna.py</span></span><br><span class="line"><span class="code">sudo python3 oh-my-tuna.py --global</span></span><br><span class="line"><span class="code">sudo apt-get update</span></span><br><span class="line"><span class="code">sudo apt-get upgrade</span></span><br></pre></td></tr></table></figure><h2 id="3-安装所需软件">3. 安装所需软件</h2><p>安装 <code>xfce4-terminal</code> 和 <code>xfce4</code>：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt-get install xfce4-terminal</span><br><span class="line"><span class="built_in">sudo</span> apt-get install xfce4</span><br></pre></td></tr></table></figure><p>重启 <code>dbus</code> 服务：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> service dbus restart</span><br></pre></td></tr></table></figure><h2 id="4-配置环境变量">4. 配置环境变量</h2><p>编辑 <code>~/.bashrc</code>：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.bashrc</span><br></pre></td></tr></table></figure><p>添加以下内容（请将 <code>172.27.46.105</code> 替换为实际的 Windows IP 地址）：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> DISPLAY=172.27.46.105:0.0  <span class="comment"># 替换为你的 Windows IP 地址</span></span><br><span class="line"><span class="built_in">export</span> WAYLAND_DISPLAY=<span class="variable">$DISPLAY</span></span><br><span class="line"><span class="built_in">export</span> XDG_SESSION_TYPE=x11</span><br></pre></td></tr></table></figure><p>保存并执行：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br></pre></td></tr></table></figure><h2 id="5-启动图形界面">5. 启动图形界面</h2><p>执行以下命令启动 <code>xfce4</code>：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">startxfce4</span><br></pre></td></tr></table></figure><p>然后就可以在 WSL2 中显示图形界面了。</p><h2 id="6-OpenCV-相关问题">6. OpenCV 相关问题</h2><p>使用 <code>apt</code> 安装 OpenCV 成功，但 <code>vcpkg</code> 方式失败，原因未知。<br>此外，有一个小技巧：WSL 可以直接使用 Windows 磁盘路径，例如：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/mnt/c/（C 盘路径）</span><br></pre></td></tr></table></figure><p>可以直接访问 Windows 里的图片文件。</p><p>最终编译运行成功，并成功显示图片！ 🎉<br><img src="https://cdn-a.markji.com/files/67b7f45da5c2cef46265e459_hd.png?e=1740988820039&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:FVDLnFenUDMYp4etgqXF7xGFeyY=" alt="图片1"></p><pre><code></code></pre>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;figure class=&quot;highlight markdown&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span cl</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>SFINAE在c++模板中的使用及标准库中的应用</title>
-    <link href="https://eatbreads.github.io/posts/b2bfdc17.html"/>
-    <id>https://eatbreads.github.io/posts/b2bfdc17.html</id>
-    <published>2025-03-02T15:35:44.000Z</published>
-    <updated>2025-03-21T16:02:18.695Z</updated>
-    
-    <content type="html"><![CDATA[<h1>代换失败不是错误（SFINAE）</h1><h2 id="概念">概念</h2><p>SFINAE（Substitution Failure Is Not An Error）意为<strong>代换失败不是错误</strong>，这是 C++ 模板机制中的一个重要特性。</p><p><strong>核心思想</strong>：<br>当模板参数推导失败时，编译器不会报错，而是会尝试匹配其他可能的函数或模板。因此，它可以避免<strong>不合理的模板实例化</strong>，防止<strong>不该匹配的类型</strong>被错误实例化。<br><img src="https://cdn-a.markji.com/files/6718a31157833190dc44516e_hd.png?e=1740932078152&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:RUdsJ4FONhfWNo9_YiTTcVxvcrk=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/6718a366f0750c5d4663751b_hd.png?e=1740932078152&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:o6yHRfpeWxDBQnRrolze3ZVy3a0=" alt="图片1"><br><strong>PS：非常非常重要！</strong></p><h2 id="代换失败的规则">代换失败的规则</h2><p>任何<strong>导致代换的模板实参</strong>不符合 C++ 语法（即<strong>非良构</strong>）的情况，都会导致代换失败，而不会引发编译错误。</p><p><strong>PS：非良构</strong>表示不符合 C++ 的基本语法。<br><img src="https://cdn-a.markji.com/files/6718aa5af0750c5d46665066_hd.png?e=1740932078152&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:x751lLJmCrCiHlKE9qCWN48oK2g=" alt="图片1"></p><h2 id="SFINAE-的具体使用">SFINAE 的具体使用</h2><p>通常，即使不使用 SFINAE，C++ 也会在模板实例化后报错。但 SFINAE 的关键在于：</p><p>✅ <strong>SFINAE 使得错误发生在实例化前，而非实例化后。</strong><br>✅ <strong>能不实例化就不要实例化</strong>，因为某些模板实例化后可能产生难以理解的错误信息。<br>✅ <strong>使用 SFINAE，错误信息会变得更简单，比如 “未找到匹配的重载函数”。</strong><br>✅ <strong>模板实例化本身是有开销的</strong>，尤其对于复杂模板而言，实例化可能带来较大编译成本。<br><img src="https://cdn-a.markji.com/files/6718aebb12bf596766b9afe2_hd.png?e=1740932078152&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:Zqkct74cpIBK0S1gAb-IUjoCuN0=" alt="图片1"></p><h2 id="标准库中的-SFINAE-——-enable-if-t">标准库中的 SFINAE —— <code>enable_if_t</code></h2><p>标准库中的 <code>std::enable_if_t</code> 是 SFINAE 的典型应用。</p><p>在前面的知识点中，我们讨论了对类型的行为要求，例如：</p><ul><li>是否具有 <code>type</code> 成员</li><li>是否支持加减运算</li></ul><p>使用 <code>enable_if</code> 可以为模板增加约束，从而控制哪些类型可以实例化该模板。</p><p><strong>PS：本质上，<code>enable_if</code> 是“使得模板可用，如果满足某个条件”。</strong></p><h2 id="enable-if-t-的原理"><code>enable_if_t</code> 的原理</h2><ul><li><code>enable_if</code> <strong>在第一参数为 <code>true</code> 时</strong>，才会定义 <code>type</code> 成员；</li><li>如果第一参数为 <code>false</code>，则 <strong>没有 <code>type</code> 成员</strong>，从而导致代换失败（SFINAE 机制生效）。<br><img src="https://cdn-a.markji.com/files/6718e6c4ccfef1e7ef90aa39_hd.png?e=1740932078152&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:Qic1PBCiJefrDMGGuvz70TXe6bQ=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/6718e87eccfef1e7ef91d10e_hd.png?e=1740932078152&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:_9RzhzxTtQxZkuO8DX9FiOHPmPk=" alt="图片1"></li></ul><hr><p>SFINAE 是 C++ 模板元编程的核心技巧之一，合理使用可以提高代码的可读性和健壮性。</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1&gt;代换失败不是错误（SFINAE）&lt;/h1&gt;
-&lt;h2 id=&quot;概念&quot;&gt;概念&lt;/h2&gt;
-&lt;p&gt;SFINAE（Substitution Failure Is Not An Error）意为&lt;strong&gt;代换失败不是错误&lt;/strong&gt;，这是 C++ 模板机制中的一个重要特性</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>奇异模板递归</title>
-    <link href="https://eatbreads.github.io/posts/233853.html"/>
-    <id>https://eatbreads.github.io/posts/233853.html</id>
-    <published>2025-03-02T15:32:28.000Z</published>
-    <updated>2025-03-21T16:02:18.735Z</updated>
-    
-    <content type="html"><![CDATA[<h1>CRTP</h1><p>CRTP（Curiously Recurring Template Pattern）被称为<strong>奇异重现</strong>，或者<strong>奇异递归模板模式</strong>。</p><h2 id="优势">优势</h2><ul><li>实现了<strong>静态多态</strong>，无需使用虚函数。</li><li><strong>无运行时开销</strong>，提高性能。</li><li>避免了传统的向下转换（downcasting）导致的类型错误。</li></ul><h2 id="备注">备注</h2><p>以后可以尝试<strong>都使用 CRTP</strong> 来编写代码，以免去运行时开销。其实改动并不难。<br><img src="https://cdn-a.markji.com/files/671efd0edee1d69b5795e9e8_hd.png?e=1740932078154&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:eTV6e0Uq9JPfOinXXfpIMFBNfrQ=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/671efe26dee1d69b579632ad_hd.png?e=1740932078154&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:xdubiw1N2IuVkkZDpZFaa3Zt7zw=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/671efe71dee1d69b5796771c_hd.png?e=1740932078154&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:2SKkuT0tqcQk8W5ETJdWlTmGC0M=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/671effd53f407d0defb03c91_hd.png?e=1740932078154&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:266HrCtrSmLMkWx15DEJq9Tg2CI=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/671f0372dee1d69b57977b98_hd.png?e=1740932078154&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:5rrSzhrY_9WCbvminQU3CnWYDzk=" alt="图片1"><br><img src="%E9%93%BEhttps://cdn-a.markji.com/files/671f0407dee1d69b57979395_hd.png?e=1740932078154&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:0y2tMdhuqFIb51or_ieuJTP55wA=" alt="图片1"></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1&gt;CRTP&lt;/h1&gt;
-&lt;p&gt;CRTP（Curiously Recurring Template Pattern）被称为&lt;strong&gt;奇异重现&lt;/strong&gt;，或者&lt;strong&gt;奇异递归模板模式&lt;/strong&gt;。&lt;/p&gt;
-&lt;h2 id=&quot;优势&quot;&gt;优势&lt;/h2&gt;
-&lt;ul</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>颜色与光照和冯氏光源</title>
-    <link href="https://eatbreads.github.io/posts/6f91cf88.html"/>
-    <id>https://eatbreads.github.io/posts/6f91cf88.html</id>
-    <published>2025-03-01T14:27:42.000Z</published>
-    <updated>2025-03-21T16:02:18.735Z</updated>
-    
-    <content type="html"><![CDATA[<h1>颜色与光源</h1><p><img src="https://cdn-a.markji.com/files/67c15ba5dc26a985b3b34fdc_hd.png?e=1740841796029&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:yx4H1nkKytF1Cm7g3oJq7090FfY=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67c16188dc26a985b3b48403_hd.png?e=1740841796029&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:56MP6kELtAyQZFdJzSF3WMfqVcE=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67c16377b18af440dfe9778b_hd.png?e=1740841796029&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:tIJYO-KENMom4Ws2gUWyi-3_oZY=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67c16554dc26a985b3b53c79_hd.png?e=1740841796029&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:cglFWhSiTsRj49mrrMBojIWgER4=" alt="图片1"></p><h2 id="冯氏光照">冯氏光照</h2><p><img src="https://cdn-a.markji.com/files/67c1660eb18af440dfea20e9_hd.png?e=1740841796029&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:K_pslwGHQp1g_WlArTLIklZzsyg=" alt="图片1"><br>在顶点着色器（vertex shader）中实现冯氏光照会导致较差的效果，而在片元着色器（fragment shader）中实现，尽管计算成本较高，但能获得更好的渲染结果。</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1&gt;颜色与光源&lt;/h1&gt;
-&lt;p&gt;&lt;img src=&quot;https://cdn-a.markji.com/files/67c15ba5dc26a985b3b34fdc_hd.png?e=1740841796029&amp;amp;token=xX63b9jqTlDOcGmctt5K925</summary>
       
     
     
