@@ -6,7 +6,7 @@
   <link href="https://eatbreads.github.io/atom.xml" rel="self"/>
   
   <link href="https://eatbreads.github.io/"/>
-  <updated>2025-03-25T14:11:43.164Z</updated>
+  <updated>2025-03-27T09:53:46.374Z</updated>
   <id>https://eatbreads.github.io/</id>
   
   <author>
@@ -17,13 +17,111 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>封装一个好用的C++20协程</title>
+    <link href="https://eatbreads.github.io/posts/5950a8c.html"/>
+    <id>https://eatbreads.github.io/posts/5950a8c.html</id>
+    <published>2025-03-27T09:52:50.000Z</published>
+    <updated>2025-03-27T09:53:46.374Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="封装C-20协程"><a href="#封装C-20协程" class="headerlink" title="封装C++20协程"></a>封装C++20协程</h1><h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>在C++20中,只要函数返回值是Task类型,并使用co_return返回,该函数就自动成为一个协程函数。</p><p>Task不仅仅是一个”配置文件”,它还承担着协程的核心管理职责。</p><h2 id="核心原理"><a href="#核心原理" class="headerlink" title="核心原理"></a>核心原理</h2><h3 id="协程的执行控制"><a href="#协程的执行控制" class="headerlink" title="协程的执行控制"></a>协程的执行控制</h3><p>一个返回Task的函数本身就是协程,其内部代码会在以下情况下异步执行:</p><ul><li>co_await 语句控制</li><li>co_return 语句控制</li></ul><h3 id="恢复协程的两种方式"><a href="#恢复协程的两种方式" class="headerlink" title="恢复协程的两种方式"></a>恢复协程的两种方式</h3><ol><li>内部恢复:</li></ol><ul><li>通过handle.resume()</li><li>由异步等待操作触发(如Delay的await_suspend)</li></ul><ol><li>外部恢复:</li></ol><ul><li>通过task2.resume()显式调用</li><li>主动从外部恢复协程执行</li></ul><p>这两种方式都会立即恢复协程并从挂起点继续执行,最终到达co_return。</p><h2 id="实践发现"><a href="#实践发现" class="headerlink" title="实践发现"></a>实践发现</h2><p>在实际使用中发现一个有趣的现象:</p><ul><li>注释掉handle.resume()不影响程序运行</li><li>但注释掉main函数中的resume()会导致程序卡住</li></ul><h2 id="编译命令"><a href="#编译命令" class="headerlink" title="编译命令"></a>编译命令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ -o <span class="built_in">test</span> -std=c++20 test.cpp</span><br></pre></td></tr></table></figure><h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol><li><p>协程函数必须:</p><ul><li>返回Task类型</li><li>使用co_return返回值</li></ul></li><li><p>恢复机制选择:</p><ul><li>内部恢复适合自动触发的场景</li><li>外部恢复适合需要手动控制的场景</li></ul></li><li><p>性能考虑:</p><ul><li>协程切换有一定开销</li><li>适合IO密集型任务</li><li>不适合CPU密集型计算</li></ul></li></ol>]]></content>
+    
+    
+    <summary type="html">介绍如何封装和使用C++20协程功能</summary>
+    
+    
+    
+    <category term="C++开发" scheme="https://eatbreads.github.io/categories/C-%E5%BC%80%E5%8F%91/"/>
+    
+    
+    <category term="C++" scheme="https://eatbreads.github.io/tags/C/"/>
+    
+    <category term="协程" scheme="https://eatbreads.github.io/tags/%E5%8D%8F%E7%A8%8B/"/>
+    
+    <category term="异步编程" scheme="https://eatbreads.github.io/tags/%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>回调地狱和解决方法</title>
+    <link href="https://eatbreads.github.io/posts/f3d7b43c.html"/>
+    <id>https://eatbreads.github.io/posts/f3d7b43c.html</id>
+    <published>2025-03-27T09:48:16.000Z</published>
+    <updated>2025-03-27T09:51:54.036Z</updated>
+    
+    <content type="html"><![CDATA[<h1>回调地狱及其解决方案</h1><h2 id="什么是回调地狱">什么是回调地狱</h2><p>回调地狱(Callback Hell)一般指的是回调函数层层嵌套的现象,这种代码结构会导致:</p><ul><li>代码难以理解</li><li>维护成本高</li><li>调试困难</li></ul><h2 id="常见场景">常见场景</h2><p>回调地狱常见于异步编程中,特别是:</p><ol><li>事件驱动模型</li><li>基于回调的异步操作</li><li>网络请求</li><li>文件读取</li><li>定时任务</li></ol><h2 id="主要问题">主要问题</h2><h3 id="1-状态传递困难">1. 状态传递困难</h3><p>多层嵌套的回调需要在不同层级间传递各种状态,导致:</p><ul><li>代码难以调试</li><li>错误追踪困难</li><li>状态管理复杂</li></ul><h3 id="2-事件依赖链">2. 事件依赖链</h3><p>典型例子是处理EPOLLIN事件时需要等待其他异步事件完成,形成复杂的事件依赖关系。<br><img src="https://cdn-a.markji.com/files/67e4f7d681bdefd1be164eb2_hd.png?e=1743071664551&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:S7s8WGObEQ7yLIBHFVNx3hy0zQ0=" alt="图片1"></p><h3 id="3-框架局限">3. 框架局限</h3><p>即使是现代框架如Qt的信号槽机制,在处理复杂的异步流程时也可能遇到类似问题。</p><h2 id="解决方案">解决方案</h2><h3 id="1-有限状态机">1. 有限状态机</h3><p>使用状态机可以:</p><ul><li>清晰地定义状态转换</li><li>简化事件处理逻辑</li><li>提高代码可维护性<br><img src="https://cdn-a.markji.com/files/67e4f9ae81bdefd1be16b2e6_hd.png?e=1743071674079&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:4qWtJeXCFx8d5jW3lGtTV0QP2fY=" alt="图片1"></li></ul><h3 id="2-协程">2. 协程</h3><p>协程提供了更优雅的解决方案:</p><ul><li>可以暂停执行中的线程</li><li>类似于给线程添加了goto能力</li><li>代码结构更清晰易读</li><li>接近同步代码的写法</li><li>避免了显式的回调嵌套</li></ul><p>协程相比传统回调的优势:</p><ul><li>线性的代码结构</li><li>更好的错误处理</li><li>更容易的状态管理</li><li>更接近人类思维方式</li></ul><h2 id="总结">总结</h2><p>回调地狱是异步编程中的常见问题,通过合适的设计模式(如状态机)或现代语言特性(如协程)可以有效避免这个问题。选择哪种解决方案需要根据具体场景和需求来决定。</p>]]></content>
+    
+    
+    <summary type="html">回调地狱产生的原因及其解决方案</summary>
+    
+    
+    
+    <category term="编程技术" scheme="https://eatbreads.github.io/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="设计模式" scheme="https://eatbreads.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+    <category term="异步编程" scheme="https://eatbreads.github.io/tags/%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>高性能服务器压力测试</title>
+    <link href="https://eatbreads.github.io/posts/1c2eabf7.html"/>
+    <id>https://eatbreads.github.io/posts/1c2eabf7.html</id>
+    <published>2025-03-27T09:38:43.000Z</published>
+    <updated>2025-03-27T09:44:48.280Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="服务器性能测试"><a href="#服务器性能测试" class="headerlink" title="服务器性能测试"></a>服务器性能测试</h1><h2 id="测试类型"><a href="#测试类型" class="headerlink" title="测试类型"></a>测试类型</h2><p>服务器性能测试主要分为两类:</p><ul><li>连接吞吐测试: 测试TCP的连接建立和断开性能</li><li>数据吞吐测试: 测试数据收发能力<br><img src="https://cdn-a.markji.com/files/67e41be2d5e9e782bf5d5c27_hd.png?e=1743059627923&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:gXwKTAIzYWZ958RV0rFgeQY-lkA=" alt="图片1"><h2 id="测试工具尝试"><a href="#测试工具尝试" class="headerlink" title="测试工具尝试"></a>测试工具尝试</h2></li></ul><h3 id="1-hping3测试"><a href="#1-hping3测试" class="headerlink" title="1. hping3测试"></a>1. hping3测试</h3><p>hping3主要用于TCP/UDP/ICMP测试,可以用于简单的TCP并发连接测试。</p><p>测试命令:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hping3 -S -p 8080 -c 200 --fast 127.0.0.1</span><br></pre></td></tr></table></figure></p><p>参数说明:</p><ul><li>-S：发送SYN包(建立TCP连接)</li><li>-p 8080：目标端口8080</li><li>-c 200：发送200个连接</li><li>—fast：快速发送请求</li></ul><h3 id="2-测试问题"><a href="#2-测试问题" class="headerlink" title="2. 测试问题"></a>2. 测试问题</h3><p>hping3存在问题:只发送SYN包而不完成完整的三次握手。</p><p>尝试使用nping:</p><ul><li>可以同时发送SYN和ACK</li><li>但服务器直接返回RST拒绝连接</li><li>可能是因为同时发送导致的问题</li></ul><h3 id="3-wrk测试"><a href="#3-wrk测试" class="headerlink" title="3. wrk测试"></a>3. wrk测试</h3><p>最后尝试使用http测试工具wrk:</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wrk -t4 -c1000 -d10s http://127.0.0.1:8082/</span><br></pre></td></tr></table></figure><p>参数说明:</p><ul><li>4个线程</li><li>1000并发连接</li><li>持续10秒</li></ul><p>测试结果:<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Running 10s test @ http://127.0.0.1:8082/</span><br><span class="line">  4 threads and 1000 connections</span><br><span class="line">  Thread Stats   Avg      Stdev     Max   +/- Stdev</span><br><span class="line">    Latency     0.00us    0.00us   0.00us    -nan%</span><br><span class="line">    Req/Sec     0.00      0.00     0.00      -nan%</span><br><span class="line">  0 requests in 10.10s, 0.00B read</span><br><span class="line">  Socket errors: connect 0, read 221412, write 0, timeout 0</span><br><span class="line">Requests/sec:      0.00</span><br><span class="line">Transfer/sec:       0.00B</span><br></pre></td></tr></table></figure></p><p><img src="https://cdn-a.markji.com/files/67e4230481bdefd1be044f9c_hd.png?e=1743059627923&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:5xzRSXgWiCCrw0kE2d6C8Niiro4=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67e423d9d5e9e782bf5f4193_hd.png?e=1743059627923&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:KqAiU6anLcQmrkLlipX43k-OgLs=" alt="图片1"></p><h3 id="4-最终方案"><a href="#4-最终方案" class="headerlink" title="4. 最终方案"></a>4. 最终方案</h3><p>虽然wrk需要解析HTTP协议会带来额外开销,但考虑到测试的完整性,最终还是选择了:</p><ul><li>使用简单的HTTP响应</li><li>通过自定义client.cpp进行压力测试</li></ul><p><img src="https://cdn-a.markji.com/files/67e4e82681bdefd1be142474_hd.png?e=1743059627923&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:MsZPuHpePJdsXpwEhq9FlnU0bak=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67e4e8f981bdefd1be1437e8_hd.png?e=1743059627923&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:Sgon3GxsCZKhCSOoiSfadNtK3qo=" alt="图片1"></p>]]></content>
+    
+    
+    <summary type="html">记录服务器性能测试的方法和经验</summary>
+    
+    
+    
+    <category term="c++开发" scheme="https://eatbreads.github.io/categories/c-%E5%BC%80%E5%8F%91/"/>
+    
+    
+    <category term="服务器" scheme="https://eatbreads.github.io/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
+    
+    <category term="性能测试" scheme="https://eatbreads.github.io/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/"/>
+    
+    <category term="网络编程" scheme="https://eatbreads.github.io/tags/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>C++20协程学习笔记</title>
+    <link href="https://eatbreads.github.io/posts/c8e6cc4a.html"/>
+    <id>https://eatbreads.github.io/posts/c8e6cc4a.html</id>
+    <published>2025-03-27T09:36:43.000Z</published>
+    <updated>2025-03-27T09:39:44.743Z</updated>
+    
+    <content type="html"><![CDATA[<h1>C++20协程学习笔记</h1><h2 id="协程基本概念">协程基本概念</h2><p>C++20引入了协程支持,提供了三个关键字:</p><h3 id="co-await">co_await</h3><p>用于等待一个异步操作完成。当遇到co_await时,协程会暂停执行并让出控制权,直到异步操作完成。</p><h3 id="co-return">co_return</h3><p>协程的返回语句,用于返回一个值并结束协程的执行。与普通函数的return不同,co_return会触发协程的清理流程。</p><h3 id="co-yield">co_yield</h3><p>暂停协程执行并返回一个值,但不会结束协程。当协程重新恢复执行时,会从co_yield的下一条语句继续执行。</p><h2 id="图片展示">图片展示</h2><p>[这里可以插入你的图片,使用markdown图片语法]</p><p><img src="https://cdn-a.markji.com/files/67e3b3bed5e9e782bf4c5f5e_hd.png?e=1743067034044&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:dm0hXEqtu0m3aIkrwD090-GKEM0=" alt="协程原理图1"></p><p><img src="https://cdn-a.markji.com/files/67e3b4c181bdefd1bef23aff_hd.png?e=1743067034044&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:tiu4RI3FO9Ow1wjPMSnHm-9EJMQ=" alt="协程示例代码"></p><p><img src="https://cdn-a.markji.com/files/67e3e413d5e9e782bf530102_hd.png?e=1743067034044&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:WQQWDUaan3U5TF1Q0MN4TgzVg9E=" alt="协程执行流程"></p><p><img src="https://cdn-a.markji.com/files/67e3e614d5e9e782bf533eae_hd.png?e=1743067034044&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:cBWMwkhuLg6n7m2K_L-bFA9lE3w=" alt="协程执行流程"></p>]]></content>
+    
+    
+    <summary type="html">C++20协程的基本概念和使用方法总结</summary>
+    
+    
+    
+    <category term="C++开发" scheme="https://eatbreads.github.io/categories/C-%E5%BC%80%E5%8F%91/"/>
+    
+    
+    <category term="C++" scheme="https://eatbreads.github.io/tags/C/"/>
+    
+    <category term="协程" scheme="https://eatbreads.github.io/tags/%E5%8D%8F%E7%A8%8B/"/>
+    
+    <category term="异步编程" scheme="https://eatbreads.github.io/tags/%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
     <title>RTSP客户端</title>
     <link href="https://eatbreads.github.io/posts/78dc036a.html"/>
     <id>https://eatbreads.github.io/posts/78dc036a.html</id>
     <published>2025-03-25T15:51:53.000Z</published>
-    <updated>2025-03-25T14:11:43.164Z</updated>
+    <updated>2025-03-27T09:39:25.147Z</updated>
     
-    <content type="html"><![CDATA[<h1>RTSP客户端实现</h1><h2 id="客户端类型">客户端类型</h2><p>有两种实现方式:</p><ul><li>拉流客户端</li><li>推流客户端</li></ul><p>之前的实现都是直接使用ffmpeg来推流到服务器。</p><h2 id="拉流命令">拉流命令</h2><h3 id="从RTSP拉流">从RTSP拉流</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -rtsp_transport tcp -i rtsp://your_rtsp_url -c copy output.mp4</span><br></pre></td></tr></table></figure><h3 id="从RTMP拉流">从RTMP拉流</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i rtmp://your_rtmp_url -c copy output.mp4</span><br></pre></td></tr></table></figure><h2 id="推流命令">推流命令</h2><h3 id="RTMP推流">RTMP推流</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -re -i input.mp4 -c:v libx264 -b:v 1M -c:a aac -b:a 128k -f flv rtmp://your_rtmp_server/live/stream</span><br></pre></td></tr></table></figure><h3 id="RTSP推流">RTSP推流</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -re -i input.mp4 -c:v libx264 -preset ultrafast -tune zerolatency -c:a aac -f rtsp rtsp://your_rtsp_server/live</span><br></pre></td></tr></table></figure>]]></content>
+    <content type="html"><![CDATA[<h1>RTSP客户端实现</h1><h2 id="客户端类型">客户端类型</h2><p>有两种实现方式:</p><ul><li>拉流客户端</li><li>推流客户端</li></ul><p>之前的实现都是直接使用ffmpeg来推流到服务器。</p><h2 id="拉流命令">拉流命令</h2><h3 id="从RTSP拉流">从RTSP拉流</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -rtsp_transport tcp -i rtsp://your_rtsp_url -c copy output.mp4</span><br></pre></td></tr></table></figure><h3 id="从RTMP拉流">从RTMP拉流</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i rtmp://your_rtmp_url -c copy output.mp4</span><br></pre></td></tr></table></figure><h2 id="推流命令">推流命令</h2><h3 id="RTMP推流">RTMP推流</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -re -i input.mp4 -c:v libx264 -b:v 1M -c:a aac -b:a 128k -f flv rtmp://your_rtmp_server/live/stream</span><br></pre></td></tr></table></figure><h3 id="RTSP推流">RTSP推流</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -re -i input.mp4 -c:v libx264 -preset ultrafast -tune zerolatency -c:a aac -f rtsp rtsp://your_rtsp_server/live</span><br></pre></td></tr></table></figure><p><img src="https://cdn-a.markji.com/files/67e260cb05df26320832127d_hd.png?e=1742892963667&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:fHVoxBdXPEl4Ehy3Ogstwn8RE4g=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67e261a805df263208322f45_hd.png?e=1742892963667&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:TWRdSVs2UbebpQEXk77sb2q_Dz4=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67e2653e81bdefd1bec96919_hd.png?e=1742892963667&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:TsjvUR8TDJ9YzdWxpiwBxCBZMEQ=" alt="图片1"></p>]]></content>
     
     
     <summary type="html">RTSP客户端的推流和拉流实现</summary>
@@ -44,9 +142,9 @@
     <link href="https://eatbreads.github.io/posts/41c91819.html"/>
     <id>https://eatbreads.github.io/posts/41c91819.html</id>
     <published>2025-03-25T14:02:46.000Z</published>
-    <updated>2025-03-25T14:11:43.162Z</updated>
+    <updated>2025-03-25T14:36:13.321Z</updated>
     
-    <content type="html"><![CDATA[<h1>Qt摄像头调用</h1><h2 id="视频帧处理">视频帧处理</h2><p>Qt 6 采集的视频帧是 QVideoFrame 格式,需要转换为 QImage 才能进行进一步处理,比如编码成 H.264 并保存为 MP4 文件。</p><h2 id="编码支持">编码支持</h2><p>Qt 本身不包含 H.264 或 AAC 编码功能，因此需要使用 FFmpeg 来进行编码和存储。</p><h2 id="extern关键字说明">extern关键字说明</h2><ul><li>extern主要用来告知编译器去外部查找定义,表示这里只是声明而没有定义,常用于头文件中声明全局变量</li><li>extern &quot;C&quot;用于告诉编译器这些引入的内容是C语言代码,不需要按照C++的命名规则来解析符号,避免解析错误</li></ul>]]></content>
+    <content type="html"><![CDATA[<h1 id="Qt摄像头调用"><a href="#Qt摄像头调用" class="headerlink" title="Qt摄像头调用"></a>Qt摄像头调用</h1><p><img src="https://cdn-a.markji.com/files/67e26e0f81bdefd1becac53f_hd.png?e=1742896807580&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:KKLRNxPYIsoAeyZ33CtujgoMhWE=" alt="图片1"></p><h2 id="视频帧处理"><a href="#视频帧处理" class="headerlink" title="视频帧处理"></a>视频帧处理</h2><p>Qt 6 采集的视频帧是 QVideoFrame 格式,需要转换为 QImage 才能进行进一步处理,比如编码成 H.264 并保存为 MP4 文件。</p><h2 id="编码支持"><a href="#编码支持" class="headerlink" title="编码支持"></a>编码支持</h2><p>Qt 本身不包含 H.264 或 AAC 编码功能，因此需要使用 FFmpeg 来进行编码和存储。<br><img src="https://cdn-a.markji.com/files/67e2727d81bdefd1becb7101_hd.png?e=1742896807580&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:2o3jMUjyoQgaZdwiXwvZkYSel-o=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67e273c005df263208355b7b_hd.png?e=1742896807580&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:XGfhJX89CRDkfaNyUkLwZ8uoVjM=" alt="图片1"></p><h2 id="extern关键字说明"><a href="#extern关键字说明" class="headerlink" title="extern关键字说明"></a>extern关键字说明</h2><ul><li>extern主要用来告知编译器去外部查找定义,表示这里只是声明而没有定义,常用于头文件中声明全局变量</li><li>extern “C”用于告诉编译器这些引入的内容是C语言代码,不需要按照C++的命名规则来解析符号,避免解析错误</li></ul>]]></content>
     
     
     <summary type="html">Qt摄像头调用及视频处理相关知识</summary>
@@ -447,104 +545,6 @@
     <category term="MySQL" scheme="https://eatbreads.github.io/tags/MySQL/"/>
     
     <category term="数据库" scheme="https://eatbreads.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>opengl加入摄像机移动</title>
-    <link href="https://eatbreads.github.io/posts/5da58852.html"/>
-    <id>https://eatbreads.github.io/posts/5da58852.html</id>
-    <published>2025-03-05T15:39:37.000Z</published>
-    <updated>2025-03-21T16:02:18.709Z</updated>
-    
-    <content type="html"><![CDATA[<h1>摄像头移动</h1><h2 id="基本原理"><strong>基本原理</strong></h2><ul><li>通过 <code>lookAt</code> 函数实现：<ul><li>传入 <strong>摄像机位置</strong></li><li>传入 <strong>物体位置</strong></li><li>传入 <strong>向上的分量</strong></li></ul></li><li><code>lookAt(cameraPos, targetPos, upVector)</code></li></ul><h2 id="键盘控制"><strong>键盘控制</strong></h2><ul><li><strong>注册键盘按压事件</strong></li><li><strong>支持多键同时移动</strong>（如同时向左和前）<ol><li>使用 <strong>集合（Set）</strong> 存储 <strong>当前按下的按键</strong></li><li>通过 <strong>定时器</strong> 定期对 <code>Set</code> 内的按键执行移动逻辑</li></ol></li></ul><p><img src="https://cdn-a.markji.com/files/67c87060f430f61a43a126d1_hd.png?e=1741191808698&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:RDaxVaynSFpDnFf5nJHzoXdsUjI=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67c87068344183dd508c2aba_hd.png?e=1741191816778&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:nzQhHOfQwQfElAjp9u6ysj0InLE=" alt="图片1"></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1&gt;摄像头移动&lt;/h1&gt;
-&lt;h2 id=&quot;基本原理&quot;&gt;&lt;strong&gt;基本原理&lt;/strong&gt;&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;通过 &lt;code&gt;lookAt&lt;/code&gt; 函数实现：
-&lt;ul&gt;
-&lt;li&gt;传入 &lt;strong&gt;摄像机位置&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;传入</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>整理的一点网络方面的八股文</title>
-    <link href="https://eatbreads.github.io/posts/1b342089.html"/>
-    <id>https://eatbreads.github.io/posts/1b342089.html</id>
-    <published>2025-03-05T15:36:25.000Z</published>
-    <updated>2025-03-21T16:02:18.726Z</updated>
-    
-    <content type="html"><![CDATA[<h1>网络(自行整理,交由大模型写成markdown)</h1><h2 id="TCP-的粘包和拆包">TCP 的粘包和拆包</h2><ul><li><strong>粘包</strong>：多个数据包在接收时合并成一个包</li><li><strong>拆包</strong>：一个数据包被分成多个包接收</li><li><strong>原因</strong>：<ul><li>TCP 是面向字节流的协议，不关心数据边界，发送方可以随意发送</li><li>拆包是因为网络传输有 MTU（最大传输单元），不能一次发送太大的包</li></ul></li><li><strong>解决办法</strong>：<ol><li>使用 <strong>定长消息</strong>（双方固定读取）</li><li>添加 <strong>消息分隔符</strong>（双方约定好）</li><li>使用 <strong>消息头</strong>（标明包的长度）</li></ol></li></ul><h2 id="三次握手">三次握手</h2><ol><li>发起方发送 <code>SYN</code></li><li>服务器回复 <code>SYN + ACK</code></li><li>发起方回复 <code>ACK</code></li></ol><h3 id="TCP-初始序列号-ISN-如何取值？">TCP 初始序列号 ISN 如何取值？</h3><ul><li>以 <strong>时间戳</strong> 为基础生成，超过 <code>2^32</code> 会回到 0</li><li>加入一些 <strong>随机值</strong> 防止被猜到</li></ul><h3 id="TCP-三次握手时，客户端发送-SYN-之后宕机了会怎样？">TCP 三次握手时，客户端发送 <code>SYN</code> 之后宕机了会怎样？</h3><ul><li>服务器会正常发送 <code>SYN + ACK</code>，但对方无响应</li><li>服务器会 <strong>重试多次</strong>，若仍无回复则 <strong>主动断开</strong></li><li><strong>重试次数</strong> 由 <code>tcp_synack_retries</code> 参数决定</li></ul><h2 id="SYN-Flood-DDoS-攻击">SYN Flood / DDoS 攻击</h2><ul><li><strong>攻击方式</strong>：客户端不断发送 <code>SYN</code>（第一次握手），但不进行第三次握手，导致服务器资源耗尽</li><li><strong>防御方法</strong>：<ol><li><strong>SYN Cookie</strong>：要求客户端在第三次握手时带上 <code>cookie</code></li><li><strong>增加 SYN 队列</strong> 或 <strong>缩短超时时间</strong></li></ol></li></ul><h2 id="四次挥手">四次挥手</h2><ol><li>客户端 <code>FIN</code> → 进入 <code>FIN_WAIT_1</code></li><li>服务器 <code>ACK</code> → 进入 <code>CLOSE_WAIT</code></li><li>服务器 <code>FIN</code> → 进入 <code>LAST_ACK</code></li><li>客户端 <code>ACK</code> → 进入 <code>TIME_WAIT</code>，服务器 <code>CLOSE</code></li></ol><h3 id="为什么需要四次挥手？">为什么需要四次挥手？</h3><ul><li>类似打电话，要两对 <code>ACK + FIN</code> 确保数据完整</li><li><strong>不一定是四次</strong>：服务器可以在 <code>ACK</code> 时同时 <code>FIN</code></li></ul><h3 id="TIME-WAIT-作用"><code>TIME_WAIT</code> 作用</h3><ul><li><strong>确保服务器收到最后的 <code>ACK</code></strong></li><li><strong>防止端口复用时收到过期数据</strong></li><li><strong>2MSL</strong>：等待两倍的最大生存时间 <code>MSL</code>（Linux 默认 <code>MSL=30s</code>，所以 <code>2MSL=1min</code>）</li></ul><h3 id="其他断开方式">其他断开方式</h3><ul><li><strong>RST（Reset）报文</strong>：异常情况下立即断开（如主机崩溃）</li><li><strong>超时断开（Timeout）</strong>：连接长时间无数据传输</li></ul><h2 id="超时重传机制">超时重传机制</h2><ul><li>类似打电话没人回应，就再重复一遍</li></ul><h2 id="SACK（选择性确认）">SACK（选择性确认）</h2><ul><li>告诉发送方自己<strong>接收到的数据块</strong></li><li>发送方只需<strong>重传丢失的部分</strong></li></ul><h2 id="滑动窗口的作用">滑动窗口的作用</h2><ul><li><strong>协调发送方和接收方速率</strong>（一般等于接收缓冲区大小）</li><li><strong>提高吞吐量</strong>（允许一次发送多个包）</li></ul><h2 id="拥塞控制">拥塞控制</h2><h3 id="1-慢启动">1. <strong>慢启动</strong></h3><ul><li>一开始 <strong>小量发送</strong>，若成功则 <strong>指数增长</strong></li><li>直到 <strong>丢包</strong> 或 <strong>达到慢启动阈值</strong></li></ul><h3 id="2-拥塞避免">2. <strong>拥塞避免</strong></h3><ul><li>慢启动是<strong>指数增长</strong>，进入拥塞避免后<strong>线性增长</strong></li></ul><h3 id="3-快速重传">3. <strong>快速重传</strong></h3><ul><li>发送 10 个包，9 个 <code>ACK</code> 回来了 → 直接重传丢失的（只需 3 个重复 <code>ACK</code>）</li></ul><h3 id="4-快速恢复">4. <strong>快速恢复</strong></h3><ul><li>发生 <strong>快速重传</strong> 后，将窗口 <strong>砍半</strong></li><li><strong>慢启动阈值</strong> 设为新窗口大小（进入<strong>拥塞避免</strong>）</li></ul><h3 id="滑动窗口-vs-拥塞窗口"><strong>滑动窗口 vs 拥塞窗口</strong></h3><table><thead><tr><th></th><th>作用</th></tr></thead><tbody><tr><td><strong>滑动窗口</strong></td><td>接收方信箱大小（控制接受能力）</td></tr><tr><td><strong>拥塞窗口</strong></td><td>送货公司送货能力（控制发送速度）</td></tr></tbody></table><h2 id="ARP-和-RARP">ARP 和 RARP</h2><ul><li><strong>ARP（Address Resolution Protocol）</strong>：IP → MAC</li><li><strong>RARP（Reverse ARP）</strong>：MAC → IP</li></ul><h2 id="四层-七层模型">四层 &amp; 七层模型</h2><h3 id="四层模型"><strong>四层模型</strong></h3><ol><li>应用层</li><li>传输层</li><li>网络层</li><li>网络接口层</li></ol><h3 id="七层模型"><strong>七层模型</strong></h3><ol><li>物理层</li><li>数据链路层</li><li>网络层</li><li>传输层</li><li>会话层</li><li>表示层</li><li>应用层</li></ol><h2 id="Cookie-vs-Token-vs-Session">Cookie vs Token vs Session</h2><table><thead><tr><th></th><th><strong>Cookie</strong></th><th><strong>Session</strong></th><th><strong>Token</strong></th></tr></thead><tbody><tr><td><strong>存储位置</strong></td><td>客户端</td><td>服务器</td><td>客户端（无状态）</td></tr><tr><td><strong>存储内容</strong></td><td>小型数据文件</td><td>用户数据</td><td>认证信息</td></tr><tr><td><strong>工作方式</strong></td><td>浏览器带上 <code>Cookie</code> 认证</td><td>客户端只存 <code>SessionID</code></td><td>无需数据库查询，直接校验</td></tr><tr><td><strong>示例</strong></td><td>购物车</td><td>登录状态</td><td>JWT（JSON Web Token）</td></tr></tbody></table><h2 id="DNS（域名解析系统）">DNS（域名解析系统）</h2><ul><li><strong>Domain Name System</strong></li><li><strong>解析域名</strong> → <strong>IP 地址</strong></li><li><strong>负载均衡</strong>：同一域名可以解析多个 IP</li></ul><h2 id="CDN（内容分发网络）">CDN（内容分发网络）</h2><ul><li><strong>缓存服务器</strong> 分布多个地点</li><li>用户请求时选择<strong>最近的缓存站</strong></li><li>适用于 <strong>静态资源</strong>（图片、CSS、JS）</li></ul><h2 id="用户输入网址到网页显示全过程">用户输入网址到网页显示全过程</h2><ol><li><strong>解析 URL</strong> 生成 <strong>HTTP 请求</strong></li><li><strong>DNS 解析</strong>：域名 → IP</li><li><strong>TCP 三次握手</strong></li><li><strong>封装 TCP 数据包</strong></li><li><strong>封装 IP、MAC 数据包</strong></li><li><strong>网卡</strong> 转换成 <strong>电信号</strong> 通过 <strong>网线传输</strong></li><li><strong>交换机 → 路由器 → 服务器</strong></li><li>服务器处理请求，返回数据</li><li>浏览器解析并渲染页面</li></ol>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1&gt;网络(自行整理,交由大模型写成markdown)&lt;/h1&gt;
-&lt;h2 id=&quot;TCP-的粘包和拆包&quot;&gt;TCP 的粘包和拆包&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;粘包&lt;/strong&gt;：多个数据包在接收时合并成一个包&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;拆包&lt;/stro</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>加入旋转</title>
-    <link href="https://eatbreads.github.io/posts/5985ea05.html"/>
-    <id>https://eatbreads.github.io/posts/5985ea05.html</id>
-    <published>2025-03-04T13:29:26.000Z</published>
-    <updated>2025-03-21T16:02:18.732Z</updated>
-    
-    <content type="html"><![CDATA[<h1>纹理映射与旋转</h1><h2 id="1-纹理映射">1. 纹理映射</h2><p>在 OpenGL 中，可以使用 <code>sampler2D</code> 进行 2D 纹理采样：</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uniform sampler2D ourTexture;</span><br></pre></td></tr></table></figure><blockquote><p>该变量用于在片元着色器中获取 2D 纹理的像素值。</p></blockquote><hr><h2 id="2-加入纹理过滤与旋转">2. 加入纹理过滤与旋转</h2><h3 id="步骤-1：转换为立方体"><strong>步骤 1：转换为立方体</strong></h3><ul><li><strong>矩形 -&gt; 立方体</strong>：原始矩形的顶点坐标扩展为 24 个顶点，以适应立方体的六个面。</li><li>每个面使用四个顶点，并绑定对应的纹理坐标。</li></ul><p>示例顶点数据（包含位置和纹理坐标）：</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">GLfloat vertices[] = &#123;</span><br><span class="line">    <span class="comment">// 位置                // 纹理坐标</span></span><br><span class="line">    <span class="number">-0.5f</span>, <span class="number">-0.5f</span>, <span class="number">-0.5f</span>,  <span class="number">0.0f</span>, <span class="number">0.0f</span>,</span><br><span class="line">     <span class="number">0.5f</span>, <span class="number">-0.5f</span>, <span class="number">-0.5f</span>,  <span class="number">1.0f</span>, <span class="number">0.0f</span>,</span><br><span class="line">     <span class="number">0.5f</span>,  <span class="number">0.5f</span>, <span class="number">-0.5f</span>,  <span class="number">1.0f</span>, <span class="number">1.0f</span>,</span><br><span class="line">    <span class="number">-0.5f</span>,  <span class="number">0.5f</span>, <span class="number">-0.5f</span>,  <span class="number">0.0f</span>, <span class="number">1.0f</span>,</span><br><span class="line">    <span class="comment">// 其余五个面省略...</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><hr><h3 id="步骤-2：应用纹理过滤"><strong>步骤 2：应用纹理过滤</strong></h3><p>为了提升渲染质量，可以使用 <strong>线性过滤</strong>：</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">glTexParameteri</span>(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);</span><br><span class="line"><span class="built_in">glTexParameteri</span>(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);</span><br></pre></td></tr></table></figure><blockquote><p>这样，在放大或缩小时，纹理会进行平滑过渡，避免像素化。</p></blockquote><hr><h3 id="步骤-3：添加旋转"><strong>步骤 3：添加旋转</strong></h3><p>使用 <code>glm::rotate</code> 在片元着色器中动态旋转：</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">model = glm::<span class="built_in">rotate</span>(model, (GLfloat)<span class="built_in">glfwGetTime</span>() * glm::<span class="built_in">radians</span>(<span class="number">50.0f</span>), glm::<span class="built_in">vec3</span>(<span class="number">0.5f</span>, <span class="number">1.0f</span>, <span class="number">0.0f</span>));</span><br></pre></td></tr></table></figure><blockquote><p>这里 <code>glfwGetTime()</code> 让物体随着时间旋转，旋转轴为 <code>(0.5, 1.0, 0.0)</code>。</p></blockquote><hr><p><img src="https://cdn-a.markji.com/files/67c70085684ac25add60662b_hd.png?e=1741097637264&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:C2_F2MO3wuBkT_xbflb-pLwYuCE=" alt="图片1"><br>这样，我们就成功将纹理映射应用到了立方体，并添加了旋转效果！🚀</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1&gt;纹理映射与旋转&lt;/h1&gt;
-&lt;h2 id=&quot;1-纹理映射&quot;&gt;1. 纹理映射&lt;/h2&gt;
-&lt;p&gt;在 OpenGL 中，可以使用 &lt;code&gt;sampler2D&lt;/code&gt; 进行 2D 纹理采样：&lt;/p&gt;
-&lt;figure class=&quot;highlight cpp&quot;&gt;&lt;table</summary>
-      
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>关于opengl使用的小心得</title>
-    <link href="https://eatbreads.github.io/posts/a608763a.html"/>
-    <id>https://eatbreads.github.io/posts/a608763a.html</id>
-    <published>2025-03-04T13:20:29.000Z</published>
-    <updated>2025-03-21T16:02:18.718Z</updated>
-    
-    <content type="html"><![CDATA[<h1>OpenGL 基础概念</h1><h2 id="VBO（数组缓冲对象）">VBO（数组缓冲对象）</h2><ul><li>用于存储顶点数据，如位置、颜色、法线、纹理坐标等。</li><li>作用是直接把数组存到 GPU 的缓存中，提高渲染效率。</li></ul><h2 id="IBO-EBO（索引缓冲对象）">IBO/EBO（索引缓冲对象）</h2><ul><li>用于存储索引数据，避免重复存储相同的顶点数据，提高渲染效率。</li><li>需要使用 <code>create</code> / <code>bind</code> / <code>allocate</code> 进行管理。</li></ul><h2 id="VAO（顶点数组对象）">VAO（顶点数组对象）</h2><ul><li>作为管理者，记录 VBO 和 IBO 的绑定状态。</li><li>不需要在每次绘制时重新设置，可在不同 VAO 之间切换，以便绘制不同的对象。</li><li>只有 <code>create</code> 和 <code>bind</code> 操作（用于成为管理者）。</li></ul><h2 id="顶点属性指针">顶点属性指针</h2><ul><li>用于告诉 OpenGL 顶点数据的格式，包括：<ul><li>每个顶点有多少数据（如每个顶点包含多少个属性）。</li><li>每个属性占用多少个 <code>GLFloat</code>。</li><li>该属性在 VBO 中的位置。</li></ul></li></ul><p>示例代码：</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">shaderProgram.<span class="built_in">enableAttributeArray</span>(<span class="number">0</span>); <span class="comment">// 启用顶点位置属性，对应顶点着色器中的 layout (location = 0)</span></span><br><span class="line">shaderProgram.<span class="built_in">setAttributeBuffer</span>(<span class="number">0</span>, GL_FLOAT, <span class="number">0</span>, <span class="number">3</span>, <span class="number">6</span> * <span class="built_in">sizeof</span>(GLfloat));</span><br><span class="line"><span class="comment">// 参数解析：</span></span><br><span class="line"><span class="comment">//  - 0：属性索引，对应顶点着色器中的 `layout (location = 0)`</span></span><br><span class="line"><span class="comment">//  - GL_FLOAT：数据类型</span></span><br><span class="line"><span class="comment">//  - 0：从 VBO 开始解析</span></span><br><span class="line"><span class="comment">//  - 3：一次解析 3 个值（x, y, z）</span></span><br><span class="line"><span class="comment">//  - 6 * sizeof(GLfloat)：步长（Stride），即每个顶点的总数据大小</span></span><br></pre></td></tr></table></figure><blockquote><p><strong>说明</strong>：这两句话相当于定义了两个指针，告诉着色器如何解析顶点数组。</p></blockquote><h3 id="OpenGL-着色器绑定规则">OpenGL 着色器绑定规则</h3><ul><li>OpenGL <strong>只能同时使用一个着色器程序</strong>，使用时需要 <code>bind</code> 绑定某个着色器。</li><li><strong>VAO 也是同理</strong>，可以创建多个 VAO 来存储不同的对象（如矩形和三角形），但<strong>不能同时使用</strong>，需要绘制不同对象时，需重新 <code>bind</code> 另一个 VAO。</li></ul><hr><h2 id="纹理映射">纹理映射</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uniform sampler2D ourTexture;</span><br></pre></td></tr></table></figure><blockquote><p>用于获取 2D 纹理的像素值。</p></blockquote><hr><h2 id="纹理过滤与旋转">纹理过滤与旋转</h2><ul><li>将矩形扩展为立方体，并增加顶点坐标至 24 个，以支持 3D 纹理映射和旋转。</li></ul><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 立方体顶点数据（包含纹理坐标）</span></span><br><span class="line">GLfloat vertices[] = &#123;</span><br><span class="line">    <span class="comment">// 位置           // 纹理坐标</span></span><br><span class="line">    <span class="number">-0.5f</span>, <span class="number">-0.5f</span>, <span class="number">-0.5f</span>,  <span class="number">0.0f</span>, <span class="number">0.0f</span>,</span><br><span class="line">     <span class="number">0.5f</span>, <span class="number">-0.5f</span>, <span class="number">-0.5f</span>,  <span class="number">1.0f</span>, <span class="number">0.0f</span>,</span><br><span class="line">     <span class="number">0.5f</span>,  <span class="number">0.5f</span>, <span class="number">-0.5f</span>,  <span class="number">1.0f</span>, <span class="number">1.0f</span>,</span><br><span class="line">    <span class="number">-0.5f</span>,  <span class="number">0.5f</span>, <span class="number">-0.5f</span>,  <span class="number">0.0f</span>, <span class="number">1.0f</span>,</span><br><span class="line">    <span class="comment">// 其余五个面省略...</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 旋转矩阵（在片元着色器中应用）</span></span><br><span class="line">model = glm::<span class="built_in">rotate</span>(model, (GLfloat)<span class="built_in">glfwGetTime</span>() * glm::<span class="built_in">radians</span>(<span class="number">50.0f</span>), glm::<span class="built_in">vec3</span>(<span class="number">0.5f</span>, <span class="number">1.0f</span>, <span class="number">0.0f</span>));</span><br></pre></td></tr></table></figure><blockquote><p>通过 <code>glfwGetTime()</code> 实现动态旋转。</p></blockquote>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1&gt;OpenGL 基础概念&lt;/h1&gt;
-&lt;h2 id=&quot;VBO（数组缓冲对象）&quot;&gt;VBO（数组缓冲对象）&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;用于存储顶点数据，如位置、颜色、法线、纹理坐标等。&lt;/li&gt;
-&lt;li&gt;作用是直接把数组存到 GPU 的缓存中，提高渲染效率。&lt;/li&gt;
-&lt;/ul</summary>
-      
-    
-    
-    
     
   </entry>
   
