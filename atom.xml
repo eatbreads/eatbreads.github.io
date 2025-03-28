@@ -156,32 +156,9 @@
     
     <category term="音视频" scheme="https://eatbreads.github.io/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/"/>
     
-    <category term="C++" scheme="https://eatbreads.github.io/tags/C/"/>
-    
     <category term="Qt" scheme="https://eatbreads.github.io/tags/Qt/"/>
     
-  </entry>
-  
-  <entry>
-    <title>音视频中同时传输h264和aac</title>
-    <link href="https://eatbreads.github.io/posts/f5f059ad.html"/>
-    <id>https://eatbreads.github.io/posts/f5f059ad.html</id>
-    <published>2025-03-24T15:51:53.000Z</published>
-    <updated>2025-03-25T14:11:43.168Z</updated>
-    
-    <content type="html"><![CDATA[<h1>音视频同步传输</h1><h2 id="实现原理">实现原理</h2><p><img src="https://cdn-a.markji.com/files/67e123a54e1cf4bdf4e16b2c_hd.png?e=1742833810864&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:hljxLZt4MgMKbfZllhhTpnKHXX4=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67e1255a8d016adbb48f30ae_hd.png?e=1742833810864&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:cflNaN-tUpP_17v5oxghxc8X8Wk=" alt="图片1"><br>本质上是创建了两个线程,然后分别处理视频和音频的传输:</p><ul><li>一个线程负责h264视频数据的传输</li><li>另一个线程负责aac音频数据的传输</li></ul><p>通过多线程实现音视频的并行传输。</p>]]></content>
-    
-    
-    <summary type="html">实现音视频的同步传输</summary>
-    
-    
-    
-    <category term="音视频开发" scheme="https://eatbreads.github.io/categories/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%BC%80%E5%8F%91/"/>
-    
-    
-    <category term="音视频" scheme="https://eatbreads.github.io/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/"/>
-    
-    <category term="多线程" scheme="https://eatbreads.github.io/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    <category term="C++" scheme="https://eatbreads.github.io/tags/C/"/>
     
   </entry>
   
@@ -205,6 +182,29 @@
     <category term="网络协议" scheme="https://eatbreads.github.io/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/"/>
     
     <category term="音视频" scheme="https://eatbreads.github.io/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>音视频中同时传输h264和aac</title>
+    <link href="https://eatbreads.github.io/posts/f5f059ad.html"/>
+    <id>https://eatbreads.github.io/posts/f5f059ad.html</id>
+    <published>2025-03-24T15:51:53.000Z</published>
+    <updated>2025-03-25T14:11:43.168Z</updated>
+    
+    <content type="html"><![CDATA[<h1>音视频同步传输</h1><h2 id="实现原理">实现原理</h2><p><img src="https://cdn-a.markji.com/files/67e123a54e1cf4bdf4e16b2c_hd.png?e=1742833810864&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:hljxLZt4MgMKbfZllhhTpnKHXX4=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67e1255a8d016adbb48f30ae_hd.png?e=1742833810864&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:cflNaN-tUpP_17v5oxghxc8X8Wk=" alt="图片1"><br>本质上是创建了两个线程,然后分别处理视频和音频的传输:</p><ul><li>一个线程负责h264视频数据的传输</li><li>另一个线程负责aac音频数据的传输</li></ul><p>通过多线程实现音视频的并行传输。</p>]]></content>
+    
+    
+    <summary type="html">实现音视频的同步传输</summary>
+    
+    
+    
+    <category term="音视频开发" scheme="https://eatbreads.github.io/categories/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%BC%80%E5%8F%91/"/>
+    
+    
+    <category term="音视频" scheme="https://eatbreads.github.io/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/"/>
+    
+    <category term="多线程" scheme="https://eatbreads.github.io/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
     
   </entry>
   
