@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>Qt5+FFmpeg实现视频软解码播放</title>
+      <link href="/posts/fd1aef76.html"/>
+      <url>/posts/fd1aef76.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="Qt5-FFmpeg实现视频软解码播放"><a href="#Qt5-FFmpeg实现视频软解码播放" class="headerlink" title="Qt5+FFmpeg实现视频软解码播放"></a>Qt5+FFmpeg实现视频软解码播放</h1><h2 id="基本流程"><a href="#基本流程" class="headerlink" title="基本流程"></a>基本流程</h2><ol><li>使用FFmpeg解封装获取视频流</li><li>对视频流进行解码得到原始数据</li><li>将解码后的数据转换为Qt可显示的格式</li><li>使用Qt组件显示视频画面</li></ol><h2 id="主要步骤"><a href="#主要步骤" class="headerlink" title="主要步骤"></a>主要步骤</h2><h3 id="1-初始化FFmpeg"><a href="#1-初始化FFmpeg" class="headerlink" title="1. 初始化FFmpeg"></a>1. 初始化FFmpeg</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 注册所有组件</span></span><br><span class="line"><span class="built_in">av_register_all</span>();</span><br><span class="line"><span class="comment">// 打开视频文件</span></span><br><span class="line"><span class="built_in">avformat_open_input</span>(&amp;formatContext, filename, <span class="literal">nullptr</span>, <span class="literal">nullptr</span>);</span><br><span class="line"><span class="comment">// 获取流信息</span></span><br><span class="line"><span class="built_in">avformat_find_stream_info</span>(formatContext, <span class="literal">nullptr</span>);</span><br></pre></td></tr></table></figure><h3 id="2-查找视频解码器"><a href="#2-查找视频解码器" class="headerlink" title="2. 查找视频解码器"></a>2. 查找视频解码器</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取视频流索引</span></span><br><span class="line">videoIndex = <span class="built_in">av_find_best_stream</span>(formatContext, AVMEDIA_TYPE_VIDEO, <span class="number">-1</span>, <span class="number">-1</span>, <span class="literal">nullptr</span>, <span class="number">0</span>);</span><br><span class="line"><span class="comment">// 获取解码器</span></span><br><span class="line">AVCodec *codec = <span class="built_in">avcodec_find_decoder</span>(formatContext-&gt;streams[videoIndex]-&gt;codecpar-&gt;codec_id);</span><br></pre></td></tr></table></figure><h3 id="3-解码并显示"><a href="#3-解码并显示" class="headerlink" title="3. 解码并显示"></a>3. 解码并显示</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 读取视频帧</span></span><br><span class="line"><span class="built_in">av_read_frame</span>(formatContext, packet);</span><br><span class="line"><span class="comment">// 解码</span></span><br><span class="line"><span class="built_in">avcodec_send_packet</span>(codecContext, packet);</span><br><span class="line"><span class="built_in">avcodec_receive_frame</span>(codecContext, frame);</span><br><span class="line"><span class="comment">// 转换为RGB格式</span></span><br><span class="line"><span class="built_in">sws_scale</span>(swsContext, frame-&gt;data, frame-&gt;linesize, <span class="number">0</span>, codecContext-&gt;height,</span><br><span class="line">          frameRGB-&gt;data, frameRGB-&gt;linesize);</span><br><span class="line"><span class="comment">// 显示画面</span></span><br><span class="line"><span class="function">QImage <span class="title">image</span><span class="params">(frameRGB-&gt;data[<span class="number">0</span>], codecContext-&gt;width, codecContext-&gt;height, </span></span></span><br><span class="line"><span class="params"><span class="function">             QImage::Format_RGB32)</span></span>;</span><br><span class="line">label-&gt;<span class="built_in">setPixmap</span>(QPixmap::<span class="built_in">fromImage</span>(image));</span><br></pre></td></tr></table></figure><h2 id="部分代码图片"><a href="#部分代码图片" class="headerlink" title="部分代码图片"></a>部分代码图片</h2><p><img src="https://cdn-a.markji.com/files/67ea4ced8e36ed841840aef9_hd.png?e=1743524616981&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:0oKoHUP8QToYpe52ZzlRFuDU4fI=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67ea4d4c205d5713c0b740e2_hd.png?e=1743524616981&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:ArjYpTLoeAf_jD2eYls8bfegURI=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67ea4e4a8e36ed841840da6a_hd.png?e=1743524616981&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:p9GWgo9KlxiCFrWDpwrGFFEOcb8=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67ea5167205d5713c0b7d299_hd.png?e=1743524616981&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:pnGhA5vUgjOD2j1jeIcako17Ku0=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67ea51ea205d5713c0b7e150_hd.png?e=1743524616981&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:kYBdJwcbpc9hzbyzsEt6QVNkaNQ=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67ea54818e36ed8418422ffe_hd.png?e=1743524616981&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:31FoxGoEK8vYqAJKDGWXS35mbSQ=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67ea54af8e36ed8418423956_hd.png?e=1743524616981&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:M65_RmAy6Z3G-i1E-F1oQbEpEDA=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67ea54d68e36ed8418423ff2_hd.png?e=1743524616981&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:dl3u7WCx1V5fZlwBV1tIqEvo9vs=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67ea56d7205d5713c0b887a0_hd.png?e=1743524616982&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:wULFepBr_NTRnAr1AFkRYQDWsrk=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67ea5a08205d5713c0b92436_hd.png?e=1743524616982&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:Eo7PAY6RNuLrWE9awS8bpV4Mcrc=" alt="图片1"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 音视频开发 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 音视频 </tag>
+            
+            <tag> Qt </tag>
+            
+            <tag> FFmpeg </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>在Qt中使用FFmpeg</title>
       <link href="/posts/9b502338.html"/>
       <url>/posts/9b502338.html</url>

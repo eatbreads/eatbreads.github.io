@@ -6,7 +6,7 @@
   <link href="https://eatbreads.github.io/atom.xml" rel="self"/>
   
   <link href="https://eatbreads.github.io/"/>
-  <updated>2025-03-30T15:59:54.918Z</updated>
+  <updated>2025-04-01T15:45:30.758Z</updated>
   <id>https://eatbreads.github.io/</id>
   
   <author>
@@ -17,11 +17,36 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Qt5+FFmpeg实现视频软解码播放</title>
+    <link href="https://eatbreads.github.io/posts/fd1aef76.html"/>
+    <id>https://eatbreads.github.io/posts/fd1aef76.html</id>
+    <published>2025-04-01T15:41:20.000Z</published>
+    <updated>2025-04-01T15:45:30.758Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Qt5-FFmpeg实现视频软解码播放"><a href="#Qt5-FFmpeg实现视频软解码播放" class="headerlink" title="Qt5+FFmpeg实现视频软解码播放"></a>Qt5+FFmpeg实现视频软解码播放</h1><h2 id="基本流程"><a href="#基本流程" class="headerlink" title="基本流程"></a>基本流程</h2><ol><li>使用FFmpeg解封装获取视频流</li><li>对视频流进行解码得到原始数据</li><li>将解码后的数据转换为Qt可显示的格式</li><li>使用Qt组件显示视频画面</li></ol><h2 id="主要步骤"><a href="#主要步骤" class="headerlink" title="主要步骤"></a>主要步骤</h2><h3 id="1-初始化FFmpeg"><a href="#1-初始化FFmpeg" class="headerlink" title="1. 初始化FFmpeg"></a>1. 初始化FFmpeg</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 注册所有组件</span></span><br><span class="line"><span class="built_in">av_register_all</span>();</span><br><span class="line"><span class="comment">// 打开视频文件</span></span><br><span class="line"><span class="built_in">avformat_open_input</span>(&amp;formatContext, filename, <span class="literal">nullptr</span>, <span class="literal">nullptr</span>);</span><br><span class="line"><span class="comment">// 获取流信息</span></span><br><span class="line"><span class="built_in">avformat_find_stream_info</span>(formatContext, <span class="literal">nullptr</span>);</span><br></pre></td></tr></table></figure><h3 id="2-查找视频解码器"><a href="#2-查找视频解码器" class="headerlink" title="2. 查找视频解码器"></a>2. 查找视频解码器</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取视频流索引</span></span><br><span class="line">videoIndex = <span class="built_in">av_find_best_stream</span>(formatContext, AVMEDIA_TYPE_VIDEO, <span class="number">-1</span>, <span class="number">-1</span>, <span class="literal">nullptr</span>, <span class="number">0</span>);</span><br><span class="line"><span class="comment">// 获取解码器</span></span><br><span class="line">AVCodec *codec = <span class="built_in">avcodec_find_decoder</span>(formatContext-&gt;streams[videoIndex]-&gt;codecpar-&gt;codec_id);</span><br></pre></td></tr></table></figure><h3 id="3-解码并显示"><a href="#3-解码并显示" class="headerlink" title="3. 解码并显示"></a>3. 解码并显示</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 读取视频帧</span></span><br><span class="line"><span class="built_in">av_read_frame</span>(formatContext, packet);</span><br><span class="line"><span class="comment">// 解码</span></span><br><span class="line"><span class="built_in">avcodec_send_packet</span>(codecContext, packet);</span><br><span class="line"><span class="built_in">avcodec_receive_frame</span>(codecContext, frame);</span><br><span class="line"><span class="comment">// 转换为RGB格式</span></span><br><span class="line"><span class="built_in">sws_scale</span>(swsContext, frame-&gt;data, frame-&gt;linesize, <span class="number">0</span>, codecContext-&gt;height,</span><br><span class="line">          frameRGB-&gt;data, frameRGB-&gt;linesize);</span><br><span class="line"><span class="comment">// 显示画面</span></span><br><span class="line"><span class="function">QImage <span class="title">image</span><span class="params">(frameRGB-&gt;data[<span class="number">0</span>], codecContext-&gt;width, codecContext-&gt;height, </span></span></span><br><span class="line"><span class="params"><span class="function">             QImage::Format_RGB32)</span></span>;</span><br><span class="line">label-&gt;<span class="built_in">setPixmap</span>(QPixmap::<span class="built_in">fromImage</span>(image));</span><br></pre></td></tr></table></figure><h2 id="部分代码图片"><a href="#部分代码图片" class="headerlink" title="部分代码图片"></a>部分代码图片</h2><p><img src="https://cdn-a.markji.com/files/67ea4ced8e36ed841840aef9_hd.png?e=1743524616981&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:0oKoHUP8QToYpe52ZzlRFuDU4fI=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67ea4d4c205d5713c0b740e2_hd.png?e=1743524616981&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:ArjYpTLoeAf_jD2eYls8bfegURI=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67ea4e4a8e36ed841840da6a_hd.png?e=1743524616981&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:p9GWgo9KlxiCFrWDpwrGFFEOcb8=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67ea5167205d5713c0b7d299_hd.png?e=1743524616981&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:pnGhA5vUgjOD2j1jeIcako17Ku0=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67ea51ea205d5713c0b7e150_hd.png?e=1743524616981&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:kYBdJwcbpc9hzbyzsEt6QVNkaNQ=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67ea54818e36ed8418422ffe_hd.png?e=1743524616981&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:31FoxGoEK8vYqAJKDGWXS35mbSQ=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67ea54af8e36ed8418423956_hd.png?e=1743524616981&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:M65_RmAy6Z3G-i1E-F1oQbEpEDA=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67ea54d68e36ed8418423ff2_hd.png?e=1743524616981&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:dl3u7WCx1V5fZlwBV1tIqEvo9vs=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67ea56d7205d5713c0b887a0_hd.png?e=1743524616982&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:wULFepBr_NTRnAr1AFkRYQDWsrk=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67ea5a08205d5713c0b92436_hd.png?e=1743524616982&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:Eo7PAY6RNuLrWE9awS8bpV4Mcrc=" alt="图片1"></p>]]></content>
+    
+    
+    <summary type="html">记录使用Qt5和FFmpeg实现视频软解码播放的过程</summary>
+    
+    
+    
+    <category term="音视频开发" scheme="https://eatbreads.github.io/categories/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%BC%80%E5%8F%91/"/>
+    
+    
+    <category term="音视频" scheme="https://eatbreads.github.io/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/"/>
+    
+    <category term="Qt" scheme="https://eatbreads.github.io/tags/Qt/"/>
+    
+    <category term="FFmpeg" scheme="https://eatbreads.github.io/tags/FFmpeg/"/>
+    
+  </entry>
+  
+  <entry>
     <title>在Qt中使用FFmpeg</title>
     <link href="https://eatbreads.github.io/posts/9b502338.html"/>
     <id>https://eatbreads.github.io/posts/9b502338.html</id>
     <published>2025-03-30T15:57:37.000Z</published>
-    <updated>2025-03-30T15:59:54.918Z</updated>
+    <updated>2025-03-30T16:00:01.849Z</updated>
     
     <content type="html"><![CDATA[<h1 id="在Qt中使用FFmpeg实现播放和录音"><a href="#在Qt中使用FFmpeg实现播放和录音" class="headerlink" title="在Qt中使用FFmpeg实现播放和录音"></a>在Qt中使用FFmpeg实现播放和录音</h1><h2 id="初始尝试"><a href="#初始尝试" class="headerlink" title="初始尝试"></a>初始尝试</h2><p>从CSDN中找到了对应的库并进行修改，最终编译成功。但运行时发现没有对应的输入声音设备。</p><h2 id="查看设备"><a href="#查看设备" class="headerlink" title="查看设备"></a>查看设备</h2><p>使用FFmpeg命令查看可用设备:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -list_devices <span class="literal">true</span> -f dshow -i dummy</span><br></pre></td></tr></table></figure><br><img src="https://cdn-a.markji.com/files/67e7e6c2205d5713c080d12b_hd.png?e=1743352806367&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:HlFFCuvBB0KSVXRTfKUfHs_zWYY=" alt="图片1"></p><h2 id="录制测试"><a href="#录制测试" class="headerlink" title="录制测试"></a>录制测试</h2><p>尝试直接使用FFmpeg命令录制:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -f dshow -i audio=<span class="string">&quot;麦克风阵列 (Realtek(R) Audio)&quot;</span> -t 5 test.wav</span><br></pre></td></tr></table></figure><br>录制失败，最后发现是没有打开麦克风权限。解决权限问题后成功录制音频。<br><img src="https://cdn-a.markji.com/files/67e7f6222f58dfdf11a28259_hd.png?e=1743352806367&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:P57m6HSucCpw477ZThLl9ycR9sE=" alt="图片1"></p><h2 id="音频播放实现"><a href="#音频播放实现" class="headerlink" title="音频播放实现"></a>音频播放实现</h2><p>在论坛找到播放代码，发现使用的是<code>&lt;QAudioFormat&gt;</code>中的<code>QAudioOutput</code>。但在Qt6中它已被<code>QAudioSink</code>取代。</p><h2 id="编译问题"><a href="#编译问题" class="headerlink" title="编译问题"></a>编译问题</h2><p>添加头文件后仍然报错，最终在CMakeLists.txt中添加:<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Qt6::Multimedia</span><br></pre></td></tr></table></figure><br>才解决了头文件找不到的问题。<br><img src="https://cdn-a.markji.com/files/67e7fa65205d5713c08396ca_hd.png?e=1743352806367&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:UVepqCC-P2xPFN7e-CcqjiRjrEU=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67e80df9205d5713c086279e_hd.png?e=1743352806367&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:LkbnqLWkqBpgs5XhdSxMzqpyeRk=" alt="图片1"></p><h2 id="重采样问题"><a href="#重采样问题" class="headerlink" title="重采样问题"></a>重采样问题</h2><p>重采样相关的代码编译一直不通过。</p><p>即使参考官方文档的示例也无法运行，最终不得不寻找其他解决方案。<br> <img src="https://cdn-a.markji.com/files/67e812cf205d5713c086a286_hd.png?e=1743352806367&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:Iidek_AwIhs3x_vdFwJcPRHMIvg=" alt="图片1"><br> <img src="https://cdn-a.markji.com/files/67e816252f58dfdf11a68af8_hd.png?e=1743352806367&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:vz8s-IeSIVWjNEB1jsY88wphH1o=" alt="图片1"></p>]]></content>
     
@@ -508,38 +533,6 @@
     
     
     
-    
-  </entry>
-  
-  <entry>
-    <title>MySQL 进阶与架构优化</title>
-    <link href="https://eatbreads.github.io/posts/7d06a385.html"/>
-    <id>https://eatbreads.github.io/posts/7d06a385.html</id>
-    <published>2025-03-07T16:00:00.000Z</published>
-    <updated>2025-03-21T16:02:18.693Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="MySQL-事务与锁">MySQL 事务与锁</h2><h3 id="锁的类型">锁的类型</h3><ul><li><strong>行级锁</strong>：锁住一行数据，提高并发能力。</li><li><strong>表级锁</strong>：锁住整个表，适用于大批量操作。</li><li><strong>意向锁</strong>：表级别的标记，用于加速行锁检测。</li><li><strong>乐观锁</strong>：不加锁，依赖版本号控制并发更新。</li><li><strong>悲观锁</strong>：先锁后操作，适用于高并发竞争场景。</li></ul><h3 id="死锁的处理">死锁的处理</h3><ol><li><strong>MySQL 死锁检测</strong>：自动回滚代价最小的事务。</li><li><strong>手动 <code>KILL</code> 事务</strong>：手动终止长时间阻塞事务。</li><li><strong>优化索引与 SQL 语句</strong>：减少锁冲突，降低死锁概率。</li></ol><h2 id="MySQL-读写分离与主从同步">MySQL 读写分离与主从同步</h2><ul><li><strong>主从架构</strong>：主库处理写操作，从库处理读操作。</li><li><strong>Binlog 实现主从同步</strong>：<ol><li>主库记录 Binlog。</li><li>从库读取 Binlog 并重放。</li></ol></li><li><strong>避免主从同步延迟</strong>：<ul><li>关键业务查询主库。</li><li>二次查询策略（从库查不到再查主库）。</li></ul></li></ul><h2 id="分库分表策略">分库分表策略</h2><h3 id="水平拆分"><strong>水平拆分</strong></h3><ul><li><strong>水平分表</strong>：将一张大表拆成多张小表（如 <code>users_0</code>, <code>users_1</code>）。</li><li><strong>水平分库</strong>：多个数据库存相同结构的表，降低单库压力。</li></ul><h3 id="垂直拆分"><strong>垂直拆分</strong></h3><ul><li><strong>垂直分表</strong>：将一张表的不同字段拆成多张表（如 <code>user_base</code> 和 <code>user_detail</code>）。</li><li><strong>垂直分库</strong>：不同业务数据存入不同数据库（如 <code>order_db</code> 和 <code>user_db</code>）。</li></ul><h3 id="分库分表的挑战"><strong>分库分表的挑战</strong></h3><ul><li><strong>跨库 JOIN 受限</strong>：需改为应用层查询或使用中间件（如 ShardingSphere）。</li><li><strong>事务一致性问题</strong>：需要分布式事务方案（如 TCC、最终一致性）。</li></ul><h2 id="MySQL-高可用架构">MySQL 高可用架构</h2><h3 id="避免单点故障"><strong>避免单点故障</strong></h3><ul><li><strong>主从复制</strong>：单主多从架构，保证数据可用性。</li><li><strong>MHA（MySQL High Availability）</strong>：自动故障切换，支持主从切换。</li><li><strong>PXC（Percona XtraDB Cluster）</strong>：多主集群，保证高可用。</li></ul><h3 id="不停机数据迁移"><strong>不停机数据迁移</strong></h3><ol><li><strong>双写方案</strong><ul><li>代码层面双写：新旧库同步写入。</li><li>业务低峰期停主从同步，开启双写。</li><li>逐步灰度切流，保证数据一致。</li></ul></li><li><strong>Flink CDC 方案</strong><ul><li>监听 Binlog 变更，实时同步数据。</li></ul></li></ol><h2 id="MySQL-存储与性能优化">MySQL 存储与性能优化</h2><h3 id="WAL（Write-Ahead-Logging）"><strong>WAL（Write-Ahead Logging）</strong></h3><ul><li><strong>先写日志再写数据</strong>，确保数据持久化。</li><li><strong>降低磁盘 IO</strong>，提高事务吞吐量。</li></ul><h3 id="Doublewrite-Buffer"><strong>Doublewrite Buffer</strong></h3><ul><li><strong>防止数据写入失败</strong>，避免数据损坏。</li></ul><h3 id="MySQL-缓存优化"><strong>MySQL 缓存优化</strong></h3><ul><li><strong>Buffer Pool</strong>：缓存常用数据，减少磁盘 IO。</li><li><strong>Query Cache（已废弃）</strong>：缓存查询结果，减少 SQL 解析时间。</li></ul><h2 id="MySQL-其他高级特性">MySQL 其他高级特性</h2><h3 id="存在性查询：EXISTS-vs-IN"><strong>存在性查询：EXISTS vs. IN</strong></h3><ul><li><strong>EXISTS</strong>：适用于大数据集合，只关心是否存在。</li><li><strong>IN</strong>：适用于小数据集合，直接匹配筛选。</li></ul><h3 id="存储过程"><strong>存储过程</strong></h3><ul><li><strong>优点</strong>：封装逻辑，提高性能。</li><li><strong>缺点</strong>：<ul><li>可移植性差，不同数据库的 SQL 语法可能不兼容。</li><li>调试困难，不利于代码管理（阿里开发手册不推荐）。</li></ul></li></ul>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;MySQL-事务与锁&quot;&gt;MySQL 事务与锁&lt;/h2&gt;
-&lt;h3 id=&quot;锁的类型&quot;&gt;锁的类型&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;行级锁&lt;/strong&gt;：锁住一行数据，提高并发能力。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;表级锁&lt;/strong&gt;：锁住整个表</summary>
-      
-    
-    
-    
-    <category term="数据库" scheme="https://eatbreads.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    
-    
-    <category term="MySQL" scheme="https://eatbreads.github.io/tags/MySQL/"/>
-    
-    <category term="数据库" scheme="https://eatbreads.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    
-    <category term="优化" scheme="https://eatbreads.github.io/tags/%E4%BC%98%E5%8C%96/"/>
     
   </entry>
   
