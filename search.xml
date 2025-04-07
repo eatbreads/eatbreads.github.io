@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>解决云服务器Docker仓库访问问题</title>
+      <link href="/posts/f4beb750.html"/>
+      <url>/posts/f4beb750.html</url>
+      
+        <content type="html"><![CDATA[<h1>云服务器运行Superset遇到的问题及解决方案</h1><h2 id="Docker镜像下载问题">Docker镜像下载问题</h2><h3 id="初始尝试">初始尝试</h3><p>在使用docker-compose部署Superset时，遇到镜像无法下载的问题。虽然通过在<code>/etc/docker/daemon.json</code>中添加国内镜像代理成功下载了redis、postgresql等镜像，但Superset本体镜像始终无法下载。</p><h3 id="解决方案">解决方案</h3><p>采用本地打包上传的方式解决：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 本地打包镜像</span></span><br><span class="line">docker save -o apache-superset.tar apachesuperset.docker.scarf.sh/apache/superset</span><br><span class="line"></span><br><span class="line"><span class="comment"># 上传到服务器</span></span><br><span class="line">scp apache-superset.tar ubuntu@43.138.190.230:/home/ubuntu</span><br><span class="line"></span><br><span class="line"><span class="comment"># 服务器端加载镜像</span></span><br><span class="line">docker load -i /home/ubuntu/apache-superset.tar</span><br></pre></td></tr></table></figure><h2 id="访问连接问题">访问连接问题</h2><h3 id="遇到的情况">遇到的情况</h3><ol><li>直接通过公网IP访问无响应</li><li>VSCode远程连接并端口转发后，可以通过localhost:8088访问</li><li>Postman测试显示502 Bad Gateway</li></ol><h3 id="解决步骤">解决步骤</h3><ol><li>检查并配置服务器防火墙</li><li>配置后成功通过Postman连接</li><li>Superset web界面也可以正常访问<br><img src="https://cdn-a.markji.com/files/67efcd9ae940a885d8a48f83_hd.png?e=1744033979105&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:C0FkwH4dORtyDjhWTd4laK_13UU=" alt="图片1"></li></ol><h2 id="MySQL部署问题">MySQL部署问题</h2><p>同样遇到了VSCode连接问题，但最终也得到解决。</p><h2 id="总结经验">总结经验</h2><ol><li>国内环境下可能需要使用镜像打包传输的方式</li><li>注意检查防火墙配置</li><li>端口转发可以作为临时的调试方案</li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> 运维笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Docker </tag>
+            
+            <tag> 云服务器 </tag>
+            
+            <tag> Superset </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>OpenGL的GLSL语法基础</title>
       <link href="/posts/f4cb9256.html"/>
       <url>/posts/f4cb9256.html</url>
