@@ -6,7 +6,7 @@
   <link href="https://eatbreads.github.io/atom.xml" rel="self"/>
   
   <link href="https://eatbreads.github.io/"/>
-  <updated>2025-04-08T15:53:08.642Z</updated>
+  <updated>2025-04-08T15:54:55.421Z</updated>
   <id>https://eatbreads.github.io/</id>
   
   <author>
@@ -17,11 +17,36 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>FFmpeg命令行和API使用指南</title>
+    <link href="https://eatbreads.github.io/posts/66a36265.html"/>
+    <id>https://eatbreads.github.io/posts/66a36265.html</id>
+    <published>2025-04-08T15:53:52.000Z</published>
+    <updated>2025-04-08T15:54:55.421Z</updated>
+    
+    <content type="html"><![CDATA[<h1>FFmpeg使用指南</h1><h2 id="命令行参数">命令行参数</h2><h3 id="基础参数">基础参数</h3><ul><li><code>-a/vn</code>: 去掉音频或视频</li><li><code>-a/vcodec</code>: 指定音视频编码器<ul><li><code>copy</code>: 不重新编码</li><li>可指定为h264或aac等</li></ul></li></ul><h3 id="常用命令">常用命令</h3><h4 id="1-获取视频信息">1. 获取视频信息</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i video.avi</span><br></pre></td></tr></table></figure><h4 id="2-音视频流处理">2. 音视频流处理</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 去掉视频流</span></span><br><span class="line">ffmpeg -i input.mp4 -an -vcodec copy output.mp4</span><br><span class="line"></span><br><span class="line"><span class="comment"># 音频重编码为AAC</span></span><br><span class="line">ffmpeg -i input.mp4 -acodec aac output.mp4</span><br><span class="line"></span><br><span class="line"><span class="comment"># 转换为WAV格式</span></span><br><span class="line">ffmpeg -i input.mp4 -acodec pcm_s16le output.wav</span><br></pre></td></tr></table></figure><h4 id="3-视频截图">3. 视频截图</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i test.mp4 -ss 10 -frames:v 1 -s 1920x1080 output.jpg</span><br></pre></td></tr></table></figure><p>参数说明：</p><ul><li><code>-ss &lt;时间&gt;</code>: 指定起始时间</li><li><code>-s &lt;宽度x高度&gt;</code>: 调整图片大小</li><li><code>-frames:v 1</code>: 只截取一帧</li></ul><h4 id="4-添加水印">4. 添加水印</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 图片水印</span></span><br><span class="line">ffmpeg -i input.mp4 -i logo.png -filter_complex <span class="string">&quot;overlay=10:10&quot;</span> output.mp4</span><br></pre></td></tr></table></figure><p>位置参数：</p><ul><li>左上角: <code>overlay=10:10</code></li><li>右上角: <code>overlay=W-w-10:10</code></li><li>左下角: <code>overlay=10:H-h-10</code></li><li>右下角: <code>overlay=W-w-10:H-h-10</code></li></ul><p>其中：</p><ul><li>W: 视频宽度</li><li>H: 视频高度</li><li>w: 水印宽度</li><li>h: 水印高度</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 文字水印</span></span><br><span class="line">ffmpeg -i input.flv -vf <span class="string">&quot;drawtext=fontfile=simhei.ttf: text=&#x27;抖音&#x27;:x=100:y=10:fontsize=24:fontcolor=yellow:shadowy=2&quot;</span> drawtext.mp4</span><br><span class="line"></span><br><span class="line"><span class="comment"># GIF水印</span></span><br><span class="line">ffmpeg -y -i test2.mp4 -ignore_loop 0 -i test.gif -filter_complex overlay=0:H-h test_out2.mp4</span><br></pre></td></tr></table></figure><h4 id="5-视频旋转">5. 视频旋转</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i test.mp4 -vf <span class="string">&quot;transpose=1&quot;</span> out.mp4  <span class="comment"># 顺时针旋转90°</span></span><br></pre></td></tr></table></figure><h2 id="API使用">API使用</h2><h3 id="视频播放流程">视频播放流程</h3><h4 id="1-格式上下文-AVFormatContext">1. 格式上下文(AVFormatContext)</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">AVFormatContext *pFormatCtx;</span><br><span class="line">pFormatCtx = <span class="built_in">avformat_alloc_context</span>();  <span class="comment">// 分配格式上下文</span></span><br><span class="line"><span class="built_in">avformat_open_input</span>(&amp;pFormatCtx, filePath.<span class="built_in">toUtf8</span>().<span class="built_in">constData</span>(), <span class="number">0</span>, <span class="number">0</span>);  <span class="comment">// 初始化上下文</span></span><br><span class="line"><span class="built_in">avformat_find_stream_info</span>(pFormatCtx, <span class="literal">NULL</span>);  <span class="comment">// 获取流信息</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 查找视频流索引</span></span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; pFormatCtx-&gt;nb_streams; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (pFormatCtx-&gt;streams[i]-&gt;codecpar-&gt;codec_type == AVMEDIA_TYPE_VIDEO) &#123;</span><br><span class="line">        streamIndex = i;</span><br><span class="line">        isVideo = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h4 id="2-解码器设置">2. 解码器设置</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">AVCodecContext *pAVctx;  <span class="comment">// 解码器上下文</span></span><br><span class="line">AVCodec *pCodec;         <span class="comment">// 实际解码器</span></span><br><span class="line"></span><br><span class="line">pAVctx = <span class="built_in">avcodec_alloc_context3</span>(<span class="literal">NULL</span>);</span><br><span class="line"><span class="built_in">avcodec_parameters_to_context</span>(pAVctx, pFormatCtx-&gt;streams[streamIndex]-&gt;codecpar);</span><br><span class="line">pCodec = <span class="built_in">avcodec_find_decoder</span>(pAVctx-&gt;codec_id);</span><br><span class="line"><span class="built_in">avcodec_open2</span>(pAVctx, pCodec, <span class="literal">NULL</span>);</span><br></pre></td></tr></table></figure><h4 id="3-数据包和帧处理">3. 数据包和帧处理</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">AVPacket *pAVpkt = <span class="built_in">av_packet_alloc</span>();</span><br><span class="line">AVFrame *pAVframe = <span class="built_in">av_frame_alloc</span>();</span><br><span class="line">AVFrame *pAVframeRGB = <span class="built_in">av_frame_alloc</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 图像转换上下文</span></span><br><span class="line">SwsContext *pSwsCtx = <span class="built_in">sws_getContext</span>(...);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 解码循环</span></span><br><span class="line"><span class="keyword">while</span>(<span class="built_in">av_read_frame</span>(pFormatCtx, pAVpkt) &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="built_in">avcodec_send_packet</span>(pAVctx, pAVpkt);</span><br><span class="line">    <span class="built_in">avcodec_receive_frame</span>(pAVctx, pAVframe);</span><br><span class="line">    <span class="built_in">sws_scale</span>(...);  <span class="comment">// 图像转换</span></span><br><span class="line">    <span class="comment">// 显示到窗口</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="音频录制流程">音频录制流程</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 初始化</span></span><br><span class="line"><span class="built_in">avdevice_register_all</span>();</span><br><span class="line"><span class="type">const</span> AVInputFormat *fmt = <span class="built_in">av_find_input_format</span>(FMT_NAME);</span><br><span class="line"><span class="built_in">avformat_open_input</span>(...);  <span class="comment">// 打开麦克风</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 录制循环</span></span><br><span class="line"><span class="keyword">while</span>(...) &#123;</span><br><span class="line">    <span class="built_in">av_read_frame</span>(ctx, &amp;pkt);  <span class="comment">// 读取PCM数据</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 结束处理</span></span><br><span class="line"><span class="built_in">writeWavHeader</span>(outputFile, <span class="number">44100</span>, <span class="number">2</span>, <span class="number">16</span>);  <span class="comment">// 更新WAV头部</span></span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+    <summary type="html">详细介绍FFmpeg的常用命令行参数和API调用方法</summary>
+    
+    
+    
+    <category term="音视频开发" scheme="https://eatbreads.github.io/categories/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%BC%80%E5%8F%91/"/>
+    
+    
+    <category term="音视频" scheme="https://eatbreads.github.io/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/"/>
+    
+    <category term="FFmpeg" scheme="https://eatbreads.github.io/tags/FFmpeg/"/>
+    
+    <category term="命令行工具" scheme="https://eatbreads.github.io/tags/%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7/"/>
+    
+  </entry>
+  
+  <entry>
     <title>音视频基础知识总结</title>
     <link href="https://eatbreads.github.io/posts/1a7c13c3.html"/>
     <id>https://eatbreads.github.io/posts/1a7c13c3.html</id>
     <published>2025-04-08T15:51:56.000Z</published>
-    <updated>2025-04-08T15:53:08.642Z</updated>
+    <updated>2025-04-08T15:53:16.141Z</updated>
     
     <content type="html"><![CDATA[<h1>音视频基础知识</h1><h2 id="基本概念">基本概念</h2><h3 id="码率-比特率">码率/比特率</h3><ul><li>单位时间内传输的数据量，单位为kbps(千位每秒)</li><li>分类：<ul><li>恒定码率(CBR)</li><li>动态码率(VBR)</li></ul></li></ul><h3 id="分辨率">分辨率</h3><ol><li>视频分辨率<ul><li>宽×高，如1080P、2K等</li></ul></li><li>屏幕分辨率<ul><li>单位是ppi(每英寸像素数)</li></ul></li><li>位分辨率<ul><li>每个像素点存储信息的位数</li><li>如8位、16位色彩等</li></ul></li></ol><h3 id="帧率">帧率</h3><ol><li>视频帧率<ul><li>由视频本身决定</li><li>FPS(每秒显示帧数)</li></ul></li><li>显示帧率<ul><li>由显示器决定</li><li>显示器刷新率</li></ul></li></ol><h3 id="像素格式">像素格式</h3><ol><li>RGBA<ul><li>红绿蓝和Alpha透明度</li><li>类似于已完成的成品</li></ul></li><li>YUV<ul><li>Y：亮度</li><li>U：色度</li><li>V：对比度</li><li>注：视频常用YUV，因为RGBA占用内存太大</li><li>压缩后转为h264(通过编码器)</li></ul></li></ol><h3 id="音频格式">音频格式</h3><ol><li>PCM<ul><li>原始数据</li><li>压缩后转为AAC帧(通过AAC编码器)</li></ul></li></ol><h2 id="画质相关">画质相关</h2><h3 id="画质要素">画质要素</h3><ol><li>清晰度：细节纹理和边界的清晰程度</li><li>锐度：图像边缘的锐利程度</li><li>解析度<ul><li>像素点数量</li><li>分辨率越高解析度越高</li></ul></li><li>色彩纯度：三原色在色彩中的百分比，越高越鲜艳</li></ol><h3 id="色域与HDR">色域与HDR</h3><ul><li>色域：能表达的颜色范围区域</li><li>HDR：高动态范围，可超出普通[0,1]范围</li></ul><h2 id="封装与编码">封装与编码</h2><h3 id="封装格式">封装格式</h3><p>视频封装格式就像一个包装盒，包含：</p><ol><li>格式头：类似快递单号，包含文件元数据</li><li>媒体信息：包括时长、格式、比特率等</li><li>音视频轨：实际的音频、视频、字幕数据</li><li>视频轨索引：指示播放器数据存储位置<br>常见格式：MP4、MKV、MOV等</li></ol><h3 id="编码协议">编码协议</h3><ul><li>是压缩原始视频数据的方式</li><li>h265压缩率更高但解码要求更高</li></ul><h3 id="音频相关">音频相关</h3><ol><li>采样率：每秒采样次数(人耳感知范围20Hz~20kHz)</li><li>声道：独立音频信号的采集/回放位置</li><li>音频封装格式：mp3、wav、aac等</li><li>音频编码协议：mp3、aac等</li></ol><h2 id="H264编码原理">H264编码原理</h2><h3 id="码流文件分层">码流文件分层</h3><ol><li>VAL(视频编码层)<ul><li>压缩编码后的视频数据序列</li></ul></li><li>NAL(网络提取层)<ul><li>负责网络传输打包</li><li>本地和网络播放都需要</li><li>本质是打包并按序发送给解码器</li></ul></li></ol><h3 id="帧类型">帧类型</h3><ol><li>I帧：完整压缩帧</li><li>P帧：只编码与前帧差异</li><li>B帧：参考前后帧</li><li>IDR帧：特殊I帧，用于GOP重置</li><li>GOP组：图像组，关键帧间隔</li></ol>]]></content>
     
@@ -500,38 +525,6 @@
     <category term="Docker" scheme="https://eatbreads.github.io/tags/Docker/"/>
     
     <category term="分布式" scheme="https://eatbreads.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>消息队列的基础编写</title>
-    <link href="https://eatbreads.github.io/posts/be5c987b.html"/>
-    <id>https://eatbreads.github.io/posts/be5c987b.html</id>
-    <published>2025-03-18T16:00:00.000Z</published>
-    <updated>2025-03-21T16:02:18.728Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="1-任务封装">1. 任务封装</h2><p>首先实现了 <code>Task</code> 类，这是一个简单的包裹类，仅包含任务的 <strong>名称</strong> 和 <strong>参数列表</strong>，用于封装任务信息。</p><h2 id="2-任务处理器设计">2. 任务处理器设计</h2><p>为了让任务处理更加模块化，我设计了 <strong>任务处理器抽象基类</strong>，所有具体任务处理方法都需要继承该基类，并重写 <code>process</code> 函数，以实现具体任务的处理逻辑。</p><h2 id="3-处理器注册机制">3. 处理器注册机制</h2><p>然后实现了 <strong>处理器注册类</strong>，用于管理不同任务处理器的映射关系：</p><ul><li><strong>Key</strong>：任务名称</li><li><strong>Value</strong>：对应的任务处理器类</li></ul><p>当需要处理 <code>Task</code> 时，会从注册类中获取与 <code>Task</code> 名称对应的处理器，并传入 <code>Task</code> 进行执行。</p><p><strong>示例流程：</strong><br>如果 <code>Task</code> 是 <strong>A 类型</strong>，注册类会找到 <strong>A 处理器</strong>，然后将 <code>Task</code> 传入处理器以获取参数列表并执行。</p><h2 id="4-单元测试">4. 单元测试</h2><p>代码编写完成后，学习并使用 <strong>Google Test（GTest）</strong> 进行单元测试，以验证任务队列的正确性。</p><hr><h2 id="总结">总结</h2><ul><li><code>Task</code> 作为基础封装类，仅存储名称和参数列表。</li><li>任务处理器通过继承基类实现 <code>process</code> 方法。</li><li>处理器注册类维护任务名称到处理器的映射，实现动态调用。</li><li>使用 Google Test 进行单元测试，提高代码的可靠性</li></ul>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;1-任务封装&quot;&gt;1. 任务封装&lt;/h2&gt;
-&lt;p&gt;首先实现了 &lt;code&gt;Task&lt;/code&gt; 类，这是一个简单的包裹类，仅包含任务的 &lt;strong&gt;名称&lt;/strong&gt; 和 &lt;strong&gt;参数列表&lt;/strong&gt;，用于封装任务信息。&lt;/p&gt;
-&lt;h2 id</summary>
-      
-    
-    
-    
-    <category term="C++" scheme="https://eatbreads.github.io/categories/C/"/>
-    
-    <category term="消息队列" scheme="https://eatbreads.github.io/categories/C/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/"/>
-    
-    
-    <category term="设计模式" scheme="https://eatbreads.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-    <category term="任务队列" scheme="https://eatbreads.github.io/tags/%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97/"/>
-    
-    <category term="Google Test" scheme="https://eatbreads.github.io/tags/Google-Test/"/>
     
   </entry>
   
