@@ -6,7 +6,7 @@
   <link href="https://eatbreads.github.io/atom.xml" rel="self"/>
   
   <link href="https://eatbreads.github.io/"/>
-  <updated>2025-04-07T13:11:28.929Z</updated>
+  <updated>2025-04-08T15:53:08.642Z</updated>
   <id>https://eatbreads.github.io/</id>
   
   <author>
@@ -17,11 +17,34 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>音视频基础知识总结</title>
+    <link href="https://eatbreads.github.io/posts/1a7c13c3.html"/>
+    <id>https://eatbreads.github.io/posts/1a7c13c3.html</id>
+    <published>2025-04-08T15:51:56.000Z</published>
+    <updated>2025-04-08T15:53:08.642Z</updated>
+    
+    <content type="html"><![CDATA[<h1>音视频基础知识</h1><h2 id="基本概念">基本概念</h2><h3 id="码率-比特率">码率/比特率</h3><ul><li>单位时间内传输的数据量，单位为kbps(千位每秒)</li><li>分类：<ul><li>恒定码率(CBR)</li><li>动态码率(VBR)</li></ul></li></ul><h3 id="分辨率">分辨率</h3><ol><li>视频分辨率<ul><li>宽×高，如1080P、2K等</li></ul></li><li>屏幕分辨率<ul><li>单位是ppi(每英寸像素数)</li></ul></li><li>位分辨率<ul><li>每个像素点存储信息的位数</li><li>如8位、16位色彩等</li></ul></li></ol><h3 id="帧率">帧率</h3><ol><li>视频帧率<ul><li>由视频本身决定</li><li>FPS(每秒显示帧数)</li></ul></li><li>显示帧率<ul><li>由显示器决定</li><li>显示器刷新率</li></ul></li></ol><h3 id="像素格式">像素格式</h3><ol><li>RGBA<ul><li>红绿蓝和Alpha透明度</li><li>类似于已完成的成品</li></ul></li><li>YUV<ul><li>Y：亮度</li><li>U：色度</li><li>V：对比度</li><li>注：视频常用YUV，因为RGBA占用内存太大</li><li>压缩后转为h264(通过编码器)</li></ul></li></ol><h3 id="音频格式">音频格式</h3><ol><li>PCM<ul><li>原始数据</li><li>压缩后转为AAC帧(通过AAC编码器)</li></ul></li></ol><h2 id="画质相关">画质相关</h2><h3 id="画质要素">画质要素</h3><ol><li>清晰度：细节纹理和边界的清晰程度</li><li>锐度：图像边缘的锐利程度</li><li>解析度<ul><li>像素点数量</li><li>分辨率越高解析度越高</li></ul></li><li>色彩纯度：三原色在色彩中的百分比，越高越鲜艳</li></ol><h3 id="色域与HDR">色域与HDR</h3><ul><li>色域：能表达的颜色范围区域</li><li>HDR：高动态范围，可超出普通[0,1]范围</li></ul><h2 id="封装与编码">封装与编码</h2><h3 id="封装格式">封装格式</h3><p>视频封装格式就像一个包装盒，包含：</p><ol><li>格式头：类似快递单号，包含文件元数据</li><li>媒体信息：包括时长、格式、比特率等</li><li>音视频轨：实际的音频、视频、字幕数据</li><li>视频轨索引：指示播放器数据存储位置<br>常见格式：MP4、MKV、MOV等</li></ol><h3 id="编码协议">编码协议</h3><ul><li>是压缩原始视频数据的方式</li><li>h265压缩率更高但解码要求更高</li></ul><h3 id="音频相关">音频相关</h3><ol><li>采样率：每秒采样次数(人耳感知范围20Hz~20kHz)</li><li>声道：独立音频信号的采集/回放位置</li><li>音频封装格式：mp3、wav、aac等</li><li>音频编码协议：mp3、aac等</li></ol><h2 id="H264编码原理">H264编码原理</h2><h3 id="码流文件分层">码流文件分层</h3><ol><li>VAL(视频编码层)<ul><li>压缩编码后的视频数据序列</li></ul></li><li>NAL(网络提取层)<ul><li>负责网络传输打包</li><li>本地和网络播放都需要</li><li>本质是打包并按序发送给解码器</li></ul></li></ol><h3 id="帧类型">帧类型</h3><ol><li>I帧：完整压缩帧</li><li>P帧：只编码与前帧差异</li><li>B帧：参考前后帧</li><li>IDR帧：特殊I帧，用于GOP重置</li><li>GOP组：图像组，关键帧间隔</li></ol>]]></content>
+    
+    
+    <summary type="html">详细介绍音视频开发中的基础概念，包括码率、分辨率、帧率等核心知识点</summary>
+    
+    
+    
+    <category term="音视频开发" scheme="https://eatbreads.github.io/categories/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%BC%80%E5%8F%91/"/>
+    
+    
+    <category term="音视频" scheme="https://eatbreads.github.io/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/"/>
+    
+    <category term="编解码" scheme="https://eatbreads.github.io/tags/%E7%BC%96%E8%A7%A3%E7%A0%81/"/>
+    
+  </entry>
+  
+  <entry>
     <title>解决云服务器Docker仓库访问问题</title>
     <link href="https://eatbreads.github.io/posts/f4beb750.html"/>
     <id>https://eatbreads.github.io/posts/f4beb750.html</id>
     <published>2025-04-07T13:10:31.000Z</published>
-    <updated>2025-04-07T13:11:28.929Z</updated>
+    <updated>2025-04-07T13:11:35.728Z</updated>
     
     <content type="html"><![CDATA[<h1>云服务器运行Superset遇到的问题及解决方案</h1><h2 id="Docker镜像下载问题">Docker镜像下载问题</h2><h3 id="初始尝试">初始尝试</h3><p>在使用docker-compose部署Superset时，遇到镜像无法下载的问题。虽然通过在<code>/etc/docker/daemon.json</code>中添加国内镜像代理成功下载了redis、postgresql等镜像，但Superset本体镜像始终无法下载。</p><h3 id="解决方案">解决方案</h3><p>采用本地打包上传的方式解决：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 本地打包镜像</span></span><br><span class="line">docker save -o apache-superset.tar apachesuperset.docker.scarf.sh/apache/superset</span><br><span class="line"></span><br><span class="line"><span class="comment"># 上传到服务器</span></span><br><span class="line">scp apache-superset.tar ubuntu@43.138.190.230:/home/ubuntu</span><br><span class="line"></span><br><span class="line"><span class="comment"># 服务器端加载镜像</span></span><br><span class="line">docker load -i /home/ubuntu/apache-superset.tar</span><br></pre></td></tr></table></figure><h2 id="访问连接问题">访问连接问题</h2><h3 id="遇到的情况">遇到的情况</h3><ol><li>直接通过公网IP访问无响应</li><li>VSCode远程连接并端口转发后，可以通过localhost:8088访问</li><li>Postman测试显示502 Bad Gateway</li></ol><h3 id="解决步骤">解决步骤</h3><ol><li>检查并配置服务器防火墙</li><li>配置后成功通过Postman连接</li><li>Superset web界面也可以正常访问<br><img src="https://cdn-a.markji.com/files/67efcd9ae940a885d8a48f83_hd.png?e=1744033979105&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:C0FkwH4dORtyDjhWTd4laK_13UU=" alt="图片1"></li></ol><h2 id="MySQL部署问题">MySQL部署问题</h2><p>同样遇到了VSCode连接问题，但最终也得到解决。</p><h2 id="总结经验">总结经验</h2><ol><li>国内环境下可能需要使用镜像打包传输的方式</li><li>注意检查防火墙配置</li><li>端口转发可以作为临时的调试方案</li></ol>]]></content>
     
@@ -509,40 +532,6 @@
     <category term="任务队列" scheme="https://eatbreads.github.io/tags/%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97/"/>
     
     <category term="Google Test" scheme="https://eatbreads.github.io/tags/Google-Test/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Kafka 基础知识总结</title>
-    <link href="https://eatbreads.github.io/posts/d00def19.html"/>
-    <id>https://eatbreads.github.io/posts/d00def19.html</id>
-    <published>2025-03-18T16:00:00.000Z</published>
-    <updated>2025-03-21T16:02:18.734Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="1-Kafka-应用场景">1. Kafka 应用场景</h2><p>Kafka 作为一款高吞吐的分布式消息系统，适用于多种应用场景：</p><ul><li><strong>消息队列</strong>：用于解耦生产者和消费者，提高系统的伸缩性。</li><li><strong>日志收集</strong>：集中存储和处理系统日志，方便分析和监控。</li><li><strong>流计算</strong>：处理实时数据流，将数据传输给实时计算系统进行计算。</li><li><strong>事件溯源</strong>：记录事件发生的历史，以便后续回溯和分析。</li><li><strong>Metrics 采集</strong>：收集和存储系统的监控指标数据。</li></ul><hr><h2 id="2-Kafka-组件介绍">2. Kafka 组件介绍</h2><p>Kafka 由多个核心组件组成：</p><ul><li><p><strong>生产者（Producer）</strong>：负责将消息发送到 Kafka。</p></li><li><p><strong>消费者（Consumer）</strong>：从 Kafka 读取消息进行处理。</p></li><li><p><strong>消息代理（Broker）</strong>：存储和管理消息，负责接收、存储和转发数据。</p></li><li><p><strong>协调器（Zookeeper）</strong>：提供分布式协调和管理任务。</p></li><li><p><strong>主题（Topic）</strong>：类似广播频道，生产者将消息发送到指定的 <code>Topic</code>，消费者从 <code>Topic</code> 读取消息。</p><p>创建 Topic 命令示例：</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 3 --topic my-topic</span><br></pre></td></tr></table></figure></li><li><p><strong>分区（Partition）</strong>：一个 <code>Topic</code> 进一步分为多个 <code>Partition</code>，可以提高数据局部性、支持并行处理，实现负载均衡。</p></li></ul><hr><h2 id="3-Kafka-消息有序性">3. Kafka 消息有序性</h2><p>Kafka 的消息处理方式：</p><ul><li><strong>不同分区的消息是并行处理的</strong>，因此 Kafka <strong>全局上不保证消息的有序性</strong>。</li><li><strong>同一分区内的消息是严格有序的</strong>，消费者会按照 <code>offset</code> 依次消费。</li></ul><hr><h2 id="4-Offset（偏移量）">4. Offset（偏移量）</h2><ul><li>Kafka 中的每条消息都有唯一的 <strong>Offset</strong>（偏移量），从 <code>0</code> 开始递增。</li><li>Offset 用于追踪消息消费进度，每个消费者组都会维护自己的 Offset。</li></ul><hr><h2 id="5-Consumer-Group（消费者组）">5. Consumer Group（消费者组）</h2><ul><li><p><strong>一个分区（Partition）只能由一个组员消费</strong>，保证分区数据不会被组内多个消费者重复消费。</p></li><li><p><strong>多个 Consumer Group 可以同时消费同一个 Topic</strong>，不同组之间不会相互影响。例如：</p><ul><li><code>Group A</code> 读取 <code>Topic X</code> 的消息一次。</li><li><code>Group B</code> 也可以独立读取 <code>Topic X</code> 的消息一次。</li></ul></li></ul><p>这样，每个组都可以独立处理相同的消息，实现多用途消费。</p><hr><h2 id="6-总结">6. 总结</h2><ul><li>Kafka 适用于消息队列、日志收集、流计算、事件溯源等场景。</li><li>核心组件包括 Producer、Consumer、Broker、Zookeeper、Topic、Partition 等。</li><li>消息的全局有序性无法保证，但 <strong>同一分区内是有序的</strong>。</li><li>Offset 记录消息的消费进度，每个 Consumer Group 维护自己的 Offset。</li><li>通过 Consumer Group 机制，可以控制消息的分发和重复消费。</li></ul><hr>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;1-Kafka-应用场景&quot;&gt;1. Kafka 应用场景&lt;/h2&gt;
-&lt;p&gt;Kafka 作为一款高吞吐的分布式消息系统，适用于多种应用场景：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;消息队列&lt;/strong&gt;：用于解耦生产者和消费者，提高系统的伸缩性。&lt;/li&gt;
-&lt;</summary>
-      
-    
-    
-    
-    <category term="分布式系统" scheme="https://eatbreads.github.io/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/"/>
-    
-    <category term="Kafka" scheme="https://eatbreads.github.io/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/Kafka/"/>
-    
-    
-    <category term="消息队列" scheme="https://eatbreads.github.io/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/"/>
-    
-    <category term="实时流处理" scheme="https://eatbreads.github.io/tags/%E5%AE%9E%E6%97%B6%E6%B5%81%E5%A4%84%E7%90%86/"/>
-    
-    <category term="大数据" scheme="https://eatbreads.github.io/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
     
   </entry>
   
