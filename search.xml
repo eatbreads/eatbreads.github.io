@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>音视频软硬解码流程详解</title>
+      <link href="/posts/2c4a1d51.html"/>
+      <url>/posts/2c4a1d51.html</url>
+      
+        <content type="html"><![CDATA[<h1>音视频解码流程详解</h1><h2 id="软解码基础流程">软解码基础流程</h2><ol><li>打开输入文件</li><li>读取媒体文件信息</li><li>查询视频流</li><li>获取解码器</li><li>获取解码器上下文</li><li>使用视频流的codecpar为解码器上下文赋值</li><li>打开解码器</li><li>获取原始数据帧</li><li>将数据发送给解码器</li><li>从解码器读取解码后的数据</li><li>获取图像转换上下文</li><li>将解码的图像格式转换成QImage</li></ol><h2 id="硬解码流程">硬解码流程</h2><h3 id="基础步骤">基础步骤</h3><ol><li>打开输入文件<ul><li><code>avformat_open_input</code></li></ul></li><li>读取媒体文件信息<ul><li><code>avformat_find_stream_info</code></li></ul></li><li>查询视频流<ul><li><code>av_find_best_stream</code></li></ul></li><li>获取解码器<ul><li><code>avcodec_find_decoder</code></li></ul></li><li>获取解码器上下文<ul><li><code>avcodec_alloc_context3</code></li></ul></li><li>使用视频流的codecpar赋值<ul><li><code>avcodec_parameters_to_context</code></li></ul></li></ol><h3 id="硬件加速相关步骤">硬件加速相关步骤</h3><ol><li>检索编解码器支持的硬件配置<ul><li><code>avcodec_get_hw_config</code></li></ul></li><li>遍历支持的编解码器设备类型<ul><li><code>av_hwdevice_iterate_types</code></li><li>在构造函数中记录支持的类型到数组</li></ul></li><li>打开指定类型的编解码器设备<ul><li><code>av_hwdevice_ctx_create</code></li></ul></li><li>注册硬件像素格式回调<ul><li><code>m_codecContext-&gt;get_format = get_hw_format</code></li></ul></li></ol><h3 id="解码步骤">解码步骤</h3><ol><li>打开解码器<ul><li><code>avcodec_open2</code></li></ul></li><li>读取原始数据帧<ul><li><code>av_read_frame</code></li></ul></li><li>发送数据到解码器<ul><li><code>avcodec_send_packet</code></li></ul></li><li>读取解码后的数据<ul><li><code>avcodec_receive_frame</code></li></ul></li><li>GPU数据拷贝到CPU<ul><li><code>av_hwframe_transfer_data</code></li><li><code>av_hwframe_map(m_frameHW, m_frame, 0)</code></li></ul></li><li>获取图像转换上下文<ul><li><code>sws_getCachedContext</code></li></ul></li><li>转换为QImage格式<ul><li><code>sws_scale</code></li></ul></li></ol><h2 id="软解码显示实现-PlayImage类">软解码显示实现(PlayImage类)</h2><h3 id="基于QWidget">基于QWidget</h3><ol><li>接收图像信号并响应updateImage槽函数</li><li>转换为QPixmap</li><li>调用update触发重绘</li><li>paintEvent中绘制</li></ol><h3 id="YUV转RGB">YUV转RGB</h3><ul><li>FFmpeg默认解码为YUV格式</li><li>使用<code>sws_getCachedContext</code>转换为RGB(AV_PIX_FMT_RGBA)</li></ul><h2 id="OpenGL渲染优化">OpenGL渲染优化</h2><h3 id="软解码-OpenGL-YUV-RGB">软解码+OpenGL(YUV-&gt;RGB)</h3><ol><li>继承QOpenGLWidget和QOpenGLFunctions</li><li>initializeGL中设置VAO/VBO/IBO</li><li>updateImage中处理纹理</li><li>paintGL中执行绘制</li></ol><h3 id="软解码-OpenGL-直接YUV">软解码+OpenGL(直接YUV)</h3><ol><li>使用AVFrame直接传递</li><li>使用三个纹理处理YUV数据</li><li>在GPU中完成格式转换</li></ol><h3 id="硬解码-OpenGL-NV12">硬解码+OpenGL(NV12)</h3><ol><li>使用<code>av_hwframe_map</code>替代transfer_data</li><li>根据格式选择初始化方式</li><li>直接在GPU中完成NV12到RGB的转换</li></ol><h2 id="摄像头采集">摄像头采集</h2><ol><li>注册设备<ul><li><code>avdevice_register_all</code></li></ul></li><li>查询输入设备<ul><li><code>av_find_input_format</code></li></ul></li><li>执行标准解码流程</li><li>OpenGL中完成YUV转RGB</li></ol><h2 id="视频录制流程">视频录制流程</h2><ol><li>创建输出上下文<ul><li><code>avformat_alloc_output_context2</code></li></ul></li><li>初始化IO上下文<ul><li><code>avio_open</code></li></ul></li><li>配置编码器</li><li>创建视频流</li><li>写入头信息</li><li>编码循环</li><li>写入尾信息</li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> 音视频开发 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 音视频 </tag>
+            
+            <tag> OpenGL </tag>
+            
+            <tag> FFmpeg </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>FFmpeg命令行和API使用指南</title>
       <link href="/posts/66a36265.html"/>
       <url>/posts/66a36265.html</url>
