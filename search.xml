@@ -4,11 +4,100 @@
   
     
     <entry>
+      <title>使用ZLMediakit实现点播功能</title>
+      <link href="/posts/edbebd32.html"/>
+      <url>/posts/edbebd32.html</url>
+      
+        <content type="html"><![CDATA[<h1>ZLMediakit点播功能实现</h1><h2 id="文件访问配置">文件访问配置</h2><h3 id="URL格式">URL格式</h3><p>点播文件URL格式：</p><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rtsp:<span class="regexp">//</span><span class="number">127.0</span>.<span class="number">0.1</span><span class="regexp">/record/</span>dd.mp4</span><br></pre></td></tr></table></figure><h3 id="挂载问题排查">挂载问题排查</h3><ol><li>文件同步问题</li></ol><ul><li>Windows Docker桥接挂载不会实时同步新增内容</li><li>文件写入晚于容器启动</li><li>解决方案：重启容器</li></ul><ol start="2"><li>挂载位置问题</li></ol><ul><li>初始挂载位置错误</li><li>修改挂载点后可以在网页执行播放</li></ul><h2 id="配置调整">配置调整</h2><h3 id="服务器配置">服务器配置</h3><ul><li>修改protocol路径</li><li>需要正确配置挂载点<br><img src="https://cdn-a.markji.com/files/67fbee472d0565736319cf54_hd.png?e=1744648123046&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:gJqxn8ma3pVA1k0Em2neCyO-ues=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67fbecaf75151df2bbdde516_hd.png?e=1744648123046&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:h_Ke2J4Z3Ra4WhtQH2i8ra7LSCk=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67fbef0d2d0565736319db78_hd.png?e=1744648123046&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:EwkA1BCeOR506p02Z6CFZX01NgI=" alt="图片1"></li></ul><h3 id="www目录处理">www目录处理</h3><p>问题：内容拷贝进www后消失<br>解决方案：</p><ol><li>创建临时容器</li><li>拷贝www目录内容</li><li>重新挂载（类似config.ini的操作）</li></ol><h2 id="播放器配置">播放器配置</h2><h3 id="VLC播放器">VLC播放器</h3><ul><li>下载安装VLC</li><li>可用于测试点播功能<br><img src="https://cdn-a.markji.com/files/67fca36c75151df2bbebfd81_hd.png?e=1744648123046&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:FXsagarh2L9cEnR6NUc4_u-LMIg=" alt="图片1"></li></ul><h2 id="待解决问题">待解决问题</h2><h3 id="WebAssist访问问题">WebAssist访问问题</h3><ul><li>目前无法访问</li><li>待后续更新解决方案</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 音视频开发 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 流媒体 </tag>
+            
+            <tag> Docker </tag>
+            
+            <tag> ZLMediakit </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>ZLMediakit的Docker配置与使用记录</title>
+      <link href="/posts/ff5976c9.html"/>
+      <url>/posts/ff5976c9.html</url>
+      
+        <content type="html"><![CDATA[<h1>ZLMediakit配置记录</h1><h2 id="初始尝试">初始尝试</h2><h3 id="vcpkg安装">vcpkg安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vcpkg install zlmediakit</span><br></pre></td></tr></table></figure><p>配置文件位置：</p><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~<span class="regexp">/vcpkg/i</span>nstalled<span class="regexp">/x64-linux/</span>tools<span class="regexp">/zlmediakit/</span></span><br></pre></td></tr></table></figure><h2 id="Docker部署">Docker部署</h2><h3 id="配置文件管理技巧">配置文件管理技巧</h3><ol><li>临时运行容器</li><li>使用docker cp拷贝配置文件</li><li>删除临时容器</li><li>修改配置文件</li><li>重新挂载运行</li></ol><h3 id="运行命令">运行命令</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">docker run <span class="literal">-d</span> <span class="literal">--name</span> zlmediakit `</span><br><span class="line">  <span class="literal">-p</span> <span class="number">1935</span>:<span class="number">1935</span> `</span><br><span class="line">  <span class="literal">-p</span> <span class="number">8080</span>:<span class="number">80</span> `</span><br><span class="line">  <span class="literal">-p</span> <span class="number">554</span>:<span class="number">554</span> `</span><br><span class="line">  <span class="literal">-p</span> <span class="number">30000</span><span class="literal">-30500</span>:<span class="number">30000</span><span class="literal">-30500</span>/tcp `</span><br><span class="line">  <span class="literal">-p</span> <span class="number">30000</span><span class="literal">-30500</span>:<span class="number">30000</span><span class="literal">-30500</span>/udp `</span><br><span class="line">  <span class="literal">-v</span> C:/Users/<span class="number">18526</span>/Desktop/config/config.ini:/opt/media/conf/config.ini `</span><br><span class="line">  <span class="literal">-v</span> C:/Users/<span class="number">18526</span>/Desktop/www:/opt/media/bin/www `</span><br><span class="line">  zlmediakit/zlmediakit:master</span><br></pre></td></tr></table></figure><p>注意：</p><ul><li>PowerShell换行符是`</li><li>www需要挂载到bin下</li><li>需要先导出www目录内容</li></ul><h3 id="配置热更新">配置热更新</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl <span class="string">&quot;http://宿主机IP:8080/api/reloadConfig?secret=your_custom_secret&quot;</span></span><br></pre></td></tr></table></figure><h2 id="推拉流测试">推拉流测试</h2><h3 id="RTSP特性说明">RTSP特性说明</h3><p>RTSP是实时传输协议，类似直播，不会持久存储内容</p><h3 id="推流命令">推流命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -re -i <span class="string">&quot;dd.mp4&quot;</span> -vcodec h264 -acodec aac -f rtsp -rtsp_transport tcp rtsp://127.0.0.1/live/test</span><br></pre></td></tr></table></figure><h3 id="拉流方式">拉流方式</h3><ol><li>RTSP拉流：</li></ol><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffplay -rtsp_transport tcp rtsp://127.0.0.1/live/test</span><br></pre></td></tr></table></figure><ol start="2"><li>HLS拉流：</li></ol><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:<span class="regexp">//i</span>p:port<span class="regexp">/live/</span>testxxx/hls.m3u8</span><br></pre></td></tr></table></figure><p>注意：live是固定路径</p><h3 id="补充说明">补充说明</h3><ul><li>支持RTSP和RTMP混用</li><li>www目录用于存放资源</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 运维笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Docker </tag>
+            
+            <tag> ZLMediakit </tag>
+            
+            <tag> 流媒体服务器 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>OpenGL多线程调试与解决方案</title>
+      <link href="/posts/31a16705.html"/>
+      <url>/posts/31a16705.html</url>
+      
+        <content type="html"><![CDATA[<h1>OpenGL多线程问题排查与解决</h1><p><img src="https://cdn-a.markji.com/files/67fa187575151df2bbad0eb6_hd.png?e=1744648123046&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:0i0tese83SpqFzkut91oyoxu2oY=" alt="图片1"></p><h2 id="初始问题">初始问题</h2><p>运行时发现代码报错，原始代码中没有makeCurrent调用。添加后出现新的错误：<br><img src="https://cdn-a.markji.com/files/67fa222375151df2bbae41e0_hd.png?e=1744648123046&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:CmWd37aFZHTM0K34RySbz__unW0=" alt="图片1"></p><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cannot make QOpenGLContext current in a different thread</span><br></pre></td></tr></table></figure><h2 id="问题分析">问题分析</h2><h3 id="代码结构">代码结构</h3><ul><li>解码线程(ReadThread)读取数据</li><li>通过emit发送信号</li><li>Widget中注册信号与槽</li><li>调用updateImage更新<br><img src="https://cdn-a.markji.com/files/67fa1c6075151df2bbad8810_hd.png?e=1744648123046&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:yZEMrUwdwFqWtmzq8L18R2kCHzY=" alt="图片1"></li></ul><h3 id="调试技巧">调试技巧</h3><ul><li>单步跳过：不进入函数体，直接到下一行</li><li>单步进入：进入函数内部</li><li>单步跳出：退出当前函数<br><img src="https://cdn-a.markji.com/files/67fa1f5f75151df2bbadf206_hd.png?e=1744648123046&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:zGIUUU5ha_omPwSHyFG_IdfC0uc=" alt="图片1"></li></ul><h3 id="根本原因">根本原因</h3><ul><li>updateImage在解码线程中触发</li><li>OpenGL上下文(Context)在Qt中只能在创建线程中激活(makeCurrent)</li></ul><h2 id="解决方案">解决方案</h2><h3 id="方案一：Auto模式-深拷贝">方案一：Auto模式 + 深拷贝</h3><p><img src="https://cdn-a.markji.com/files/67fa233075151df2bbae64da_hd.png?e=1744648123046&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:-yfpyons9ehsOOcbxmQlFOabt6s=" alt="图片1"><br>优点：</p><ul><li>实现简单</li></ul><p>缺点：</p><ul><li>emit(image)默认浅拷贝</li><li>可能导致主线程和解码线程访问冲突</li><li>解码线程处理速度快于主线程时可能崩溃</li></ul><p>改进：</p><ul><li>在发送信号时使用image.copy()</li><li>避免修改同一份image</li></ul><h3 id="方案二：使用阻塞方式">方案二：使用阻塞方式</h3><p><img src="https://cdn-a.markji.com/files/67fa256275151df2bbaef138_hd.png?e=1744648123046&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:_x8HnTqg5OPILeNFkR8791dGpy0=" alt="图片1"><br>特点：</p><ul><li>控制同时访问</li><li>保证线程安全</li></ul><h2 id="补充说明">补充说明</h2><p>之前使用QPainter没问题的原因：</p><ul><li>没有OpenGL的同线程要求</li><li>可以使用Direct模式</li><li>不需要拷贝image(因为在同一线程)</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 图形编程 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 多线程 </tag>
+            
+            <tag> Qt </tag>
+            
+            <tag> OpenGL </tag>
+            
+            <tag> 调试 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>PlayImage使用OpenGL实现视频渲染</title>
       <link href="/posts/74e5f723.html"/>
       <url>/posts/74e5f723.html</url>
       
-        <content type="html"><![CDATA[<h1 id="PlayImage的OpenGL实现"><a href="#PlayImage的OpenGL实现" class="headerlink" title="PlayImage的OpenGL实现"></a>PlayImage的OpenGL实现</h1><h2 id="基础架构"><a href="#基础架构" class="headerlink" title="基础架构"></a>基础架构</h2><p><img src="https://cdn-a.markji.com/files/67f8ca1ceb27578088b6e53c_hd.png?e=1744648123046&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:FNznTp5nnhoXjDIZXuZOGN2282Q=" alt="图片1"></p><h3 id="类继承"><a href="#类继承" class="headerlink" title="类继承"></a>类继承</h3><ul><li>继承QOpenGLWidget和QOpenGLFunctions_3_3</li><li>新版本OpenGL(&gt;2.0)从固定管线转向可编程管线</li></ul><h3 id="缓冲区概念"><a href="#缓冲区概念" class="headerlink" title="缓冲区概念"></a>缓冲区概念</h3><ul><li>VBO：保存单个顶点数据（数据集）</li><li>VAO：保存如何使用这些VBO的数据（使用说明）</li></ul><h3 id="资源管理"><a href="#资源管理" class="headerlink" title="资源管理"></a>资源管理</h3><ul><li>添加资源文件：通过Qt的resource系统</li><li>GLSL文件需要添加到资源系统中</li></ul><h2 id="OpenGL渲染流程类比"><a href="#OpenGL渲染流程类比" class="headerlink" title="OpenGL渲染流程类比"></a>OpenGL渲染流程类比</h2><p>整个流程类似于布置电影院：</p><ol><li>摆放设备</li><li>调整投影仪滤镜（着色器）</li><li>准备海报并裁剪（texture）</li><li>播放时绑定海报（texture.bind()）</li><li>执行播放<br><img src="https://cdn-a.markji.com/files/67f8cb28c7682418c31519ff_hd.png?e=1744648123046&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:QNAYSqKEJEjBgCyT0Uc9d8_k5Sc=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67f940acc7682418c32441de_hd.png?e=1744648123046&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:SgWrSGa6iuhbQ506zT-eMbHyKKQ=" alt="图片1"></li></ol><h2 id="着色器工作原理"><a href="#着色器工作原理" class="headerlink" title="着色器工作原理"></a>着色器工作原理</h2><h3 id="着色器特点"><a href="#着色器特点" class="headerlink" title="着色器特点"></a>着色器特点</h3><ul><li>每份着色器代码只是单个像素的绘制蓝图</li><li>GPU中多个工作单元并行处理</li><li>每个工作单元负责一个像素的绘制</li><li>着色器是工作单元的执行指南</li></ul><h3 id="着色器类型"><a href="#着色器类型" class="headerlink" title="着色器类型"></a>着色器类型</h3><ol><li>顶点着色器：确定位置</li><li>片段着色器（像素着色器）：绘制颜色</li></ol><h3 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h3><ol><li>顶点着色器执行（仅执行顶点次数）</li><li>图元装配（组合成三角形/线段）</li><li>光栅化（填充像素块）</li><li>片段着色器处理每个fragment（执行像素数量次）<br><img src="https://cdn-a.markji.com/files/67f9412ac7682418c32449ec_hd.png?e=1744648123046&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:HNqm3Atyp4YM3vWyNkjdxyszr7U=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67fa0ba875151df2bbab74ed_hd.png?e=1744648123046&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:OBn53mQm0j8uiGbdmz_xskuSVXY=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67fa278f75151df2bbaf3551_hd.png?e=1744648123046&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:jlImCTf9A5kJcKHYi8IaLukQCOE=" alt="图片1"><h2 id="实现注意事项"><a href="#实现注意事项" class="headerlink" title="实现注意事项"></a>实现注意事项</h2></li></ol><h3 id="OpenGL封装选择"><a href="#OpenGL封装选择" class="headerlink" title="OpenGL封装选择"></a>OpenGL封装选择</h3><ul><li>放弃Qt封装的OpenGL</li><li>直接使用原生句柄操作VAO/VBO</li></ul><h3 id="位置管理"><a href="#位置管理" class="headerlink" title="位置管理"></a>位置管理</h3><ul><li>m_pos使用QPoint类型<br><img src="https://cdn-a.markji.com/files/67fa0fd27f917e87d7bf7967_hd.png?e=1744648123046&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:Kk27zVoJp9jmZm8XKIDflYrTouU=" alt="图片1"></li></ul>]]></content>
+        <content type="html"><![CDATA[<h1>PlayImage的OpenGL实现</h1><h2 id="基础架构">基础架构</h2><p><img src="https://cdn-a.markji.com/files/67f8ca1ceb27578088b6e53c_hd.png?e=1744648123046&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:FNznTp5nnhoXjDIZXuZOGN2282Q=" alt="图片1"></p><h3 id="类继承">类继承</h3><ul><li>继承QOpenGLWidget和QOpenGLFunctions_3_3</li><li>新版本OpenGL(&gt;2.0)从固定管线转向可编程管线</li></ul><h3 id="缓冲区概念">缓冲区概念</h3><ul><li>VBO：保存单个顶点数据（数据集）</li><li>VAO：保存如何使用这些VBO的数据（使用说明）</li></ul><h3 id="资源管理">资源管理</h3><ul><li>添加资源文件：通过Qt的resource系统</li><li>GLSL文件需要添加到资源系统中</li></ul><h2 id="OpenGL渲染流程类比">OpenGL渲染流程类比</h2><p>整个流程类似于布置电影院：</p><ol><li>摆放设备</li><li>调整投影仪滤镜（着色器）</li><li>准备海报并裁剪（texture）</li><li>播放时绑定海报（texture.bind()）</li><li>执行播放<br><img src="https://cdn-a.markji.com/files/67f8cb28c7682418c31519ff_hd.png?e=1744648123046&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:QNAYSqKEJEjBgCyT0Uc9d8_k5Sc=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67f940acc7682418c32441de_hd.png?e=1744648123046&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:SgWrSGa6iuhbQ506zT-eMbHyKKQ=" alt="图片1"></li></ol><h2 id="着色器工作原理">着色器工作原理</h2><h3 id="着色器特点">着色器特点</h3><ul><li>每份着色器代码只是单个像素的绘制蓝图</li><li>GPU中多个工作单元并行处理</li><li>每个工作单元负责一个像素的绘制</li><li>着色器是工作单元的执行指南</li></ul><h3 id="着色器类型">着色器类型</h3><ol><li>顶点着色器：确定位置</li><li>片段着色器（像素着色器）：绘制颜色</li></ol><h3 id="工作流程">工作流程</h3><ol><li>顶点着色器执行（仅执行顶点次数）</li><li>图元装配（组合成三角形/线段）</li><li>光栅化（填充像素块）</li><li>片段着色器处理每个fragment（执行像素数量次）<br><img src="https://cdn-a.markji.com/files/67f9412ac7682418c32449ec_hd.png?e=1744648123046&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:HNqm3Atyp4YM3vWyNkjdxyszr7U=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67fa0ba875151df2bbab74ed_hd.png?e=1744648123046&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:OBn53mQm0j8uiGbdmz_xskuSVXY=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67fa278f75151df2bbaf3551_hd.png?e=1744648123046&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:jlImCTf9A5kJcKHYi8IaLukQCOE=" alt="图片1"></li></ol><h2 id="实现注意事项">实现注意事项</h2><h3 id="OpenGL封装选择">OpenGL封装选择</h3><ul><li>放弃Qt封装的OpenGL</li><li>直接使用原生句柄操作VAO/VBO</li></ul><h3 id="位置管理">位置管理</h3><ul><li>m_pos使用QPoint类型<br><img src="https://cdn-a.markji.com/files/67fa0fd27f917e87d7bf7967_hd.png?e=1744648123046&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:Kk27zVoJp9jmZm8XKIDflYrTouU=" alt="图片1"></li></ul>]]></content>
       
       
       <categories>
