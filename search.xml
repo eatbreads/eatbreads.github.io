@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>PlayImage使用OpenGL实现视频渲染</title>
+      <link href="/posts/74e5f723.html"/>
+      <url>/posts/74e5f723.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="PlayImage的OpenGL实现"><a href="#PlayImage的OpenGL实现" class="headerlink" title="PlayImage的OpenGL实现"></a>PlayImage的OpenGL实现</h1><h2 id="基础架构"><a href="#基础架构" class="headerlink" title="基础架构"></a>基础架构</h2><p><img src="https://cdn-a.markji.com/files/67f8ca1ceb27578088b6e53c_hd.png?e=1744648123046&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:FNznTp5nnhoXjDIZXuZOGN2282Q=" alt="图片1"></p><h3 id="类继承"><a href="#类继承" class="headerlink" title="类继承"></a>类继承</h3><ul><li>继承QOpenGLWidget和QOpenGLFunctions_3_3</li><li>新版本OpenGL(&gt;2.0)从固定管线转向可编程管线</li></ul><h3 id="缓冲区概念"><a href="#缓冲区概念" class="headerlink" title="缓冲区概念"></a>缓冲区概念</h3><ul><li>VBO：保存单个顶点数据（数据集）</li><li>VAO：保存如何使用这些VBO的数据（使用说明）</li></ul><h3 id="资源管理"><a href="#资源管理" class="headerlink" title="资源管理"></a>资源管理</h3><ul><li>添加资源文件：通过Qt的resource系统</li><li>GLSL文件需要添加到资源系统中</li></ul><h2 id="OpenGL渲染流程类比"><a href="#OpenGL渲染流程类比" class="headerlink" title="OpenGL渲染流程类比"></a>OpenGL渲染流程类比</h2><p>整个流程类似于布置电影院：</p><ol><li>摆放设备</li><li>调整投影仪滤镜（着色器）</li><li>准备海报并裁剪（texture）</li><li>播放时绑定海报（texture.bind()）</li><li>执行播放<br><img src="https://cdn-a.markji.com/files/67f8cb28c7682418c31519ff_hd.png?e=1744648123046&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:QNAYSqKEJEjBgCyT0Uc9d8_k5Sc=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67f940acc7682418c32441de_hd.png?e=1744648123046&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:SgWrSGa6iuhbQ506zT-eMbHyKKQ=" alt="图片1"></li></ol><h2 id="着色器工作原理"><a href="#着色器工作原理" class="headerlink" title="着色器工作原理"></a>着色器工作原理</h2><h3 id="着色器特点"><a href="#着色器特点" class="headerlink" title="着色器特点"></a>着色器特点</h3><ul><li>每份着色器代码只是单个像素的绘制蓝图</li><li>GPU中多个工作单元并行处理</li><li>每个工作单元负责一个像素的绘制</li><li>着色器是工作单元的执行指南</li></ul><h3 id="着色器类型"><a href="#着色器类型" class="headerlink" title="着色器类型"></a>着色器类型</h3><ol><li>顶点着色器：确定位置</li><li>片段着色器（像素着色器）：绘制颜色</li></ol><h3 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h3><ol><li>顶点着色器执行（仅执行顶点次数）</li><li>图元装配（组合成三角形/线段）</li><li>光栅化（填充像素块）</li><li>片段着色器处理每个fragment（执行像素数量次）<br><img src="https://cdn-a.markji.com/files/67f9412ac7682418c32449ec_hd.png?e=1744648123046&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:HNqm3Atyp4YM3vWyNkjdxyszr7U=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67fa0ba875151df2bbab74ed_hd.png?e=1744648123046&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:OBn53mQm0j8uiGbdmz_xskuSVXY=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67fa278f75151df2bbaf3551_hd.png?e=1744648123046&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:jlImCTf9A5kJcKHYi8IaLukQCOE=" alt="图片1"><h2 id="实现注意事项"><a href="#实现注意事项" class="headerlink" title="实现注意事项"></a>实现注意事项</h2></li></ol><h3 id="OpenGL封装选择"><a href="#OpenGL封装选择" class="headerlink" title="OpenGL封装选择"></a>OpenGL封装选择</h3><ul><li>放弃Qt封装的OpenGL</li><li>直接使用原生句柄操作VAO/VBO</li></ul><h3 id="位置管理"><a href="#位置管理" class="headerlink" title="位置管理"></a>位置管理</h3><ul><li>m_pos使用QPoint类型<br><img src="https://cdn-a.markji.com/files/67fa0fd27f917e87d7bf7967_hd.png?e=1744648123046&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:Kk27zVoJp9jmZm8XKIDflYrTouU=" alt="图片1"></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 音视频开发 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Qt </tag>
+            
+            <tag> OpenGL </tag>
+            
+            <tag> 图形编程 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>PlayImage类的实现与窗口控件提升</title>
       <link href="/posts/e486a6b2.html"/>
       <url>/posts/e486a6b2.html</url>
@@ -1055,7 +1084,7 @@
       <link href="/posts/233853.html"/>
       <url>/posts/233853.html</url>
       
-        <content type="html"><![CDATA[<h1>CRTP</h1><p>CRTP（Curiously Recurring Template Pattern）被称为<strong>奇异重现</strong>，或者<strong>奇异递归模板模式</strong>。</p><h2 id="优势">优势</h2><ul><li>实现了<strong>静态多态</strong>，无需使用虚函数。</li><li><strong>无运行时开销</strong>，提高了性能。</li><li>避免了传统的向下转换（downcasting）导致的类型错误。</li></ul><h2 id="备注">备注</h2><p>以后可以尝试<strong>都使用 CRTP</strong> 来编写代码，以免去运行时开销。其实改动并不难。<br><img src="https://cdn-a.markji.com/files/671efd0edee1d69b5795e9e8_hd.png?e=1740932078154&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:eTV6e0Uq9JPfOinXXfpIMFBNfrQ=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/671efe26dee1d69b579632ad_hd.png?e=1740932078154&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:xdubiw1N2IuVkkZDpZFaa3Zt7zw=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/671efe71dee1d69b5796771c_hd.png?e=1740932078154&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:2SKkuT0tqcQk8W5ETJdWlTmGC0M=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/671effd53f407d0defb03c91_hd.png?e=1740932078154&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:266HrCtrSmLMkWx15DEJq9Tg2CI=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/671f0372dee1d69b57977b98_hd.png?e=1740932078154&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:5rrSzhrY_9WCbvminQU3CnWYDzk=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/671f0407dee1d69b57979395_hd.png?e=1740932078154&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:0y2tMdhuqFIb51or_ieuJTP55wA=" alt="图片1"></p>]]></content>
+        <content type="html"><![CDATA[<h1 id="CRTP"><a href="#CRTP" class="headerlink" title="CRTP"></a>CRTP</h1><p>CRTP（Curiously Recurring Template Pattern）被称为<strong>奇异重现</strong>，或者<strong>奇异递归模板模式</strong>。</p><h2 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h2><ul><li>实现了<strong>静态多态</strong>，无需使用虚函数。</li><li><strong>无运行时开销</strong>，提高了性能。</li><li>避免了传统的向下转换（downcasting）导致的类型错误。</li></ul><h2 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h2><p>以后可以尝试<strong>都使用 CRTP</strong> 来编写代码，以免去运行时开销。其实改动并不难。<br><img src="https://cdn-a.markji.com/files/671efd0edee1d69b5795e9e8_hd.png?e=1740932078154&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:eTV6e0Uq9JPfOinXXfpIMFBNfrQ=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/671efe26dee1d69b579632ad_hd.png?e=1740932078154&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:xdubiw1N2IuVkkZDpZFaa3Zt7zw=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/671efe71dee1d69b5796771c_hd.png?e=1740932078154&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:2SKkuT0tqcQk8W5ETJdWlTmGC0M=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/671effd53f407d0defb03c91_hd.png?e=1740932078154&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:266HrCtrSmLMkWx15DEJq9Tg2CI=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/671f0372dee1d69b57977b98_hd.png?e=1740932078154&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:5rrSzhrY_9WCbvminQU3CnWYDzk=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/671f0407dee1d69b57979395_hd.png?e=1740932078154&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:0y2tMdhuqFIb51or_ieuJTP55wA=" alt="图片1"></p>]]></content>
       
       
       <categories>

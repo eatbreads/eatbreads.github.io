@@ -6,7 +6,7 @@
   <link href="https://eatbreads.github.io/atom.xml" rel="self"/>
   
   <link href="https://eatbreads.github.io/"/>
-  <updated>2025-04-10T15:38:34.219Z</updated>
+  <updated>2025-04-14T15:50:33.861Z</updated>
   <id>https://eatbreads.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>PlayImage使用OpenGL实现视频渲染</title>
+    <link href="https://eatbreads.github.io/posts/74e5f723.html"/>
+    <id>https://eatbreads.github.io/posts/74e5f723.html</id>
+    <published>2025-04-14T15:46:32.000Z</published>
+    <updated>2025-04-14T15:50:33.861Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="PlayImage的OpenGL实现"><a href="#PlayImage的OpenGL实现" class="headerlink" title="PlayImage的OpenGL实现"></a>PlayImage的OpenGL实现</h1><h2 id="基础架构"><a href="#基础架构" class="headerlink" title="基础架构"></a>基础架构</h2><p><img src="https://cdn-a.markji.com/files/67f8ca1ceb27578088b6e53c_hd.png?e=1744648123046&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:FNznTp5nnhoXjDIZXuZOGN2282Q=" alt="图片1"></p><h3 id="类继承"><a href="#类继承" class="headerlink" title="类继承"></a>类继承</h3><ul><li>继承QOpenGLWidget和QOpenGLFunctions_3_3</li><li>新版本OpenGL(&gt;2.0)从固定管线转向可编程管线</li></ul><h3 id="缓冲区概念"><a href="#缓冲区概念" class="headerlink" title="缓冲区概念"></a>缓冲区概念</h3><ul><li>VBO：保存单个顶点数据（数据集）</li><li>VAO：保存如何使用这些VBO的数据（使用说明）</li></ul><h3 id="资源管理"><a href="#资源管理" class="headerlink" title="资源管理"></a>资源管理</h3><ul><li>添加资源文件：通过Qt的resource系统</li><li>GLSL文件需要添加到资源系统中</li></ul><h2 id="OpenGL渲染流程类比"><a href="#OpenGL渲染流程类比" class="headerlink" title="OpenGL渲染流程类比"></a>OpenGL渲染流程类比</h2><p>整个流程类似于布置电影院：</p><ol><li>摆放设备</li><li>调整投影仪滤镜（着色器）</li><li>准备海报并裁剪（texture）</li><li>播放时绑定海报（texture.bind()）</li><li>执行播放<br><img src="https://cdn-a.markji.com/files/67f8cb28c7682418c31519ff_hd.png?e=1744648123046&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:QNAYSqKEJEjBgCyT0Uc9d8_k5Sc=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67f940acc7682418c32441de_hd.png?e=1744648123046&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:SgWrSGa6iuhbQ506zT-eMbHyKKQ=" alt="图片1"></li></ol><h2 id="着色器工作原理"><a href="#着色器工作原理" class="headerlink" title="着色器工作原理"></a>着色器工作原理</h2><h3 id="着色器特点"><a href="#着色器特点" class="headerlink" title="着色器特点"></a>着色器特点</h3><ul><li>每份着色器代码只是单个像素的绘制蓝图</li><li>GPU中多个工作单元并行处理</li><li>每个工作单元负责一个像素的绘制</li><li>着色器是工作单元的执行指南</li></ul><h3 id="着色器类型"><a href="#着色器类型" class="headerlink" title="着色器类型"></a>着色器类型</h3><ol><li>顶点着色器：确定位置</li><li>片段着色器（像素着色器）：绘制颜色</li></ol><h3 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h3><ol><li>顶点着色器执行（仅执行顶点次数）</li><li>图元装配（组合成三角形/线段）</li><li>光栅化（填充像素块）</li><li>片段着色器处理每个fragment（执行像素数量次）<br><img src="https://cdn-a.markji.com/files/67f9412ac7682418c32449ec_hd.png?e=1744648123046&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:HNqm3Atyp4YM3vWyNkjdxyszr7U=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67fa0ba875151df2bbab74ed_hd.png?e=1744648123046&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:OBn53mQm0j8uiGbdmz_xskuSVXY=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67fa278f75151df2bbaf3551_hd.png?e=1744648123046&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:jlImCTf9A5kJcKHYi8IaLukQCOE=" alt="图片1"><h2 id="实现注意事项"><a href="#实现注意事项" class="headerlink" title="实现注意事项"></a>实现注意事项</h2></li></ol><h3 id="OpenGL封装选择"><a href="#OpenGL封装选择" class="headerlink" title="OpenGL封装选择"></a>OpenGL封装选择</h3><ul><li>放弃Qt封装的OpenGL</li><li>直接使用原生句柄操作VAO/VBO</li></ul><h3 id="位置管理"><a href="#位置管理" class="headerlink" title="位置管理"></a>位置管理</h3><ul><li>m_pos使用QPoint类型<br><img src="https://cdn-a.markji.com/files/67fa0fd27f917e87d7bf7967_hd.png?e=1744648123046&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:Kk27zVoJp9jmZm8XKIDflYrTouU=" alt="图片1"></li></ul>]]></content>
+    
+    
+    <summary type="html">详细介绍使用OpenGL实现PlayImage视频渲染的过程，包括着色器编程、缓冲区管理等核心概念</summary>
+    
+    
+    
+    <category term="音视频开发" scheme="https://eatbreads.github.io/categories/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%BC%80%E5%8F%91/"/>
+    
+    
+    <category term="Qt" scheme="https://eatbreads.github.io/tags/Qt/"/>
+    
+    <category term="OpenGL" scheme="https://eatbreads.github.io/tags/OpenGL/"/>
+    
+    <category term="图形编程" scheme="https://eatbreads.github.io/tags/%E5%9B%BE%E5%BD%A2%E7%BC%96%E7%A8%8B/"/>
+    
+  </entry>
   
   <entry>
     <title>PlayImage类的实现与窗口控件提升</title>
@@ -488,29 +513,6 @@
     <category term="协程" scheme="https://eatbreads.github.io/tags/%E5%8D%8F%E7%A8%8B/"/>
     
     <category term="异步编程" scheme="https://eatbreads.github.io/tags/%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>RTSP客户端</title>
-    <link href="https://eatbreads.github.io/posts/78dc036a.html"/>
-    <id>https://eatbreads.github.io/posts/78dc036a.html</id>
-    <published>2025-03-25T15:51:53.000Z</published>
-    <updated>2025-03-27T09:39:25.147Z</updated>
-    
-    <content type="html"><![CDATA[<h1>RTSP客户端实现</h1><h2 id="客户端类型">客户端类型</h2><p>有两种实现方式:</p><ul><li>拉流客户端</li><li>推流客户端</li></ul><p>之前的实现都是直接使用ffmpeg来推流到服务器。</p><h2 id="拉流命令">拉流命令</h2><h3 id="从RTSP拉流">从RTSP拉流</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -rtsp_transport tcp -i rtsp://your_rtsp_url -c copy output.mp4</span><br></pre></td></tr></table></figure><h3 id="从RTMP拉流">从RTMP拉流</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i rtmp://your_rtmp_url -c copy output.mp4</span><br></pre></td></tr></table></figure><h2 id="推流命令">推流命令</h2><h3 id="RTMP推流">RTMP推流</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -re -i input.mp4 -c:v libx264 -b:v 1M -c:a aac -b:a 128k -f flv rtmp://your_rtmp_server/live/stream</span><br></pre></td></tr></table></figure><h3 id="RTSP推流">RTSP推流</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -re -i input.mp4 -c:v libx264 -preset ultrafast -tune zerolatency -c:a aac -f rtsp rtsp://your_rtsp_server/live</span><br></pre></td></tr></table></figure><p><img src="https://cdn-a.markji.com/files/67e260cb05df26320832127d_hd.png?e=1742892963667&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:fHVoxBdXPEl4Ehy3Ogstwn8RE4g=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67e261a805df263208322f45_hd.png?e=1742892963667&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:TWRdSVs2UbebpQEXk77sb2q_Dz4=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67e2653e81bdefd1bec96919_hd.png?e=1742892963667&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:TsjvUR8TDJ9YzdWxpiwBxCBZMEQ=" alt="图片1"></p>]]></content>
-    
-    
-    <summary type="html">RTSP客户端的推流和拉流实现</summary>
-    
-    
-    
-    <category term="音视频开发" scheme="https://eatbreads.github.io/categories/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%BC%80%E5%8F%91/"/>
-    
-    
-    <category term="流媒体" scheme="https://eatbreads.github.io/tags/%E6%B5%81%E5%AA%92%E4%BD%93/"/>
-    
-    <category term="音视频" scheme="https://eatbreads.github.io/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/"/>
     
   </entry>
   
