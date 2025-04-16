@@ -6,7 +6,7 @@
   <link href="https://eatbreads.github.io/atom.xml" rel="self"/>
   
   <link href="https://eatbreads.github.io/"/>
-  <updated>2025-04-15T16:28:52.020Z</updated>
+  <updated>2025-04-16T15:46:30.807Z</updated>
   <id>https://eatbreads.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>直播协议摘要介绍RTMP-HTTP-FLV-WebRTC-RTSP等</title>
+    <link href="https://eatbreads.github.io/posts/c0a1f903.html"/>
+    <id>https://eatbreads.github.io/posts/c0a1f903.html</id>
+    <published>2025-04-16T15:43:36.000Z</published>
+    <updated>2025-04-16T15:46:30.807Z</updated>
+    
+    <content type="html"><![CDATA[<h1>音视频协议详解</h1><h2 id="RTMP-HTTP-FLV">RTMP/HTTP-FLV</h2><p>这两种协议都建立在FLV封装之上，且一般不写入磁盘，仅在内存中交换。</p><h3 id="RTMP">RTMP</h3><ul><li>用于直播源推流和系统内直播流数据传递</li><li>端口号1935，建立TCP长连接</li><li>延迟一般为1~3s</li><li>推流地址和播放地址相同</li><li>存在高并发问题</li><li>因浏览器摒弃flash，主要用于直播源推流和CDN推流</li><li>强制切片以保证实时性和弱网抵抗能力，但有性能损耗</li></ul><h3 id="HTTP-FLV">HTTP-FLV</h3><ul><li>主要用于客户端观看</li><li>是RTMP的HTTP版本</li><li>网页需要引入flv.js才能播放</li></ul><h2 id="WebRTC协议">WebRTC协议</h2><h3 id="基本特性">基本特性</h3><ul><li>Web Real-Time Communication</li><li>允许浏览器之间直接连接</li><li>延迟低于1s，使用UDP通道</li><li>推拉流地址格式：<code>webrtc://127.0.0.1:8000/live</code></li></ul><h3 id="连接机制">连接机制</h3><ol><li>点对点协议(PPP)</li><li>需要信令服务器作为初始中转</li><li>信令内容包括：<ul><li>媒体流元数据</li><li>网络数据信息</li></ul></li></ol><h3 id="连接方式">连接方式</h3><ol><li>本地局域网直接通信</li><li>通过STUN服务器获取公网IP</li><li>TURN服务器作为备选方案</li></ol><h3 id="多对多通信模式">多对多通信模式</h3><ol><li><p>Mesh模式</p><ul><li>优点：实现简单</li><li>缺点：仅支持4-6人</li></ul></li><li><p>MCU模式</p><ul><li>优点：支持多人</li><li>缺点：服务器压力大</li></ul></li><li><p>SFU模式</p><ul><li>优点：服务器压力适中</li><li>缺点：带宽消耗大</li><li>适用于一对多通信</li></ul></li></ol><h2 id="RTSP协议">RTSP协议</h2><ul><li>主要用于摄像头/监控设备</li><li>支持TCP/UDP切换</li><li>支持推流拉流</li><li>支持点播直播</li><li>现代浏览器不支持</li></ul><h2 id="直播系统架构">直播系统架构</h2><h3 id="工作流程">工作流程</h3><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">直播源 -&gt; 服务器<span class="number">1</span> -&gt; 转码处理 -&gt; 服务器<span class="number">2</span> -&gt; 客户端</span><br></pre></td></tr></table></figure><h3 id="功能特性">功能特性</h3><ul><li>支持转码处理</li><li>支持水印添加</li><li>支持清晰度转换</li><li>支持码率限制</li><li>支持直播录像</li></ul><h2 id="封装格式对比">封装格式对比</h2><h3 id="MP4">MP4</h3><ul><li>支持自定义封面</li><li>树状结构数据块</li><li>主要数据块：<ul><li>ftyp：编码格式信息</li><li>moov：元数据</li><li>mdat：音视频数据</li></ul></li></ul><h3 id="FLV">FLV</h3><ul><li>适合网络视频播放</li><li>大文件/长时间播放稳定</li><li>支持时间戳索引</li><li>需要建立I帧索引</li></ul><h3 id="HLS">HLS</h3><ul><li>基于HTTP下载</li><li>由ts文件和m3u8索引组成</li><li>支持二级索引</li><li>延迟较大(5~30秒)</li></ul><h2 id="H-264编码原理">H.264编码原理</h2><h3 id="码流分层">码流分层</h3><ul><li>VAL：视频编码层</li><li>NAL：网络提取层</li></ul><h3 id="帧类型">帧类型</h3><ul><li>I帧：完整帧</li><li>P帧：差异编码</li><li>B帧：双向参考</li><li>IDR帧：重置参考</li><li>GOP组：关键帧组</li></ul><h3 id="参数优化">参数优化</h3><ol><li>码率控制</li><li>分辨率/帧率调整</li><li>GOP设置：<ul><li>在线播放：帧率的4-5倍</li><li>直播：帧率的1-2倍</li></ul></li></ol><h3 id="推流命令示例">推流命令示例</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.\ffmpeg -re -f dshow -i video=<span class="string">&quot;USB2.0 HD UVC WebCam&quot;</span> -vcodec libx264 -acodec aac -f flv -g 60 -bf 0 rtmp://127.0.0.1/live/test</span><br></pre></td></tr></table></figure><p>参数说明：</p><ul><li><code>-re</code>：按原帧率读取</li><li><code>-f dshow</code>：Windows视频获取</li><li><code>-g 60</code>：GOP大小</li><li><code>-bf 0</code>：禁用B帧</li></ul>]]></content>
+    
+    
+    <summary type="html">详细介绍各种音视频直播协议的特点和应用场景，包括RTMP、HTTP-FLV、WebRTC、RTSP等</summary>
+    
+    
+    
+    <category term="音视频开发" scheme="https://eatbreads.github.io/categories/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%BC%80%E5%8F%91/"/>
+    
+    
+    <category term="网络协议" scheme="https://eatbreads.github.io/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/"/>
+    
+    <category term="音视频" scheme="https://eatbreads.github.io/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/"/>
+    
+    <category term="直播" scheme="https://eatbreads.github.io/tags/%E7%9B%B4%E6%92%AD/"/>
+    
+  </entry>
   
   <entry>
     <title>优化ZLMediakit的直播播放</title>
@@ -485,31 +510,6 @@
     
     
     <category term="音视频开发" scheme="https://eatbreads.github.io/categories/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%BC%80%E5%8F%91/"/>
-    
-    
-    <category term="音视频" scheme="https://eatbreads.github.io/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/"/>
-    
-    <category term="Qt" scheme="https://eatbreads.github.io/tags/Qt/"/>
-    
-    <category term="FFmpeg" scheme="https://eatbreads.github.io/tags/FFmpeg/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>在Qt中使用FFmpeg</title>
-    <link href="https://eatbreads.github.io/posts/9b502338.html"/>
-    <id>https://eatbreads.github.io/posts/9b502338.html</id>
-    <published>2025-03-30T15:57:37.000Z</published>
-    <updated>2025-03-30T16:00:01.849Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="在Qt中使用FFmpeg实现播放和录音"><a href="#在Qt中使用FFmpeg实现播放和录音" class="headerlink" title="在Qt中使用FFmpeg实现播放和录音"></a>在Qt中使用FFmpeg实现播放和录音</h1><h2 id="初始尝试"><a href="#初始尝试" class="headerlink" title="初始尝试"></a>初始尝试</h2><p>从CSDN中找到了对应的库并进行修改，最终编译成功。但运行时发现没有对应的输入声音设备。</p><h2 id="查看设备"><a href="#查看设备" class="headerlink" title="查看设备"></a>查看设备</h2><p>使用FFmpeg命令查看可用设备:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -list_devices <span class="literal">true</span> -f dshow -i dummy</span><br></pre></td></tr></table></figure><br><img src="https://cdn-a.markji.com/files/67e7e6c2205d5713c080d12b_hd.png?e=1743352806367&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:HlFFCuvBB0KSVXRTfKUfHs_zWYY=" alt="图片1"></p><h2 id="录制测试"><a href="#录制测试" class="headerlink" title="录制测试"></a>录制测试</h2><p>尝试直接使用FFmpeg命令录制:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -f dshow -i audio=<span class="string">&quot;麦克风阵列 (Realtek(R) Audio)&quot;</span> -t 5 test.wav</span><br></pre></td></tr></table></figure><br>录制失败，最后发现是没有打开麦克风权限。解决权限问题后成功录制音频。<br><img src="https://cdn-a.markji.com/files/67e7f6222f58dfdf11a28259_hd.png?e=1743352806367&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:P57m6HSucCpw477ZThLl9ycR9sE=" alt="图片1"></p><h2 id="音频播放实现"><a href="#音频播放实现" class="headerlink" title="音频播放实现"></a>音频播放实现</h2><p>在论坛找到播放代码，发现使用的是<code>&lt;QAudioFormat&gt;</code>中的<code>QAudioOutput</code>。但在Qt6中它已被<code>QAudioSink</code>取代。</p><h2 id="编译问题"><a href="#编译问题" class="headerlink" title="编译问题"></a>编译问题</h2><p>添加头文件后仍然报错，最终在CMakeLists.txt中添加:<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Qt6::Multimedia</span><br></pre></td></tr></table></figure><br>才解决了头文件找不到的问题。<br><img src="https://cdn-a.markji.com/files/67e7fa65205d5713c08396ca_hd.png?e=1743352806367&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:UVepqCC-P2xPFN7e-CcqjiRjrEU=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/67e80df9205d5713c086279e_hd.png?e=1743352806367&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:LkbnqLWkqBpgs5XhdSxMzqpyeRk=" alt="图片1"></p><h2 id="重采样问题"><a href="#重采样问题" class="headerlink" title="重采样问题"></a>重采样问题</h2><p>重采样相关的代码编译一直不通过。</p><p>即使参考官方文档的示例也无法运行，最终不得不寻找其他解决方案。<br> <img src="https://cdn-a.markji.com/files/67e812cf205d5713c086a286_hd.png?e=1743352806367&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:Iidek_AwIhs3x_vdFwJcPRHMIvg=" alt="图片1"><br> <img src="https://cdn-a.markji.com/files/67e816252f58dfdf11a68af8_hd.png?e=1743352806367&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:vz8s-IeSIVWjNEB1jsY88wphH1o=" alt="图片1"></p>]]></content>
-    
-    
-    <summary type="html">记录在Qt中使用FFmpeg实现音视频播放和录制的过程</summary>
-    
-    
-    
-    <category term="Qt开发" scheme="https://eatbreads.github.io/categories/Qt%E5%BC%80%E5%8F%91/"/>
     
     
     <category term="音视频" scheme="https://eatbreads.github.io/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/"/>
