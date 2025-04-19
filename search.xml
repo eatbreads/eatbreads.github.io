@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>c++高性能定时器实现</title>
+      <link href="/posts/9b96a9aa.html"/>
+      <url>/posts/9b96a9aa.html</url>
+      
+        <content type="html"><![CDATA[<h1>直接上代码</h1><ul><li>分为两种,一种是多线程,一种是时间线</li></ul><p><img src="https://cdn-a.markji.com/files/665d1b26a552a1096b431e0a_hd.png?e=1745079714430&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:T3e2SKI2rJZDxMbrZUMOE08y7xU=" alt="图片1"><br>多线程<br><img src="https://cdn-a.markji.com/files/665d1c76a552a1096b434126_hd.png?e=1745079714430&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:aUtkOolbkxAQmAYlIALpGfsQI7E=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/665d1c856c5f0515e269b414_hd.png?e=1745079714430&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:yo_YNaaP25uc9dTjrUv40gzObRg=" alt="图片1"><br>时间线<br><img src="https://cdn-a.markji.com/files/665d1c9fa552a1096b4343fc_hd.png?e=1745079714430&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:23Ja14SqyjRKfF6hreKLzGv9OsI=" alt="图片1"><br>二更：这边大于now就会直接退出，因为multmap是递增排序，后续的肯定也是大于的</p><p>然后这个内层if是处理新加的timer是否要处理的操作</p><p><img src="https://cdn-a.markji.com/files/665d1caca552a1096b4344dd_hd.png?e=1745079714431&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:bIH2WjAE2GeEgWkSotaPDXkV4p0=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/665d1cbba552a1096b434603_hd.png?e=1745079714431&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:H95QUaSiuHzo-ic0ssQCXDKcoL0=" alt="图片1"><br><img src="https://cdn-a.markji.com/files/665d1cc7a552a1096b4346b0_hd.png?e=1745079714431&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:EGFfv1vxmawSyr-fg_GFmsuZz9o=" alt="图片1"></p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>WebRTC的JavaScript简单实现</title>
       <link href="/posts/e8866bd2.html"/>
       <url>/posts/e8866bd2.html</url>
