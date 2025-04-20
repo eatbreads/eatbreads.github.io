@@ -6,7 +6,7 @@
   <link href="https://eatbreads.github.io/atom.xml" rel="self"/>
   
   <link href="https://eatbreads.github.io/"/>
-  <updated>2025-04-19T15:43:52.439Z</updated>
+  <updated>2025-04-20T15:39:03.472Z</updated>
   <id>https://eatbreads.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>音视频开发常见面试题解析(一)</title>
+    <link href="https://eatbreads.github.io/posts/ee93bc5b.html"/>
+    <id>https://eatbreads.github.io/posts/ee93bc5b.html</id>
+    <published>2025-04-20T15:37:56.000Z</published>
+    <updated>2025-04-20T15:39:03.472Z</updated>
+    
+    <content type="html"><![CDATA[<h1>音视频开发核心问题解析</h1><h2 id="解码与渲染流程">解码与渲染流程</h2><h3 id="解码过程">解码过程</h3><ul><li>H.264解码输出：YUV420P/YUV格式</li><li>AAC解码输出：PCM格式</li></ul><h3 id="渲染实现">渲染实现</h3><ul><li>使用OpenGL将YUV分量上传为纹理</li><li>通过着色器完成YUV到RGB的转换</li></ul><h3 id="音视频同步">音视频同步</h3><ul><li>利用帧的PTS做时钟同步</li></ul><h3 id="音频帧丢失处理">音频帧丢失处理</h3><ol><li><p>视频丢帧方案</p><ul><li>丢弃部分视频帧使视频追上音频</li></ul></li><li><p>音频补偿方案</p><ul><li>填充静音或插值补足缺失片段</li><li>适用于不允许丢视频帧的场景</li></ul></li><li><p>动态速率调整</p><ul><li>通过加快或减慢视频播放重新同步</li></ul></li></ol><p>注：丢帧或填充静音是直播场景下最常用的方案</p><h2 id="花屏问题处理">花屏问题处理</h2><h3 id="产生原因">产生原因</h3><ol><li><p>关键帧丢失</p><ul><li>导致后续B帧和P帧无法显示</li></ul></li><li><p>元数据变化</p><ul><li>分辨率、帧率、编码格式等参数变化</li><li>播放器适应问题</li></ul></li><li><p>硬件兼容性</p><ul><li>主要出现在安卓设备</li></ul></li><li><p>颜色格式不一致</p><ul><li>推流和播放端格式不匹配</li></ul></li></ol><h3 id="解决方案">解决方案</h3><ol><li><p>丢帧处理优化</p><ul><li>必须丢帧时应丢弃整个GOP</li></ul></li><li><p>参数稳定性</p><ul><li>保持直播编码参数稳定</li></ul></li><li><p>解码方案调整</p><ul><li>尝试软解码对比</li><li>建立设备兼容性名单</li></ul></li><li><p>格式统一</p><ul><li>统一推流和拉流的颜色格式</li></ul></li></ol><h2 id="跳帧问题分析">跳帧问题分析</h2><h3 id="原因分析">原因分析</h3><ol><li>帧率与刷新率不匹配</li><li>解码/渲染性能不足</li><li>网络抖动影响</li><li>音视频同步机制问题</li></ol><h2 id="服务器性能评估">服务器性能评估</h2><h3 id="测试维度">测试维度</h3><ol><li><p>并发能力</p><ul><li>同时观看和推流路数</li></ul></li><li><p>带宽评估</p><ul><li>总出口带宽</li><li>CDN分发能力</li></ul></li><li><p>转码负载</p><ul><li>CPU/GPU资源评估</li></ul></li><li><p>系统稳定性</p><ul><li>端到端延迟</li><li>丢包率</li><li>故障恢复能力</li></ul></li></ol><h2 id="IPC摄像头方案">IPC摄像头方案</h2><h3 id="设备来源">设备来源</h3><ol><li>自研/ODM</li><li>第三方厂商（海康、大华等）</li></ol><h3 id="通信协议">通信协议</h3><ol><li><p>RTSP+RTP</p><ul><li>主流摄像头默认支持</li></ul></li><li><p>GB28181</p><ul><li>国内安防标准</li><li>SIP 5060端口注册</li></ul></li><li><p>ONVIF</p><ul><li>国际通用协议</li><li>支持设备发现和控制</li></ul></li></ol><h2 id="音视频平台架构">音视频平台架构</h2><h3 id="核心模块">核心模块</h3><ol><li><p>用户权限模块</p><ul><li>登录认证</li><li>鉴权管理</li><li>Token管理</li></ul></li><li><p>前端/客户端</p><ul><li>播放功能</li><li>管理交互</li></ul></li><li><p>流媒体服务</p><ul><li>推流/拉流</li><li>协议转发</li><li>转码支持</li></ul></li><li><p>存储服务</p><ul><li>录像保存</li><li>截图存储</li><li>检索回放</li></ul></li><li><p>设备管理</p><ul><li>摄像头注册</li><li>状态监控</li><li>控制命令下发</li></ul></li></ol>]]></content>
+    
+    
+    <summary type="html">详细解析音视频开发中的常见面试题，包括解码渲染、音视频同步、花屏处理等核心问题</summary>
+    
+    
+    
+    <category term="音视频开发" scheme="https://eatbreads.github.io/categories/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%BC%80%E5%8F%91/"/>
+    
+    
+    <category term="音视频" scheme="https://eatbreads.github.io/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/"/>
+    
+    <category term="FFmpeg" scheme="https://eatbreads.github.io/tags/FFmpeg/"/>
+    
+    <category term="面试题" scheme="https://eatbreads.github.io/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
+    
+  </entry>
   
   <entry>
     <title>c++高性能定时器实现</title>
@@ -477,31 +502,6 @@
     <category term="音视频" scheme="https://eatbreads.github.io/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/"/>
     
     <category term="编解码" scheme="https://eatbreads.github.io/tags/%E7%BC%96%E8%A7%A3%E7%A0%81/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>解决云服务器Docker仓库访问问题</title>
-    <link href="https://eatbreads.github.io/posts/f4beb750.html"/>
-    <id>https://eatbreads.github.io/posts/f4beb750.html</id>
-    <published>2025-04-07T13:10:31.000Z</published>
-    <updated>2025-04-07T13:11:35.728Z</updated>
-    
-    <content type="html"><![CDATA[<h1>云服务器运行Superset遇到的问题及解决方案</h1><h2 id="Docker镜像下载问题">Docker镜像下载问题</h2><h3 id="初始尝试">初始尝试</h3><p>在使用docker-compose部署Superset时，遇到镜像无法下载的问题。虽然通过在<code>/etc/docker/daemon.json</code>中添加国内镜像代理成功下载了redis、postgresql等镜像，但Superset本体镜像始终无法下载。</p><h3 id="解决方案">解决方案</h3><p>采用本地打包上传的方式解决：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 本地打包镜像</span></span><br><span class="line">docker save -o apache-superset.tar apachesuperset.docker.scarf.sh/apache/superset</span><br><span class="line"></span><br><span class="line"><span class="comment"># 上传到服务器</span></span><br><span class="line">scp apache-superset.tar ubuntu@43.138.190.230:/home/ubuntu</span><br><span class="line"></span><br><span class="line"><span class="comment"># 服务器端加载镜像</span></span><br><span class="line">docker load -i /home/ubuntu/apache-superset.tar</span><br></pre></td></tr></table></figure><h2 id="访问连接问题">访问连接问题</h2><h3 id="遇到的情况">遇到的情况</h3><ol><li>直接通过公网IP访问无响应</li><li>VSCode远程连接并端口转发后，可以通过localhost:8088访问</li><li>Postman测试显示502 Bad Gateway</li></ol><h3 id="解决步骤">解决步骤</h3><ol><li>检查并配置服务器防火墙</li><li>配置后成功通过Postman连接</li><li>Superset web界面也可以正常访问<br><img src="https://cdn-a.markji.com/files/67efcd9ae940a885d8a48f83_hd.png?e=1744033979105&amp;token=xX63b9jqTlDOcGmctt5K9254rV0LG8hS9BmDeFBy:C0FkwH4dORtyDjhWTd4laK_13UU=" alt="图片1"></li></ol><h2 id="MySQL部署问题">MySQL部署问题</h2><p>同样遇到了VSCode连接问题，但最终也得到解决。</p><h2 id="总结经验">总结经验</h2><ol><li>国内环境下可能需要使用镜像打包传输的方式</li><li>注意检查防火墙配置</li><li>端口转发可以作为临时的调试方案</li></ol>]]></content>
-    
-    
-    <summary type="html">记录在云服务器上部署Superset时遇到的Docker镜像下载和访问问题及解决方案</summary>
-    
-    
-    
-    <category term="运维笔记" scheme="https://eatbreads.github.io/categories/%E8%BF%90%E7%BB%B4%E7%AC%94%E8%AE%B0/"/>
-    
-    
-    <category term="Docker" scheme="https://eatbreads.github.io/tags/Docker/"/>
-    
-    <category term="云服务器" scheme="https://eatbreads.github.io/tags/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
-    
-    <category term="Superset" scheme="https://eatbreads.github.io/tags/Superset/"/>
     
   </entry>
   

@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>音视频开发常见面试题解析(一)</title>
+      <link href="/posts/ee93bc5b.html"/>
+      <url>/posts/ee93bc5b.html</url>
+      
+        <content type="html"><![CDATA[<h1>音视频开发核心问题解析</h1><h2 id="解码与渲染流程">解码与渲染流程</h2><h3 id="解码过程">解码过程</h3><ul><li>H.264解码输出：YUV420P/YUV格式</li><li>AAC解码输出：PCM格式</li></ul><h3 id="渲染实现">渲染实现</h3><ul><li>使用OpenGL将YUV分量上传为纹理</li><li>通过着色器完成YUV到RGB的转换</li></ul><h3 id="音视频同步">音视频同步</h3><ul><li>利用帧的PTS做时钟同步</li></ul><h3 id="音频帧丢失处理">音频帧丢失处理</h3><ol><li><p>视频丢帧方案</p><ul><li>丢弃部分视频帧使视频追上音频</li></ul></li><li><p>音频补偿方案</p><ul><li>填充静音或插值补足缺失片段</li><li>适用于不允许丢视频帧的场景</li></ul></li><li><p>动态速率调整</p><ul><li>通过加快或减慢视频播放重新同步</li></ul></li></ol><p>注：丢帧或填充静音是直播场景下最常用的方案</p><h2 id="花屏问题处理">花屏问题处理</h2><h3 id="产生原因">产生原因</h3><ol><li><p>关键帧丢失</p><ul><li>导致后续B帧和P帧无法显示</li></ul></li><li><p>元数据变化</p><ul><li>分辨率、帧率、编码格式等参数变化</li><li>播放器适应问题</li></ul></li><li><p>硬件兼容性</p><ul><li>主要出现在安卓设备</li></ul></li><li><p>颜色格式不一致</p><ul><li>推流和播放端格式不匹配</li></ul></li></ol><h3 id="解决方案">解决方案</h3><ol><li><p>丢帧处理优化</p><ul><li>必须丢帧时应丢弃整个GOP</li></ul></li><li><p>参数稳定性</p><ul><li>保持直播编码参数稳定</li></ul></li><li><p>解码方案调整</p><ul><li>尝试软解码对比</li><li>建立设备兼容性名单</li></ul></li><li><p>格式统一</p><ul><li>统一推流和拉流的颜色格式</li></ul></li></ol><h2 id="跳帧问题分析">跳帧问题分析</h2><h3 id="原因分析">原因分析</h3><ol><li>帧率与刷新率不匹配</li><li>解码/渲染性能不足</li><li>网络抖动影响</li><li>音视频同步机制问题</li></ol><h2 id="服务器性能评估">服务器性能评估</h2><h3 id="测试维度">测试维度</h3><ol><li><p>并发能力</p><ul><li>同时观看和推流路数</li></ul></li><li><p>带宽评估</p><ul><li>总出口带宽</li><li>CDN分发能力</li></ul></li><li><p>转码负载</p><ul><li>CPU/GPU资源评估</li></ul></li><li><p>系统稳定性</p><ul><li>端到端延迟</li><li>丢包率</li><li>故障恢复能力</li></ul></li></ol><h2 id="IPC摄像头方案">IPC摄像头方案</h2><h3 id="设备来源">设备来源</h3><ol><li>自研/ODM</li><li>第三方厂商（海康、大华等）</li></ol><h3 id="通信协议">通信协议</h3><ol><li><p>RTSP+RTP</p><ul><li>主流摄像头默认支持</li></ul></li><li><p>GB28181</p><ul><li>国内安防标准</li><li>SIP 5060端口注册</li></ul></li><li><p>ONVIF</p><ul><li>国际通用协议</li><li>支持设备发现和控制</li></ul></li></ol><h2 id="音视频平台架构">音视频平台架构</h2><h3 id="核心模块">核心模块</h3><ol><li><p>用户权限模块</p><ul><li>登录认证</li><li>鉴权管理</li><li>Token管理</li></ul></li><li><p>前端/客户端</p><ul><li>播放功能</li><li>管理交互</li></ul></li><li><p>流媒体服务</p><ul><li>推流/拉流</li><li>协议转发</li><li>转码支持</li></ul></li><li><p>存储服务</p><ul><li>录像保存</li><li>截图存储</li><li>检索回放</li></ul></li><li><p>设备管理</p><ul><li>摄像头注册</li><li>状态监控</li><li>控制命令下发</li></ul></li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> 音视频开发 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 音视频 </tag>
+            
+            <tag> FFmpeg </tag>
+            
+            <tag> 面试题 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>c++高性能定时器实现</title>
       <link href="/posts/9b96a9aa.html"/>
       <url>/posts/9b96a9aa.html</url>
