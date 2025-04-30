@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://eatbreads.github.io/posts/5a225ca.html</loc>
+    
+    <lastmod>2025-04-30</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://eatbreads.github.io/posts/ffa1ef1b.html</loc>
     
     <lastmod>2025-04-30</lastmod>
@@ -1418,6 +1427,13 @@
     <priority>0.2</priority>
   </url>
   
+  <url>
+    <loc>https://eatbreads.github.io/tags/P2P%E7%BD%91%E7%BB%9C/</loc>
+    <lastmod>2025-04-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
 
   
   <url>
@@ -1604,6 +1620,13 @@
   
   <url>
     <loc>https://eatbreads.github.io/categories/%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/</loc>
+    <lastmod>2025-04-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://eatbreads.github.io/categories/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%BC%80%E5%8F%91/</loc>
     <lastmod>2025-04-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
