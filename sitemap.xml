@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://eatbreads.github.io/posts/8fc563d2.html</loc>
+    
+    <lastmod>2025-05-17</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://eatbreads.github.io/posts/aec0840e.html</loc>
     
     <lastmod>2025-05-17</lastmod>
@@ -1590,6 +1599,13 @@
     <priority>0.2</priority>
   </url>
   
+  <url>
+    <loc>https://eatbreads.github.io/tags/Socket/</loc>
+    <lastmod>2025-05-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
 
   
   <url>
@@ -1804,6 +1820,13 @@
   
   <url>
     <loc>https://eatbreads.github.io/categories/%E7%AE%97%E6%B3%95%E9%A2%98%E8%A7%A3/</loc>
+    <lastmod>2025-05-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://eatbreads.github.io/categories/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/</loc>
     <lastmod>2025-05-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
